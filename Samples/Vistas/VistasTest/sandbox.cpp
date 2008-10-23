@@ -55,7 +55,7 @@ int main(int p_nArgumentCount, char* p_szArguments[])
 	DX9SandboxApplication application("Meson: Vistas", uiWidth, uiHeight, bFullscreen, bInstrumentationDriver);
 	//DX9PostProcessingApp application("Meson: Vistas", uiWidth, uiHeight, bFullscreen, bInstrumentationDriver);
 
-	application.ApplicationPath = Directory::GetCurrent().GetPath() + Directory::Delimeter + "..\\Vistas\\VistasTest";
+	application.ApplicationPath = Directory::GetCurrent().GetPath() + Directory::Delimeter + "..\\..\\Test";
 	//application.MaterialCatalogue = "default.ms";
 	application.MaterialCatalogue = "sandbox.ms";
 	//application.MaterialCatalogue = "postprocess.ms";
