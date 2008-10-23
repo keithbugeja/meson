@@ -66,6 +66,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalLibraryDirectories=""
+				GenerateDebugInformation="true"
 				SubSystem="1"
 			/>
 			<Tool
