@@ -1,0 +1,756 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{3D01EA41-9A05-4838-9FC4-8EE55143EA41}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{11A00B6E-FECD-4FE7-966B-501D0E549A0A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{A2C3A678-3808-45FA-B0F6-AAD6DC4F885C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Core\Common\Common.vcproj", "{6240F03C-4204-4E64-9608-6EF97191AF81}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cuneus", "Cuneus", "{08E12E65-41A3-4734-A53B-6ED5C3A9C5A5}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cuneus", "Core\Cuneus\Cuneus.vcproj", "{C98A4B8D-6D41-4B9A-A6A9-4C8F3E376F5B}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gravitas", "Gravitas", "{AAAD9BF1-9E6C-4344-B3A1-2A5589AFDDF4}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gravitas", "Core\Gravitas\Gravitas.vcproj", "{E40D5703-5D58-4B29-A8F4-4E1EEA196C49}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vistas", "Vistas", "{48E54F83-ED2F-4F31-8FCB-479A325EC87E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vistas", "Core\Vistas\Vistas.vcproj", "{170A50F6-EA33-45A8-BF5B-33E78D14C6FF}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{42E1CF10-C1AB-4227-9AEA-B69317224F83}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{DD195744-C7D0-4E08-A4A0-003C3F947798}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{43365E74-08FB-4503-B49A-F05E8C8262F6}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cuneus", "Cuneus", "{9F36AB50-6036-4364-8F3F-CC55BCFE737D}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ByteCodeManagers", "ByteCodeManagers", "{085F83ED-CB59-4484-BB25-72023CE19B84}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreByteCodeManagers", "CoreByteCodeManagers", "{B1D1B585-6AF0-4457-9C8D-F3922743FAC8}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreByteCodeManagers", "Plugins\Cuneus\BytecodeManagers\CoreByteCodeManagers\CoreByteCodeManagers.vcproj", "{66BF3EF7-F367-428B-8484-B1C6FDAD22B2}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GarbageCollectors", "GarbageCollectors", "{EC649B03-EE9F-451E-B398-AEC9597F79C9}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scavenger", "Scavenger", "{CECA643D-1C95-4CF2-907B-206C92E76194}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Scavenger", "Plugins\Cuneus\GarbageCollectors\Scavenger\Scavenger.vcproj", "{8B8CC2F3-A4DA-4279-8937-A7AB32CD9AA5}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interpreters", "Interpreters", "{46431B8F-E8D3-4640-931A-796C962740CA}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreInterpreters", "CoreInterpreters", "{0DDB4B5F-682E-40F3-B9C8-77A3DAA8DBD0}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schedulers", "Schedulers", "{6DECD88C-4715-489A-8951-88B6029A2130}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeightedRoundRobin", "WeightedRoundRobin", "{D4C61C31-4B82-4583-8A33-BCC8810FEA27}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WeightedRoundRobin", "Plugins\Cuneus\Schedulers\WeightedRoundRobin\WeightedRoundRobin.vcproj", "{011567ED-B0B7-4E50-AACC-617669B1B7FD}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gravitas", "Gravitas", "{32D64678-5CB3-44B1-86BE-23D9AB1BE7B3}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Constraints", "Constraints", "{07EF65A8-89CE-410F-8033-91531073BE4E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreConstraints", "CoreConstraints", "{7C2B5708-9D36-4677-9F89-BE74F7B195D2}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreConstraints", "Plugins\Gravitas\Constraints\CoreConstraints\CoreConstraints.vcproj", "{B53378BC-4021-4C57-B8C2-11133E030B58}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Forces", "Forces", "{0B616601-0C75-42A3-A2F1-C09A3CD67B8F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreForces", "CoreForces", "{1586186E-80D1-4909-8ACD-9231DE959F67}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreForces", "Plugins\Gravitas\Forces\CoreForces\CoreForces.vcproj", "{500295BE-2C36-4247-A194-76AF9C0779C6}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Geometry", "Geometry", "{DAB28F83-E83E-4EA9-AA2A-27261E578009}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreGeometry", "CoreGeometry", "{2DACFCC2-785A-4409-9C99-69EFA65E63CD}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrators", "Integrators", "{D44FCCCC-7CDA-43D2-B871-2F8D037CA1E2}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreIntegrators", "CoreIntegrators", "{C316DB58-D35F-4F1D-BAB7-AE00B332BBC1}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Simulators", "Simulators", "{D1C9CE64-8710-4953-87C2-E9BFAC449024}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spaces", "Spaces", "{88B3DF17-48AF-4329-A560-F8CFF58E26E6}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreSimulators", "CoreSimulators", "{B7507CC8-BF9C-46DC-9D05-BA52696B305D}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreSpaces", "CoreSpaces", "{B6688C3D-D762-4EE5-9076-60E810DBDB22}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreGeometry", "Plugins\Gravitas\Geometry\CoreGeometry\CoreGeometry.vcproj", "{3EF332E0-9DDF-497C-A34D-7048D959F3FD}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreIntegrators", "Plugins\Gravitas\Integrators\CoreIntegrators\CoreIntegrators.vcproj", "{7DC9DA7F-CC1D-438A-916A-F17D455B02A7}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreSimulators", "Plugins\Gravitas\Simulators\CoreSimulators\CoreSimulators.vcproj", "{912CAB23-2367-4F00-AC95-6903016CD31A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreSpaces", "Plugins\Gravitas\Spaces\CoreSpaces\CoreSpaces.vcproj", "{85DBA045-2FBA-4BFD-A21A-EFBBAF9ECC59}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreInterpreters", "Plugins\Cuneus\Interpreters\CoreInterpreters\CoreInterpreters.vcproj", "{A07DED9E-6DFA-430B-832F-8F3B53690166}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vistas", "Vistas", "{D6136225-31C0-4FFE-95F2-1F76FA968FE8}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cullers", "Cullers", "{C84B1C92-DD10-4A5F-8ADB-474AD2BA8805}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreCullers", "CoreCullers", "{884087FB-2024-425A-ABA0-6879D8FCDF6E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreCullers", "Plugins\Vistas\Cullers\CoreCullers\CoreCullers.vcproj", "{29E87ADB-F49E-4630-8A3B-4F17590E2A72}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Geometry", "Geometry", "{D37E8B97-F353-433E-A6E6-403629C105ED}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreGeometry", "CoreGeometry", "{05D85855-8323-48F6-BE09-1965FD752703}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Renderers", "Renderers", "{4F133A36-E2D0-4EA7-94BB-DD996244F3F1}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoreRenderers", "CoreRenderers", "{EC2FB450-8002-4EB3-92BF-682BFC3A227C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreRenderers", "Plugins\Vistas\Renderers\CoreRenderers\CoreRenderers.vcproj", "{9DEB48A4-1D1E-4E0F-9351-B18613E6888F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RenderDevices", "RenderDevices", "{ACF7C7AA-CE99-41C4-BC1F-B3B337C7C518}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DirectX9", "DirectX9", "{4D65410A-6964-4F08-915F-AF6B1CFD3E44}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreGeometries", "Plugins\Vistas\Geometry\CoreGeometry\CoreGeometry.vcproj", "{FF1566DF-C933-479D-8FFE-9C8CF08D0619}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectX9Renderer", "Plugins\Vistas\RenderDevices\DirectX9\DirectX9Renderer.vcproj", "{38FF64B2-D6DB-4B12-930F-81790FCE1196}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{79FD42F8-9A45-4450-A97F-B5AB3B3C3AF2}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Studio", "Visual Studio", "{6021F17C-5D98-4C15-A5DA-805CF572EA97}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Resources\Configuration\Visual Studio\usertype.dat = Resources\Configuration\Visual Studio\usertype.dat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{57002163-8D7C-4117-A3A1-7E8D2F717397}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{75159155-BB9F-49AF-976B-EC84E1A8B571}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{D35E290F-781E-488F-8AFD-C94C4E27B4BA}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.0", "2.0", "{681122EA-A6FE-4E82-A15F-C6965C283447}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cuneus", "Cuneus", "{954D587B-6A61-48ED-A12A-2C26241B6909}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{E0590BDE-9867-40D9-84D8-683ACD6EF6AC}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gravitas", "Gravitas", "{49914D7A-C69D-455B-9A39-9769C9F6D743}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vistas", "Vistas", "{33DEE6A5-2A70-49F6-812D-E1F5C9F18B9E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compiler", "Compiler", "{8CF8216F-47CC-4715-9C44-4EA0C83A8FF3}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandbox", "Sandbox", "{446203F6-DC61-469F-B2DE-A922ED49BCCB}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CuneusCompiler", "Tools\Cuneus\Compiler\CuneusCompiler.vcproj", "{5AC8F708-07E2-41BC-9A16-AA602D844839}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GravitasSandbox", "Tools\Gravitas\Sandbox\GravitasSandbox.vcproj", "{801F869F-8460-4B66-8D03-0D8FFD72E7A6}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{CEFB6818-AB28-4ABF-BE52-A7D4421810D3}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cuneus", "Cuneus", "{757A20A7-BF7B-4B0A-A9BA-9A921ECE8A89}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gravitas", "Gravitas", "{5AD0FA5A-C60E-483C-80F2-0E573AE6A9D4}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vistas", "Vistas", "{4569FFF9-E059-4D89-A381-1CA73AC9ED31}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VistasTest", "VistasTest", "{3D78FD18-4048-4338-A3BB-5BBFA7F3CFB1}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GravitasTest", "GravitasTest", "{A4BC4CA6-483A-4835-9C51-841B89C83175}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GravitasTest", "Samples\Gravitas\GravitasTest\GravitasTest.vcproj", "{531EE7D7-537C-4A1B-AC26-042269F90D46}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VistasTest", "Samples\Vistas\VistasTest\VistasTest.vcproj", "{D153C098-AB56-4CA2-88D0-6933AD68DEFE}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 23
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs05.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Core\\Common\\Common.vcproj
+		SccProjectTopLevelParentUniqueName1 = Meson.sln
+		SccProjectName1 = Core/Common
+		SccLocalPath1 = Core\\Common
+		SccProjectUniqueName2 = Core\\Cuneus\\Cuneus.vcproj
+		SccProjectTopLevelParentUniqueName2 = Meson.sln
+		SccProjectName2 = Core/Cuneus
+		SccLocalPath2 = Core\\Cuneus
+		SccProjectUniqueName3 = Core\\Gravitas\\Gravitas.vcproj
+		SccProjectTopLevelParentUniqueName3 = Meson.sln
+		SccProjectName3 = Core/Gravitas
+		SccLocalPath3 = Core\\Gravitas
+		SccProjectUniqueName4 = Core\\Vistas\\Vistas.vcproj
+		SccProjectTopLevelParentUniqueName4 = Meson.sln
+		SccProjectName4 = Core/Vistas
+		SccLocalPath4 = Core\\Vistas
+		SccProjectUniqueName5 = Plugins\\Cuneus\\BytecodeManagers\\CoreByteCodeManagers\\CoreByteCodeManagers.vcproj
+		SccProjectTopLevelParentUniqueName5 = Meson.sln
+		SccProjectName5 = Plugins/Cuneus/BytecodeManagers/CoreByteCodeManagers
+		SccLocalPath5 = Plugins\\Cuneus\\BytecodeManagers\\CoreByteCodeManagers
+		SccProjectUniqueName6 = Plugins\\Cuneus\\GarbageCollectors\\Scavenger\\Scavenger.vcproj
+		SccProjectTopLevelParentUniqueName6 = Meson.sln
+		SccProjectName6 = Plugins/Cuneus/GarbageCollectors/Scavenger
+		SccLocalPath6 = Plugins\\Cuneus\\GarbageCollectors\\Scavenger
+		SccProjectUniqueName7 = Plugins\\Cuneus\\Interpreters\\CoreInterpreters\\CoreInterpreters.vcproj
+		SccProjectTopLevelParentUniqueName7 = Meson.sln
+		SccProjectName7 = Plugins/Cuneus/Interpreters/CoreInterpreters
+		SccLocalPath7 = Plugins\\Cuneus\\Interpreters\\CoreInterpreters
+		SccProjectUniqueName8 = Plugins\\Cuneus\\Schedulers\\WeightedRoundRobin\\WeightedRoundRobin.vcproj
+		SccProjectTopLevelParentUniqueName8 = Meson.sln
+		SccProjectName8 = Plugins/Cuneus/Schedulers/WeightedRoundRobin
+		SccLocalPath8 = Plugins\\Cuneus\\Schedulers\\WeightedRoundRobin
+		SccProjectUniqueName9 = Plugins\\Gravitas\\Constraints\\CoreConstraints\\CoreConstraints.vcproj
+		SccProjectTopLevelParentUniqueName9 = Meson.sln
+		SccProjectName9 = Plugins/Gravitas/Constraints/CoreConstraints
+		SccLocalPath9 = Plugins\\Gravitas\\Constraints\\CoreConstraints
+		SccProjectUniqueName10 = Plugins\\Gravitas\\Forces\\CoreForces\\CoreForces.vcproj
+		SccProjectTopLevelParentUniqueName10 = Meson.sln
+		SccProjectName10 = Plugins/Gravitas/Forces/CoreForces
+		SccLocalPath10 = Plugins\\Gravitas\\Forces\\CoreForces
+		SccProjectUniqueName11 = Plugins\\Gravitas\\Geometry\\CoreGeometry\\CoreGeometry.vcproj
+		SccProjectTopLevelParentUniqueName11 = Meson.sln
+		SccProjectName11 = Plugins/Gravitas/Geometry/CoreGeometry
+		SccLocalPath11 = Plugins\\Gravitas\\Geometry\\CoreGeometry
+		SccProjectUniqueName12 = Plugins\\Gravitas\\Integrators\\CoreIntegrators\\CoreIntegrators.vcproj
+		SccProjectTopLevelParentUniqueName12 = Meson.sln
+		SccProjectName12 = Plugins/Gravitas/Integrators/CoreIntegrators
+		SccLocalPath12 = Plugins\\Gravitas\\Integrators\\CoreIntegrators
+		SccProjectUniqueName13 = Plugins\\Gravitas\\Simulators\\CoreSimulators\\CoreSimulators.vcproj
+		SccProjectTopLevelParentUniqueName13 = Meson.sln
+		SccProjectName13 = Plugins/Gravitas/Simulators/CoreSimulators
+		SccLocalPath13 = Plugins\\Gravitas\\Simulators\\CoreSimulators
+		SccProjectUniqueName14 = Plugins\\Gravitas\\Spaces\\CoreSpaces\\CoreSpaces.vcproj
+		SccProjectTopLevelParentUniqueName14 = Meson.sln
+		SccProjectName14 = Plugins/Gravitas/Spaces/CoreSpaces
+		SccLocalPath14 = Plugins\\Gravitas\\Spaces\\CoreSpaces
+		SccProjectUniqueName15 = Plugins\\Vistas\\Cullers\\CoreCullers\\CoreCullers.vcproj
+		SccProjectTopLevelParentUniqueName15 = Meson.sln
+		SccProjectName15 = Plugins/Vistas/Cullers/CoreCullers
+		SccLocalPath15 = Plugins\\Vistas\\Cullers\\CoreCullers
+		SccProjectUniqueName16 = Plugins\\Vistas\\Geometry\\CoreGeometry\\CoreGeometry.vcproj
+		SccProjectTopLevelParentUniqueName16 = Meson.sln
+		SccProjectName16 = Plugins/Vistas/Geometry/CoreGeometry
+		SccLocalPath16 = Plugins\\Vistas\\Geometry\\CoreGeometry
+		SccProjectUniqueName17 = Plugins\\Vistas\\RenderDevices\\DirectX9\\DirectX9Renderer.vcproj
+		SccProjectTopLevelParentUniqueName17 = Meson.sln
+		SccProjectName17 = Plugins/Vistas/RenderDevices/DirectX9
+		SccLocalPath17 = Plugins\\Vistas\\RenderDevices\\DirectX9
+		SccProjectUniqueName18 = Plugins\\Vistas\\Renderers\\CoreRenderers\\CoreRenderers.vcproj
+		SccProjectTopLevelParentUniqueName18 = Meson.sln
+		SccProjectName18 = Plugins/Vistas/Renderers/CoreRenderers
+		SccLocalPath18 = Plugins\\Vistas\\Renderers\\CoreRenderers
+		SccProjectUniqueName19 = Samples\\Gravitas\\GravitasTest\\GravitasTest.vcproj
+		SccProjectTopLevelParentUniqueName19 = Meson.sln
+		SccProjectName19 = Samples/Gravitas/GravitasTest
+		SccLocalPath19 = Samples\\Gravitas\\GravitasTest
+		SccProjectUniqueName20 = Samples\\Vistas\\VistasTest\\VistasTest.vcproj
+		SccProjectTopLevelParentUniqueName20 = Meson.sln
+		SccProjectName20 = Samples/Vistas/VistasTest
+		SccLocalPath20 = Samples\\Vistas\\VistasTest
+		SccProjectUniqueName21 = Tools\\Cuneus\\Compiler\\CuneusCompiler.vcproj
+		SccProjectTopLevelParentUniqueName21 = Meson.sln
+		SccProjectName21 = Tools/Cuneus/Compiler
+		SccLocalPath21 = Tools\\Cuneus\\Compiler
+		SccProjectUniqueName22 = Tools\\Gravitas\\Sandbox\\GravitasSandbox.vcproj
+		SccProjectTopLevelParentUniqueName22 = Meson.sln
+		SccProjectName22 = Tools/Gravitas/Sandbox
+		SccLocalPath22 = Tools\\Gravitas\\Sandbox
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6240F03C-4204-4E64-9608-6EF97191AF81}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6240F03C-4204-4E64-9608-6EF97191AF81}.Debug|Win32.Build.0 = Debug|Win32
+		{6240F03C-4204-4E64-9608-6EF97191AF81}.Release|Win32.ActiveCfg = Release|Win32
+		{6240F03C-4204-4E64-9608-6EF97191AF81}.Release|Win32.Build.0 = Release|Win32
+		{C98A4B8D-6D41-4B9A-A6A9-4C8F3E376F5B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C98A4B8D-6D41-4B9A-A6A9-4C8F3E376F5B}.Debug|Win32.Build.0 = Debug|Win32
+		{C98A4B8D-6D41-4B9A-A6A9-4C8F3E376F5B}.Release|Win32.ActiveCfg = Release|Win32
+		{C98A4B8D-6D41-4B9A-A6A9-4C8F3E376F5B}.Release|Win32.Build.0 = Release|Win32
+		{E40D5703-5D58-4B29-A8F4-4E1EEA196C49}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E40D5703-5D58-4B29-A8F4-4E1EEA196C49}.Debug|Win32.Build.0 = Debug|Win32
+		{E40D5703-5D58-4B29-A8F4-4E1EEA196C49}.Release|Win32.ActiveCfg = Release|Win32
+		{E40D5703-5D58-4B29-A8F4-4E1EEA196C49}.Release|Win32.Build.0 = Release|Win32
+		{170A50F6-EA33-45A8-BF5B-33E78D14C6FF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{170A50F6-EA33-45A8-BF5B-33E78D14C6FF}.Debug|Win32.Build.0 = Debug|Win32
+		{170A50F6-EA33-45A8-BF5B-33E78D14C6FF}.Release|Win32.ActiveCfg = Release|Win32
+		{170A50F6-EA33-45A8-BF5B-33E78D14C6FF}.Release|Win32.Build.0 = Release|Win32
+		{66BF3EF7-F367-428B-8484-B1C6FDAD22B2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{66BF3EF7-F367-428B-8484-B1C6FDAD22B2}.Debug|Win32.Build.0 = Debug|Win32
+		{66BF3EF7-F367-428B-8484-B1C6FDAD22B2}.Release|Win32.ActiveCfg = Release|Win32
+		{66BF3EF7-F367-428B-8484-B1C6FDAD22B2}.Release|Win32.Build.0 = Release|Win32
+		{8B8CC2F3-A4DA-4279-8937-A7AB32CD9AA5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8B8CC2F3-A4DA-4279-8937-A7AB32CD9AA5}.Debug|Win32.Build.0 = Debug|Win32
+		{8B8CC2F3-A4DA-4279-8937-A7AB32CD9AA5}.Release|Win32.ActiveCfg = Release|Win32
+		{8B8CC2F3-A4DA-4279-8937-A7AB32CD9AA5}.Release|Win32.Build.0 = Release|Win32
+		{011567ED-B0B7-4E50-AACC-617669B1B7FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{011567ED-B0B7-4E50-AACC-617669B1B7FD}.Debug|Win32.Build.0 = Debug|Win32
+		{011567ED-B0B7-4E50-AACC-617669B1B7FD}.Release|Win32.ActiveCfg = Release|Win32
+		{011567ED-B0B7-4E50-AACC-617669B1B7FD}.Release|Win32.Build.0 = Release|Win32
+		{B53378BC-4021-4C57-B8C2-11133E030B58}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B53378BC-4021-4C57-B8C2-11133E030B58}.Debug|Win32.Build.0 = Debug|Win32
+		{B53378BC-4021-4C57-B8C2-11133E030B58}.Release|Win32.ActiveCfg = Release|Win32
+		{B53378BC-4021-4C57-B8C2-11133E030B58}.Release|Win32.Build.0 = Release|Win32
+		{500295BE-2C36-4247-A194-76AF9C0779C6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{500295BE-2C36-4247-A194-76AF9C0779C6}.Debug|Win32.Build.0 = Debug|Win32
+		{500295BE-2C36-4247-A194-76AF9C0779C6}.Release|Win32.ActiveCfg = Release|Win32
+		{500295BE-2C36-4247-A194-76AF9C0779C6}.Release|Win32.Build.0 = Release|Win32
+		{3EF332E0-9DDF-497C-A34D-7048D959F3FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3EF332E0-9DDF-497C-A34D-7048D959F3FD}.Debug|Win32.Build.0 = Debug|Win32
+		{3EF332E0-9DDF-497C-A34D-7048D959F3FD}.Release|Win32.ActiveCfg = Release|Win32
+		{3EF332E0-9DDF-497C-A34D-7048D959F3FD}.Release|Win32.Build.0 = Release|Win32
+		{7DC9DA7F-CC1D-438A-916A-F17D455B02A7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7DC9DA7F-CC1D-438A-916A-F17D455B02A7}.Debug|Win32.Build.0 = Debug|Win32
+		{7DC9DA7F-CC1D-438A-916A-F17D455B02A7}.Release|Win32.ActiveCfg = Release|Win32
+		{7DC9DA7F-CC1D-438A-916A-F17D455B02A7}.Release|Win32.Build.0 = Release|Win32
+		{912CAB23-2367-4F00-AC95-6903016CD31A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{912CAB23-2367-4F00-AC95-6903016CD31A}.Debug|Win32.Build.0 = Debug|Win32
+		{912CAB23-2367-4F00-AC95-6903016CD31A}.Release|Win32.ActiveCfg = Release|Win32
+		{912CAB23-2367-4F00-AC95-6903016CD31A}.Release|Win32.Build.0 = Release|Win32
+		{85DBA045-2FBA-4BFD-A21A-EFBBAF9ECC59}.Debug|Win32.ActiveCfg = Debug|Win32
+		{85DBA045-2FBA-4BFD-A21A-EFBBAF9ECC59}.Debug|Win32.Build.0 = Debug|Win32
+		{85DBA045-2FBA-4BFD-A21A-EFBBAF9ECC59}.Release|Win32.ActiveCfg = Release|Win32
+		{85DBA045-2FBA-4BFD-A21A-EFBBAF9ECC59}.Release|Win32.Build.0 = Release|Win32
+		{A07DED9E-6DFA-430B-832F-8F3B53690166}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A07DED9E-6DFA-430B-832F-8F3B53690166}.Debug|Win32.Build.0 = Debug|Win32
+		{A07DED9E-6DFA-430B-832F-8F3B53690166}.Release|Win32.ActiveCfg = Release|Win32
+		{A07DED9E-6DFA-430B-832F-8F3B53690166}.Release|Win32.Build.0 = Release|Win32
+		{29E87ADB-F49E-4630-8A3B-4F17590E2A72}.Debug|Win32.ActiveCfg = Debug|Win32
+		{29E87ADB-F49E-4630-8A3B-4F17590E2A72}.Debug|Win32.Build.0 = Debug|Win32
+		{29E87ADB-F49E-4630-8A3B-4F17590E2A72}.Release|Win32.ActiveCfg = Release|Win32
+		{29E87ADB-F49E-4630-8A3B-4F17590E2A72}.Release|Win32.Build.0 = Release|Win32
+		{9DEB48A4-1D1E-4E0F-9351-B18613E6888F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9DEB48A4-1D1E-4E0F-9351-B18613E6888F}.Debug|Win32.Build.0 = Debug|Win32
+		{9DEB48A4-1D1E-4E0F-9351-B18613E6888F}.Release|Win32.ActiveCfg = Release|Win32
+		{9DEB48A4-1D1E-4E0F-9351-B18613E6888F}.Release|Win32.Build.0 = Release|Win32
+		{FF1566DF-C933-479D-8FFE-9C8CF08D0619}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FF1566DF-C933-479D-8FFE-9C8CF08D0619}.Debug|Win32.Build.0 = Debug|Win32
+		{FF1566DF-C933-479D-8FFE-9C8CF08D0619}.Release|Win32.ActiveCfg = Release|Win32
+		{FF1566DF-C933-479D-8FFE-9C8CF08D0619}.Release|Win32.Build.0 = Release|Win32
+		{38FF64B2-D6DB-4B12-930F-81790FCE1196}.Debug|Win32.ActiveCfg = Debug|Win32
+		{38FF64B2-D6DB-4B12-930F-81790FCE1196}.Debug|Win32.Build.0 = Debug|Win32
+		{38FF64B2-D6DB-4B12-930F-81790FCE1196}.Release|Win32.ActiveCfg = Release|Win32
+		{38FF64B2-D6DB-4B12-930F-81790FCE1196}.Release|Win32.Build.0 = Release|Win32
+		{5AC8F708-07E2-41BC-9A16-AA602D844839}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5AC8F708-07E2-41BC-9A16-AA602D844839}.Debug|Win32.Build.0 = Debug|Win32
+		{5AC8F708-07E2-41BC-9A16-AA602D844839}.Release|Win32.ActiveCfg = Release|Win32
+		{5AC8F708-07E2-41BC-9A16-AA602D844839}.Release|Win32.Build.0 = Release|Win32
+		{801F869F-8460-4B66-8D03-0D8FFD72E7A6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{801F869F-8460-4B66-8D03-0D8FFD72E7A6}.Debug|Win32.Build.0 = Debug|Win32
+		{801F869F-8460-4B66-8D03-0D8FFD72E7A6}.Release|Win32.ActiveCfg = Release|Win32
+		{801F869F-8460-4B66-8D03-0D8FFD72E7A6}.Release|Win32.Build.0 = Release|Win32
+		{531EE7D7-537C-4A1B-AC26-042269F90D46}.Debug|Win32.ActiveCfg = Debug|Win32
+		{531EE7D7-537C-4A1B-AC26-042269F90D46}.Debug|Win32.Build.0 = Debug|Win32
+		{531EE7D7-537C-4A1B-AC26-042269F90D46}.Release|Win32.ActiveCfg = Release|Win32
+		{531EE7D7-537C-4A1B-AC26-042269F90D46}.Release|Win32.Build.0 = Release|Win32
+		{D153C098-AB56-4CA2-88D0-6933AD68DEFE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D153C098-AB56-4CA2-88D0-6933AD68DEFE}.Debug|Win32.Build.0 = Debug|Win32
+		{D153C098-AB56-4CA2-88D0-6933AD68DEFE}.Release|Win32.ActiveCfg = Release|Win32
+		{D153C098-AB56-4CA2-88D0-6933AD68DEFE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{79FD42F8-9A45-4450-A97F-B5AB3B3C3AF2} = {3D01EA41-9A05-4838-9FC4-8EE55143EA41}
+		{57002163-8D7C-4117-A3A1-7E8D2F717397} = {3D01EA41-9A05-4838-9FC4-8EE55143EA41}
+		{75159155-BB9F-49AF-976B-EC84E1A8B571} = {3D01EA41-9A05-4838-9FC4-8EE55143EA41}
+		{D35E290F-781E-488F-8AFD-C94C4E27B4BA} = {3D01EA41-9A05-4838-9FC4-8EE55143EA41}
+		{A2C3A678-3808-45FA-B0F6-AAD6DC4F885C} = {11A00B6E-FECD-4FE7-966B-501D0E549A0A}
+		{08E12E65-41A3-4734-A53B-6ED5C3A9C5A5} = {11A00B6E-FECD-4FE7-966B-501D0E549A0A}
+		{AAAD9BF1-9E6C-4344-B3A1-2A5589AFDDF4} = {11A00B6E-FECD-4FE7-966B-501D0E549A0A}
+		{48E54F83-ED2F-4F31-8FCB-479A325EC87E} = {11A00B6E-FECD-4FE7-966B-501D0E549A0A}
+		{6240F03C-4204-4E64-9608-6EF97191AF81} = {A2C3A678-3808-45FA-B0F6-AAD6DC4F885C}
+		{C98A4B8D-6D41-4B9A-A6A9-4C8F3E376F5B} = {08E12E65-41A3-4734-A53B-6ED5C3A9C5A5}
+		{E40D5703-5D58-4B29-A8F4-4E1EEA196C49} = {AAAD9BF1-9E6C-4344-B3A1-2A5589AFDDF4}
+		{170A50F6-EA33-45A8-BF5B-33E78D14C6FF} = {48E54F83-ED2F-4F31-8FCB-479A325EC87E}
+		{9F36AB50-6036-4364-8F3F-CC55BCFE737D} = {42E1CF10-C1AB-4227-9AEA-B69317224F83}
+		{32D64678-5CB3-44B1-86BE-23D9AB1BE7B3} = {42E1CF10-C1AB-4227-9AEA-B69317224F83}
+		{D6136225-31C0-4FFE-95F2-1F76FA968FE8} = {42E1CF10-C1AB-4227-9AEA-B69317224F83}
+		{954D587B-6A61-48ED-A12A-2C26241B6909} = {DD195744-C7D0-4E08-A4A0-003C3F947798}
+		{E0590BDE-9867-40D9-84D8-683ACD6EF6AC} = {DD195744-C7D0-4E08-A4A0-003C3F947798}
+		{49914D7A-C69D-455B-9A39-9769C9F6D743} = {DD195744-C7D0-4E08-A4A0-003C3F947798}
+		{33DEE6A5-2A70-49F6-812D-E1F5C9F18B9E} = {DD195744-C7D0-4E08-A4A0-003C3F947798}
+		{CEFB6818-AB28-4ABF-BE52-A7D4421810D3} = {43365E74-08FB-4503-B49A-F05E8C8262F6}
+		{757A20A7-BF7B-4B0A-A9BA-9A921ECE8A89} = {43365E74-08FB-4503-B49A-F05E8C8262F6}
+		{5AD0FA5A-C60E-483C-80F2-0E573AE6A9D4} = {43365E74-08FB-4503-B49A-F05E8C8262F6}
+		{4569FFF9-E059-4D89-A381-1CA73AC9ED31} = {43365E74-08FB-4503-B49A-F05E8C8262F6}
+		{085F83ED-CB59-4484-BB25-72023CE19B84} = {9F36AB50-6036-4364-8F3F-CC55BCFE737D}
+		{EC649B03-EE9F-451E-B398-AEC9597F79C9} = {9F36AB50-6036-4364-8F3F-CC55BCFE737D}
+		{46431B8F-E8D3-4640-931A-796C962740CA} = {9F36AB50-6036-4364-8F3F-CC55BCFE737D}
+		{6DECD88C-4715-489A-8951-88B6029A2130} = {9F36AB50-6036-4364-8F3F-CC55BCFE737D}
+		{B1D1B585-6AF0-4457-9C8D-F3922743FAC8} = {085F83ED-CB59-4484-BB25-72023CE19B84}
+		{66BF3EF7-F367-428B-8484-B1C6FDAD22B2} = {B1D1B585-6AF0-4457-9C8D-F3922743FAC8}
+		{CECA643D-1C95-4CF2-907B-206C92E76194} = {EC649B03-EE9F-451E-B398-AEC9597F79C9}
+		{8B8CC2F3-A4DA-4279-8937-A7AB32CD9AA5} = {CECA643D-1C95-4CF2-907B-206C92E76194}
+		{0DDB4B5F-682E-40F3-B9C8-77A3DAA8DBD0} = {46431B8F-E8D3-4640-931A-796C962740CA}
+		{A07DED9E-6DFA-430B-832F-8F3B53690166} = {0DDB4B5F-682E-40F3-B9C8-77A3DAA8DBD0}
+		{D4C61C31-4B82-4583-8A33-BCC8810FEA27} = {6DECD88C-4715-489A-8951-88B6029A2130}
+		{011567ED-B0B7-4E50-AACC-617669B1B7FD} = {D4C61C31-4B82-4583-8A33-BCC8810FEA27}
+		{07EF65A8-89CE-410F-8033-91531073BE4E} = {32D64678-5CB3-44B1-86BE-23D9AB1BE7B3}
+		{0B616601-0C75-42A3-A2F1-C09A3CD67B8F} = {32D64678-5CB3-44B1-86BE-23D9AB1BE7B3}
+		{DAB28F83-E83E-4EA9-AA2A-27261E578009} = {32D64678-5CB3-44B1-86BE-23D9AB1BE7B3}
+		{D44FCCCC-7CDA-43D2-B871-2F8D037CA1E2} = {32D64678-5CB3-44B1-86BE-23D9AB1BE7B3}
+		{D1C9CE64-8710-4953-87C2-E9BFAC449024} = {32D64678-5CB3-44B1-86BE-23D9AB1BE7B3}
+		{88B3DF17-48AF-4329-A560-F8CFF58E26E6} = {32D64678-5CB3-44B1-86BE-23D9AB1BE7B3}
+		{7C2B5708-9D36-4677-9F89-BE74F7B195D2} = {07EF65A8-89CE-410F-8033-91531073BE4E}
+		{B53378BC-4021-4C57-B8C2-11133E030B58} = {7C2B5708-9D36-4677-9F89-BE74F7B195D2}
+		{1586186E-80D1-4909-8ACD-9231DE959F67} = {0B616601-0C75-42A3-A2F1-C09A3CD67B8F}
+		{500295BE-2C36-4247-A194-76AF9C0779C6} = {1586186E-80D1-4909-8ACD-9231DE959F67}
+		{2DACFCC2-785A-4409-9C99-69EFA65E63CD} = {DAB28F83-E83E-4EA9-AA2A-27261E578009}
+		{3EF332E0-9DDF-497C-A34D-7048D959F3FD} = {2DACFCC2-785A-4409-9C99-69EFA65E63CD}
+		{C316DB58-D35F-4F1D-BAB7-AE00B332BBC1} = {D44FCCCC-7CDA-43D2-B871-2F8D037CA1E2}
+		{7DC9DA7F-CC1D-438A-916A-F17D455B02A7} = {C316DB58-D35F-4F1D-BAB7-AE00B332BBC1}
+		{B7507CC8-BF9C-46DC-9D05-BA52696B305D} = {D1C9CE64-8710-4953-87C2-E9BFAC449024}
+		{B6688C3D-D762-4EE5-9076-60E810DBDB22} = {88B3DF17-48AF-4329-A560-F8CFF58E26E6}
+		{912CAB23-2367-4F00-AC95-6903016CD31A} = {B7507CC8-BF9C-46DC-9D05-BA52696B305D}
+		{85DBA045-2FBA-4BFD-A21A-EFBBAF9ECC59} = {B6688C3D-D762-4EE5-9076-60E810DBDB22}
+		{C84B1C92-DD10-4A5F-8ADB-474AD2BA8805} = {D6136225-31C0-4FFE-95F2-1F76FA968FE8}
+		{D37E8B97-F353-433E-A6E6-403629C105ED} = {D6136225-31C0-4FFE-95F2-1F76FA968FE8}
+		{4F133A36-E2D0-4EA7-94BB-DD996244F3F1} = {D6136225-31C0-4FFE-95F2-1F76FA968FE8}
+		{ACF7C7AA-CE99-41C4-BC1F-B3B337C7C518} = {D6136225-31C0-4FFE-95F2-1F76FA968FE8}
+		{884087FB-2024-425A-ABA0-6879D8FCDF6E} = {C84B1C92-DD10-4A5F-8ADB-474AD2BA8805}
+		{29E87ADB-F49E-4630-8A3B-4F17590E2A72} = {884087FB-2024-425A-ABA0-6879D8FCDF6E}
+		{05D85855-8323-48F6-BE09-1965FD752703} = {D37E8B97-F353-433E-A6E6-403629C105ED}
+		{FF1566DF-C933-479D-8FFE-9C8CF08D0619} = {05D85855-8323-48F6-BE09-1965FD752703}
+		{EC2FB450-8002-4EB3-92BF-682BFC3A227C} = {4F133A36-E2D0-4EA7-94BB-DD996244F3F1}
+		{9DEB48A4-1D1E-4E0F-9351-B18613E6888F} = {EC2FB450-8002-4EB3-92BF-682BFC3A227C}
+		{4D65410A-6964-4F08-915F-AF6B1CFD3E44} = {ACF7C7AA-CE99-41C4-BC1F-B3B337C7C518}
+		{38FF64B2-D6DB-4B12-930F-81790FCE1196} = {4D65410A-6964-4F08-915F-AF6B1CFD3E44}
+		{6021F17C-5D98-4C15-A5DA-805CF572EA97} = {79FD42F8-9A45-4450-A97F-B5AB3B3C3AF2}
+		{681122EA-A6FE-4E82-A15F-C6965C283447} = {D35E290F-781E-488F-8AFD-C94C4E27B4BA}
+		{8CF8216F-47CC-4715-9C44-4EA0C83A8FF3} = {954D587B-6A61-48ED-A12A-2C26241B6909}
+		{446203F6-DC61-469F-B2DE-A922ED49BCCB} = {49914D7A-C69D-455B-9A39-9769C9F6D743}
+		{5AC8F708-07E2-41BC-9A16-AA602D844839} = {8CF8216F-47CC-4715-9C44-4EA0C83A8FF3}
+		{801F869F-8460-4B66-8D03-0D8FFD72E7A6} = {446203F6-DC61-469F-B2DE-A922ED49BCCB}
+		{A4BC4CA6-483A-4835-9C51-841B89C83175} = {5AD0FA5A-C60E-483C-80F2-0E573AE6A9D4}
+		{3D78FD18-4048-4338-A3BB-5BBFA7F3CFB1} = {4569FFF9-E059-4D89-A381-1CA73AC9ED31}
+		{D153C098-AB56-4CA2-88D0-6933AD68DEFE} = {3D78FD18-4048-4338-A3BB-5BBFA7F3CFB1}
+		{531EE7D7-537C-4A1B-AC26-042269F90D46} = {A4BC4CA6-483A-4835-9C51-841B89C83175}
+	EndGlobalSection
+EndGlobal

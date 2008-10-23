@@ -1,0 +1,17 @@
+#pragma once
+
+#include "CnsTypeBool.h"
+#include "CnsTypeByte.h"
+#include "CnsTypeChar.h"
+#include "CnsTypeDouble.h"
+#include "CnsTypeDWord.h"
+#include "CnsTypeFloat.h"
+#include "CnsTypeInt.h"
+#include "CnsTypeLong.h"
+#include "CnsTypeQWord.h"
+#include "CnsTypeShort.h"
+#include "CnsTypeWord.h"
+#include "CnsTypeObject.h"
+#include "CnsTypeRef.h"
+#include "CnsTypeArray.h"
+#include "CnsTypeString.h"
