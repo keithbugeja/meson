@@ -1,0 +1,9 @@
+byte
+word
+dword
+qword
+uchar
+ushort
+uint
+ulong
+ulonglong
