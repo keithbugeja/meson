@@ -5,9 +5,6 @@
 //----------------------------------------------------------------------------------------------
 //	Keith Bugeja	01/07/2007	1.0.0		First version
 //----------------------------------------------------------------------------------------------
-//  TODO: Implement support for trapping compilation errors and possibly correcting them.
-//----------------------------------------------------------------------------------------------
-
 #include "VstVistasEngine.h"
 #include "VstRenderConstant.h"
 #include "DX9RenderDevice.h"
@@ -19,23 +16,25 @@ using namespace Meson::Common::Collections;
 Meson_Vistas_BEGIN
 //----------------------------------------------------------------------------------------------
 DX9VertexProgram::DX9VertexProgram(LPDIRECT3DDEVICE9 p_pD3DDevice, IShaderProgramFactory* p_pCreator, const Meson::Common::Text::String& p_strProgramName)
-	: m_pD3DDevice(p_pD3DDevice),
-	  m_pD3DVertexShader(NULL),
-	  m_pD3DConstantTable(NULL)
+	: ShaderProgramAdapter(p_pCreator, p_strProgramName)
+	, m_pD3DDevice(p_pD3DDevice)
+	, m_pD3DVertexShader(NULL)
+	, m_pD3DConstantTable(NULL)
 {
-	m_strName = p_strProgramName;
-	m_pCreator = p_pCreator;
+	//m_strName = p_strProgramName;
+	//m_pCreator = p_pCreator;
 	m_bIsCompiled = false;
 	m_bIsBound = false;
 }
 //----------------------------------------------------------------------------------------------
 DX9VertexProgram::DX9VertexProgram(LPDIRECT3DDEVICE9 p_pD3DDevice, IShaderProgramFactory* p_pCreator, const Meson::Common::Text::String& p_strFilename, const Meson::Common::Text::String& p_strProgramName)
-	: m_pD3DDevice(p_pD3DDevice),
-	  m_pD3DVertexShader(NULL),
-	  m_pD3DConstantTable(NULL)
+	: ShaderProgramAdapter(p_pCreator, p_strProgramName)
+	, m_pD3DDevice(p_pD3DDevice)
+	, m_pD3DVertexShader(NULL)
+	, m_pD3DConstantTable(NULL)
 {
-	m_strName = p_strProgramName;
-	m_pCreator = p_pCreator;
+	//m_strName = p_strProgramName;
+	//m_pCreator = p_pCreator;
 	m_bIsCompiled = false;
 	m_bIsBound = false;
 
@@ -177,30 +176,57 @@ void DX9VertexProgram::Bind(void)
 	m_bIsBound = true;
 }
 //----------------------------------------------------------------------------------------------
-// TODO: Tidy this up, adding error handling and recovery from compilation errors.
-void DX9VertexProgram::Compile(void) 
+bool DX9VertexProgram::Compile(void)
 {
+	String strErrors;
+	return Compile(strErrors);
+}
+//----------------------------------------------------------------------------------------------
+bool DX9VertexProgram::Compile(Meson::Common::Text::String& p_strErrors) 
+{
+	// Do not compile again, if already compiled.
 	if (!m_bIsCompiled)
 	{
 		LPD3DXBUFFER pD3DShaderBuffer,
 					 pD3DErrorMessageBuffer;
 
-		m_bIsCompiled = (D3D_OK == D3DXCompileShader(	m_strSourceCode, 
-														(UINT)m_strSourceCode.Size(), 
-														NULL, 
-														NULL, 
-														m_strEntryPoint, 
-														m_strProfile, 
-														0,
-														&pD3DShaderBuffer, 
-														&pD3DErrorMessageBuffer, 
-														&m_pD3DConstantTable));
+		// Unbind if the shader is currently bound to a 
+		// render device.
+		if (IsBound()) Unbind();
 
-		m_pD3DDevice->CreateVertexShader((DWORD*)pD3DShaderBuffer->GetBufferPointer(), &m_pD3DVertexShader);
-		
+		// Release vertex shader and constant table. 
+		// This step is necessary in case the source code
+		// bound to the given shader is changed.
+		SAFE_RELEASE(m_pD3DConstantTable);
+		SAFE_RELEASE(m_pD3DVertexShader);
+
+		// Compile source, with backwards compatibility
+		// enabled. This flag is required for compilation
+		// of old sources on the Direct3D10 compiler.
+		if ((m_bIsCompiled = 
+			(D3D_OK == D3DXCompileShader(m_strSourceCode, (UINT)m_strSourceCode.Size(), 
+										NULL, NULL, m_strEntryPoint, m_strProfile, 
+										D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY,
+										&pD3DShaderBuffer, 
+										&pD3DErrorMessageBuffer, 
+										&m_pD3DConstantTable))))
+		{
+			// Create vertex shader
+			m_pD3DDevice->CreateVertexShader((DWORD*)pD3DShaderBuffer->GetBufferPointer(), &m_pD3DVertexShader);
+		}
+		else
+		{
+			// Compilation failed : return error message
+			p_strErrors.Append((char*)pD3DErrorMessageBuffer->GetBufferPointer(), 
+				pD3DErrorMessageBuffer->GetBufferSize());
+		}
+
+		// Release used buffers
 		SAFE_RELEASE(pD3DShaderBuffer);
 		SAFE_RELEASE(pD3DErrorMessageBuffer);
 	}
+
+	return m_bIsCompiled;
 }
 //----------------------------------------------------------------------------------------------
 

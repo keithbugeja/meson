@@ -10,6 +10,7 @@
 #include "VstHardwareResourceManager.h"
 #include "DX9TextureBuffer.h"
 
+using namespace Meson::Common;
 using namespace Meson::Common::Text;
 
 Meson_Vistas_BEGIN
@@ -54,19 +55,19 @@ DX9TextureBuffer::DX9TextureBuffer(LPDIRECT3DDEVICE9 p_pD3DDevice9, TextureBuffe
 	, m_pD3DTexture9(NULL)
 	, m_pbyData(NULL)
 {
-	D3DPOOL d3dPool;
 	DWORD dwUsage = 0;
+	D3DPOOL d3dPool = D3DPOOL_DEFAULT;
 	D3DFORMAT d3dFormat = m_d3dTextureFormat[p_eTextureFormat];
 
+	// Texture is unlocked
 	m_bIsLocked = false;
 
 	// Texture usage
 	if (p_dwUsage & TextureBuffer::TU_AUTOGEN_MIPMAP)
 		dwUsage |= D3DUSAGE_AUTOGENMIPMAP;
 
-	/** If texutre is used as a render target, the memory pool 
-		must be set to D3DPOOL_DEFAULT.
-	 */
+	// If texutre is used as a render target, the memory pool 
+	// must be set to D3DPOOL_DEFAULT.
 	if (p_dwUsage & TextureBuffer::TU_RENDERTARGET)
 	{
 		dwUsage |= D3DUSAGE_RENDERTARGET;
@@ -85,6 +86,8 @@ DX9TextureBuffer::DX9TextureBuffer(LPDIRECT3DDEVICE9 p_pD3DDevice9, TextureBuffe
 	// Determine texture type
 	switch (p_eTextureType)
 	{
+		// 1D and 2D textures
+		case TT_1D:
 		case TT_2D:
 		{
 			if (D3D_OK != p_pD3DDevice9->CreateTexture(p_uiWidth, p_uiHeight, p_uiMipmapLevels, dwUsage, d3dFormat, d3dPool, &m_pD3DTexture2D, NULL))
@@ -94,6 +97,7 @@ DX9TextureBuffer::DX9TextureBuffer(LPDIRECT3DDEVICE9 p_pD3DDevice9, TextureBuffe
 			break;
 		}
 
+		// 3D (volume) textures
 		case TT_3D:
 		{
 			if (D3D_OK != p_pD3DDevice9->CreateVolumeTexture(p_uiWidth, p_uiHeight, p_uiWidth, p_uiMipmapLevels, dwUsage, d3dFormat, d3dPool, &m_pD3DTextureVolume, NULL))
@@ -103,6 +107,7 @@ DX9TextureBuffer::DX9TextureBuffer(LPDIRECT3DDEVICE9 p_pD3DDevice9, TextureBuffe
 			break;
 		}
 
+		// Cubemaps (6x2D) textures
 		case TT_CUBEMAP:
 		{
 			if (D3D_OK != p_pD3DDevice9->CreateCubeTexture(p_uiWidth, p_uiMipmapLevels, dwUsage, d3dFormat, d3dPool, &m_pD3DTextureCube, NULL))
@@ -130,33 +135,73 @@ DX9TextureBuffer::DX9TextureBuffer(LPDIRECT3DDEVICE9 p_pD3DDevice9, const String
 		case TT_1D:
 		case TT_2D:
 		{
+			// Load texture from file
 			if (D3D_OK != D3DXCreateTextureFromFile(m_pD3DDevice9, p_strFilename, &m_pD3DTexture2D ))
 				throw new Meson::Common::MesonException("Failed creating texture buffer from file : make sure file exists.", __FILE__, __LINE__ );
 		
+			// Set generic texture pointer
 			m_pD3DTexture9 = m_pD3DTexture2D;
+			
+			// Read width, height and depth from loaded texture
+			m_uiWidth = m_pD3DTexture2D->Width;
+			m_uiHeight = m_pD3DTexture2D->Height;
+			m_uiDepth = 1;
+			
+			// Get mipmap levels and texture format
+			m_uiMipMapLevels = m_pD3DTexture2D->Levels;
+			m_eTextureFormat = ConvertTextureFormat(m_pD3DTexture2D->Format);
+
 			break;
 		}
 		
 		case TT_3D:
 		{
+			// Load texture from file
 			if (D3D_OK != D3DXCreateVolumeTextureFromFile(m_pD3DDevice9, p_strFilename, &m_pD3DTextureVolume))
 				throw new Meson::Common::MesonException("Failed creating texture buffer from file : make sure file exists.", __FILE__, __LINE__ );
 		
+			// Set generic texture pointer
 			m_pD3DTexture9 = m_pD3DTextureVolume;
+
+			// Read width, height and depth from loaded texture
+			m_uiWidth = m_pD3DTextureVolume->Width;
+			m_uiHeight = m_pD3DTextureVolume->Height;
+			m_uiDepth = m_pD3DTextureVolume->Depth;
+
+			// Get mipmap levels and texture format
+			m_uiMipMapLevels = m_pD3DTextureVolume->Levels;
+			m_eTextureFormat = ConvertTextureFormat(m_pD3DTextureVolume->Format);
+
 			break;
 		}
 
 		case TT_CUBEMAP:
 		{
+			// Load texture from file
 			if (D3D_OK != D3DXCreateCubeTextureFromFile(m_pD3DDevice9, p_strFilename, &m_pD3DTextureCube))
 				throw new Meson::Common::MesonException("Failed creating texture buffer from file : make sure file exists.", __FILE__, __LINE__ );
 		
+			// Set generic texture pointer
 			m_pD3DTexture9 = m_pD3DTextureCube;
+
+			// Read width, height and depth from loaded texture
+			m_uiWidth = m_pD3DTextureCube->Width;
+			m_uiHeight = m_pD3DTextureCube->Height;
+			m_uiDepth = 1;
+			
+			// Get mipmap levels and texture format
+			m_uiMipMapLevels = m_pD3DTextureCube->Levels;
+			m_eTextureFormat = ConvertTextureFormat(m_pD3DTextureCube->Format);
+			
 			break;
 		}
 	}
 
+	// Update resource handle
 	m_resourceHandle = (void*)m_pD3DTexture9;
+
+	// Debug information
+	VistasEngine::GetInstance()->Logger().Out<<"Texture loaded : ['"<<m_strId<<"', "<<m_eTextureFormat<<", "<<m_uiWidth<<"x"<<m_uiHeight<<"x"<<m_uiDepth<<" : "<<m_uiMipMapLevels<<"]\n";
 }
 //----------------------------------------------------------------------------------------------
 DX9TextureBuffer::~DX9TextureBuffer(void)
@@ -268,6 +313,18 @@ LPDIRECT3DCUBETEXTURE9 DX9TextureBuffer::GetTextureCube(void) const
 LPDIRECT3DVOLUMETEXTURE9 DX9TextureBuffer::GetTextureVolume(void) const
 {
 	return m_pD3DTextureVolume;
+}
+//----------------------------------------------------------------------------------------------
+TextureBuffer::TextureFormat DX9TextureBuffer::ConvertTextureFormat(D3DFORMAT p_d3dFormat)
+{
+	// Note that this could be replaced with a map for reverse lookup, although
+	// hashing could prove to be more expensive than iterating and comparing
+	for (uint uiIndex = 0; uiIndex < TF_COUNT; uiIndex++)
+		if (m_d3dTextureFormat[uiIndex] == p_d3dFormat)
+			return (TextureBuffer::TextureFormat)uiIndex;
+
+	// Throw exception if the format is unknown
+	throw new Meson::Common::MesonException("Unknown texture format : unable to perform conversion", __FILE__, __LINE__);
 }
 //----------------------------------------------------------------------------------------------
 

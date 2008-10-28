@@ -10,6 +10,7 @@
 
 #include "VstTypes.h"
 #include "VstRenderTypes.h"
+#include "VstVistasObject.h"
 #include "VstShaderProgramVariable.h"
 #include "VstShaderProgramConstant.h"
 
@@ -18,7 +19,7 @@ Meson_Vistas_BEGIN
 
 	/** Base class for all shader program types.
 	 */
-	class IShaderProgram
+	class IShaderProgram : public VistasObject
 	{
 	public:
 		/** This enumeration lists the shader program types which
@@ -31,15 +32,11 @@ Meson_Vistas_BEGIN
 			SPT_COUNT
 		};
 
+	protected:
+		IShaderProgram(void) : VistasObject() { }
+		IShaderProgram(const Meson::Common::Text::String& p_strId) : VistasObject(p_strId) { }
+
 	public:
-		//----------------------------------------------------------------------------------------------
-		/**	Returns the name of the shader program.
-
-			\return Name of shader program.
-		 */
-		//----------------------------------------------------------------------------------------------
-		virtual const Meson::Common::Text::String& GetName(void) const = 0;
-
 		//----------------------------------------------------------------------------------------------
 		/**	Returns the type of shader program of the underlying implementation. Must be implemented
 			by derived classes.
@@ -94,7 +91,8 @@ Meson_Vistas_BEGIN
 			be implemented.
 		 */
 		//----------------------------------------------------------------------------------------------
-		virtual void Compile(void) = 0;
+		virtual bool Compile(void) = 0;
+		virtual bool Compile(Meson::Common::Text::String& p_strErrors) = 0;
 
 		//----------------------------------------------------------------------------------------------
 		/** Returns whether the given shader program is compiled into a usable resource. 

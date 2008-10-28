@@ -81,7 +81,8 @@ Meson_Vistas_BEGIN
 		/** Compiles the vertex shader HLSL program.
 		 */
 		//----------------------------------------------------------------------------------------------
-		void Compile(void);
+		bool Compile(void);
+		bool Compile(Meson::Common::Text::String& p_strErrors);
 
 	protected:
 		LPDIRECT3DDEVICE9 m_pD3DDevice;

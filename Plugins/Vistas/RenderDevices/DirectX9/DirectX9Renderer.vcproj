@@ -72,6 +72,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="d3dx9d.lib d3d9.lib"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft DirectX SDK\Lib\x86&quot;"
+				GenerateDebugInformation="true"
 				LinkTimeCodeGeneration="1"
 			/>
 			<Tool

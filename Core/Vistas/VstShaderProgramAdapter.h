@@ -21,6 +21,10 @@ Meson_Vistas_BEGIN
 	 */
 	class ShaderProgramAdapter : public IShaderProgram
 	{
+	protected:
+		ShaderProgramAdapter(IShaderProgramFactory* p_pCreator, Meson::Common::Text::String p_strId);
+		ShaderProgramAdapter(IShaderProgramFactory* p_pCreator);
+
 	public:
 		//----------------------------------------------------------------------------------------------
 		/** Virtual destructor for derived class cascaded destruction.
@@ -37,14 +41,6 @@ Meson_Vistas_BEGIN
 		 */
 		//----------------------------------------------------------------------------------------------
 		IShaderProgramFactory* GetCreator(void);
-
-		//----------------------------------------------------------------------------------------------
-		/**	Returns the name of the shader program.
-
-			\return Name of shader program.
-		 */
-		//----------------------------------------------------------------------------------------------
-		const Meson::Common::Text::String& GetName(void) const;
 
 		//----------------------------------------------------------------------------------------------
 		/**	Returns the type of shader program of the underlying implementation. Must be implemented
@@ -88,7 +84,8 @@ Meson_Vistas_BEGIN
 			be implemented.
 		 */
 		//----------------------------------------------------------------------------------------------
-		virtual void Compile(void) = 0;
+		virtual bool Compile(void) = 0;
+		virtual bool Compile(Meson::Common::Text::String& p_strErrors) = 0;
 
 		//----------------------------------------------------------------------------------------------
 		/** Returns whether the given shader program is bound to its respective unit. 
@@ -187,7 +184,7 @@ Meson_Vistas_BEGIN
 		Meson::Common::Collections::THashMap<Meson::Common::Text::String, ShaderProgramVariable*> m_shaderVariableMap;
 		Meson::Common::Collections::TArrayList<RenderConstantType::RenderConstantType> m_renderConstantList;
 
-		Meson::Common::Text::String m_strName,
+		Meson::Common::Text::String m_strId,
 									m_strSourceCode,
 									m_strEntryPoint,
 									m_strProfile;
