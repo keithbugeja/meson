@@ -4,13 +4,24 @@
 
 Meson_Vistas_BEGIN
 //----------------------------------------------------------------------------------------------
-ShaderProgramAdapter::~ShaderProgramAdapter(void)
+ShaderProgramAdapter::ShaderProgramAdapter(IShaderProgramFactory* p_pCreator, Meson::Common::Text::String p_strId)
+	: IShaderProgram(p_strId)
+	, m_pCreator(p_pCreator)
+	, m_bIsBound(false)
+	, m_bIsCompiled(false)
 {
 }
 //----------------------------------------------------------------------------------------------
-const Meson::Common::Text::String& ShaderProgramAdapter::GetName(void) const 
+ShaderProgramAdapter::ShaderProgramAdapter(IShaderProgramFactory* p_pCreator)
+	: IShaderProgram()
+	, m_pCreator(p_pCreator)
+	, m_bIsBound(false)
+	, m_bIsCompiled(false)
 {
-	return m_strName;
+}
+//----------------------------------------------------------------------------------------------
+ShaderProgramAdapter::~ShaderProgramAdapter(void)
+{
 }
 //----------------------------------------------------------------------------------------------
 IShaderProgramFactory* ShaderProgramAdapter::GetCreator(void) 

@@ -50,7 +50,7 @@ Meson_Vistas_BEGIN
 		/** Removes shader program from catalogue.
 		 */
 		//----------------------------------------------------------------------------------------------
-		void RemoveShaderProgram(const Meson::Common::Text::String& p_strName);
+		void RemoveShaderProgram(const Meson::Common::Text::String& p_strId);
 		
 		//----------------------------------------------------------------------------------------------
 		/** Clears the catalogue of all shader programs.
@@ -62,19 +62,19 @@ Meson_Vistas_BEGIN
 		/** Returns the named shader program.
 		 */
 		//----------------------------------------------------------------------------------------------
-		IShaderProgram* GetShaderProgram(const Meson::Common::Text::String& p_strName);
+		IShaderProgram* GetShaderProgram(const Meson::Common::Text::String& p_strId);
 
 		//----------------------------------------------------------------------------------------------
 		/** Returns whether the specified shader program is contained within the catalogue.
 		 */
 		//----------------------------------------------------------------------------------------------
-		bool ContainsShaderProgram(const Meson::Common::Text::String& p_strName);
+		bool ContainsShaderProgram(const Meson::Common::Text::String& p_strId);
 
 		//----------------------------------------------------------------------------------------------
 		/** Returns whether the specified shader program is contained within the catalogue.
 		 */
 		//----------------------------------------------------------------------------------------------
-		bool ContainsShaderProgram(const Meson::Common::Text::String& p_strName, IShaderProgram*& p_pShaderProgram);
+		bool ContainsShaderProgram(const Meson::Common::Text::String& p_strId, IShaderProgram*& p_pShaderProgram);
 
 		//----------------------------------------------------------------------------------------------
 		/** Returns an enumerator of all shader programs within the catalogue.

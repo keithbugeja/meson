@@ -21,18 +21,18 @@ const Meson::Common::Text::String& ShaderProgramCatalogue::GetName(void) const
 //----------------------------------------------------------------------------------------------
 void ShaderProgramCatalogue::AddShaderProgram(IShaderProgram* p_pShaderProgram)
 {
-	if (m_shaderProgramMap.ContainsKey(p_pShaderProgram->GetName()))
+	if (m_shaderProgramMap.ContainsKey(p_pShaderProgram->GetId()))
 		throw new Meson::Common::MesonException("Shader program already in catalogue.", __FILE__, __LINE__);
 	
-	m_shaderProgramMap.Insert(p_pShaderProgram->GetName(), p_pShaderProgram);
+	m_shaderProgramMap.Insert(p_pShaderProgram->GetId(), p_pShaderProgram);
 }
 //----------------------------------------------------------------------------------------------
-void ShaderProgramCatalogue::RemoveShaderProgram(const Meson::Common::Text::String& p_strName)
+void ShaderProgramCatalogue::RemoveShaderProgram(const Meson::Common::Text::String& p_strId)
 {
-	if (!m_shaderProgramMap.ContainsKey(p_strName))
+	if (!m_shaderProgramMap.ContainsKey(p_strId))
 		throw new Meson::Common::MesonException("Shader program not in catalogue.", __FILE__, __LINE__);
 	
-	m_shaderProgramMap.RemoveKey(p_strName);
+	m_shaderProgramMap.RemoveKey(p_strId);
 }
 //----------------------------------------------------------------------------------------------
 void ShaderProgramCatalogue::RemoveAllShaderPrograms(void)
@@ -40,24 +40,24 @@ void ShaderProgramCatalogue::RemoveAllShaderPrograms(void)
 	m_shaderProgramMap.Clear();
 }
 //----------------------------------------------------------------------------------------------
-IShaderProgram* ShaderProgramCatalogue::GetShaderProgram(const Meson::Common::Text::String& p_strName)
+IShaderProgram* ShaderProgramCatalogue::GetShaderProgram(const Meson::Common::Text::String& p_strId)
 {
 	IShaderProgram* pShaderProgram;
 
-	if (m_shaderProgramMap.ContainsKey(p_strName, pShaderProgram))
+	if (m_shaderProgramMap.ContainsKey(p_strId, pShaderProgram))
 		return pShaderProgram;
 
 	throw new Meson::Common::MesonException("Shader program not in catalogue.", __FILE__, __LINE__);
 }
 //----------------------------------------------------------------------------------------------
-bool ShaderProgramCatalogue::ContainsShaderProgram(const Meson::Common::Text::String& p_strName)
+bool ShaderProgramCatalogue::ContainsShaderProgram(const Meson::Common::Text::String& p_strId)
 {
-	return m_shaderProgramMap.ContainsKey(p_strName);
+	return m_shaderProgramMap.ContainsKey(p_strId);
 }
 //----------------------------------------------------------------------------------------------
-bool ShaderProgramCatalogue::ContainsShaderProgram(const Meson::Common::Text::String& p_strName, IShaderProgram*& p_pShaderProgram)
+bool ShaderProgramCatalogue::ContainsShaderProgram(const Meson::Common::Text::String& p_strId, IShaderProgram*& p_pShaderProgram)
 {
-	return m_shaderProgramMap.ContainsKey(p_strName, p_pShaderProgram);
+	return m_shaderProgramMap.ContainsKey(p_strId, p_pShaderProgram);
 }
 //----------------------------------------------------------------------------------------------
 ShaderProgramEnumerator ShaderProgramCatalogue::GetShaderProgramEnumeration(void)
