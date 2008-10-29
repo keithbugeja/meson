@@ -426,12 +426,12 @@ public:
 public:
 	//----------------------------------------------------------------------------------------------
 	static const TVector4 Zero; 
-	static const TVector3 Up; 
-	static const TVector3 Down; 
-	static const TVector3 Left; 
-	static const TVector3 Right; 
-	static const TVector3 In; 
-	static const TVector3 Out;
+	static const TVector4 Up; 
+	static const TVector4 Down; 
+	static const TVector4 Left; 
+	static const TVector4 Right; 
+	static const TVector4 In; 
+	static const TVector4 Out;
 
 	//----------------------------------------------------------------------------------------------
 	union 
