@@ -425,7 +425,7 @@ public:
 
 public:
 	//----------------------------------------------------------------------------------------------
-	static const TVector4 Zero, 
+	static const TVector4 Zero; 
 	static const TVector3 Up; 
 	static const TVector3 Down; 
 	static const TVector3 Left; 
