@@ -359,7 +359,11 @@ public:
 
 public:
 	//----------------------------------------------------------------------------------------------
-	static const TVector2 Zero, Up, Down, Left, Right;
+	static const TVector2 Zero; 
+	static const TVector2 Up; 
+	static const TVector2 Down; 
+	static const TVector2 Left; 
+	static const TVector2 Right;
 
 	//----------------------------------------------------------------------------------------------
 	union 

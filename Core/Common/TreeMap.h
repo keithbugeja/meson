@@ -292,7 +292,7 @@ private: // private methods
 	TTreeMapNode<TKey, TValue>* CloneNode(TTreeMapNode<TKey, TValue>* p_pNode)
 	{
 		TTreeMapNode<TKey, TValue> *pNodeClone
-			= new TTreeMapNode<TKey, TValue>(p_pNode->m_keyValuePair.m_key, p_pNode->m_keyValuePair.m_value);
+			= new TTreeMapNode<TKey, TValue>(p_pNode->m_keyValuePair.Key, p_pNode->m_keyValuePair.Value);
 		if (p_pNode->m_pChild[0] != NULL)
 			pNodeClone->m_pChild[0] = CloneNode(p_pNode->m_pChild[0]);
 		if (p_pNode->m_pChild[1] != NULL)
