@@ -31,14 +31,14 @@ void CreatePolyhedron(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintLi
 	// geometry
 	Meson::Gravitas::Geometry::GeometryPtr pGeometryConvexPolyhedron = pGeometryFactoryConvexPolyhedron->CreateGeometry();
 
-	pGeometryConvexPolyhedron->SetProperty("Vertex", 0, TPoint3<Real>(-0.5, -0.5, -0.5));
-	pGeometryConvexPolyhedron->SetProperty("Vertex", 1, TPoint3<Real>( 0.5, -0.3, -0.3));
-	pGeometryConvexPolyhedron->SetProperty("Vertex", 2, TPoint3<Real>(-0.5,  0.5, -0.5));
-	pGeometryConvexPolyhedron->SetProperty("Vertex", 3, TPoint3<Real>( 0.5,  0.3, -0.3));
-	pGeometryConvexPolyhedron->SetProperty("Vertex", 4, TPoint3<Real>(-0.5, -0.5,  0.5));
-	pGeometryConvexPolyhedron->SetProperty("Vertex", 5, TPoint3<Real>( 0.5, -0.3,  0.3));
-	pGeometryConvexPolyhedron->SetProperty("Vertex", 6, TPoint3<Real>(-0.5,  0.5,  0.5));
-	pGeometryConvexPolyhedron->SetProperty("Vertex", 7, TPoint3<Real>( 0.5,  0.3,  0.3));
+	pGeometryConvexPolyhedron->SetProperty("Vertex", 0, TVector3<Real>(-0.5, -0.5, -0.5));
+	pGeometryConvexPolyhedron->SetProperty("Vertex", 1, TVector3<Real>( 0.5, -0.3, -0.3));
+	pGeometryConvexPolyhedron->SetProperty("Vertex", 2, TVector3<Real>(-0.5,  0.5, -0.5));
+	pGeometryConvexPolyhedron->SetProperty("Vertex", 3, TVector3<Real>( 0.5,  0.3, -0.3));
+	pGeometryConvexPolyhedron->SetProperty("Vertex", 4, TVector3<Real>(-0.5, -0.5,  0.5));
+	pGeometryConvexPolyhedron->SetProperty("Vertex", 5, TVector3<Real>( 0.5, -0.3,  0.3));
+	pGeometryConvexPolyhedron->SetProperty("Vertex", 6, TVector3<Real>(-0.5,  0.5,  0.5));
+	pGeometryConvexPolyhedron->SetProperty("Vertex", 7, TVector3<Real>( 0.5,  0.3,  0.3));
 
 	TArrayList<int> listVertices;
 
@@ -131,7 +131,7 @@ void CreatePolyhedron(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintLi
 	pRigidBodyConvexPolyhedron->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position body
-	pRigidBodyConvexPolyhedron->GetKineticProperties().Position = TPoint3<Real>(0.0, 10.0, 0.0);
+	pRigidBodyConvexPolyhedron->GetKineticProperties().Position = TVector3<Real>(0.0, 10.0, 0.0);
 	pRigidBodyConvexPolyhedron->GetKineticProperties().AngularVelocity = TVector3<Real>::Out * TMaths<Real>::Pi * 1.0;
 
 	// bounding sphere

@@ -13,9 +13,9 @@ private: // private variables
 	Meson::Gravitas::Body::BodyPtr m_pBody2;
 	bool m_bBroken;
 	Real m_rBreakingThreshold;
-	Meson::Common::Maths::TPoint3<Real> m_ptBindPoint;
-	Meson::Common::Maths::TPoint3<Real> m_ptLocalConnectionPoint1;
-	Meson::Common::Maths::TPoint3<Real> m_ptLocalConnectionPoint2;
+	Meson::Common::Maths::TVector3<Real> m_vecBindPoint;
+	Meson::Common::Maths::TVector3<Real> m_vecLocalConnectionPoint1;
+	Meson::Common::Maths::TVector3<Real> m_vecLocalConnectionPoint2;
 	Real m_rAngleLimit;
 	Real m_rJointRestitution;
 	Real m_rAngleLimitCosine;
@@ -24,7 +24,7 @@ private: // private variables
 
 private: // private methods
 	void UpdateAngleLimitDerivatives(void);
-	Meson::Common::Maths::TPoint3<Real> GetCurrentJointPosition(void) const;
+	Meson::Common::Maths::TVector3<Real> GetCurrentJointPosition(void) const;
 
 public: // public methods
 	SphericalJointConstraint(void);
@@ -37,8 +37,8 @@ public: // public methods
 		&p_mapProperties) const;
 	void GetProperty(const Meson::Common::Text::String &p_strName, Real &p_rValue) const;
 	void SetProperty(const Meson::Common::Text::String &p_strName, Real p_rValue);
-	void GetProperty(const Meson::Common::Text::String &p_strName, Meson::Common::Maths::TPoint3<Real> &p_ptValue) const;
-	void SetProperty(const Meson::Common::Text::String &p_strName, const Meson::Common::Maths::TPoint3<Real> &p_ptValue);
+	void GetProperty(const Meson::Common::Text::String &p_strName, Meson::Common::Maths::TVector3<Real> &p_vecValue) const;
+	void SetProperty(const Meson::Common::Text::String &p_strName, const Meson::Common::Maths::TVector3<Real> &p_vecValue);
 
 	void RenderInstrumentation(
 		Meson::Gravitas::Instrumentation::IInstrumentationDevice* p_pInstrumentationDevice);

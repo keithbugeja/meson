@@ -38,7 +38,7 @@ private: // private variables
 	GeometryCompositeState *m_pGeometryCompositeState;
 
 private: // private methods
-	Meson::Common::Maths::TPoint3<Real> GetCentroid(void) const;
+	Meson::Common::Maths::TVector3<Real> GetCentroid(void) const;
 
 public: // public methods
 
@@ -69,7 +69,7 @@ public: // public methods
 
 	bool IntersectsRay(const Ray& p_ray) const;
 	bool IntersectsRay(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 
 	// custom interface
 

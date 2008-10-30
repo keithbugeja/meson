@@ -19,7 +19,7 @@ private: // private methods
 		Meson::Common::Maths::TInterval<Real>& p_itvContact);
 	bool Intersects(
 		const Meson::Gravitas::Geometry::BoundingOrientedBox& p_boundingOrientedBox,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptTestPoint);
+		const Meson::Common::Maths::TVector3<Real>& p_vecTestPoint);
 
 public: // public methods
 	ConvexPolyhedronCollisionDetector(void);

@@ -15,7 +15,7 @@ using namespace Meson::Vistas;
 
 struct ModelVertex
 {
-	Point3f Position;
+	Vector3f Position;
 	ColourRGBA Colour;
 	Vector3f Normal;
 	Vector3f Binormal;
@@ -24,7 +24,7 @@ struct ModelVertex
 
 	ModelVertex(void);
 	ModelVertex(const ModelVertex& p_modelVertex);
-	ModelVertex(const Point3f& p_ptPosition, ColourRGBA p_colourRGBA,
+	ModelVertex(const Vector3f& p_vecPosition, ColourRGBA p_colourRGBA,
 		const Vector3f& p_vecNormal, const Vector3f& p_vecTangent,
 		const Vector2f& p_vecTexCoords);
 	bool operator==(const ModelVertex& p_modelVertex);

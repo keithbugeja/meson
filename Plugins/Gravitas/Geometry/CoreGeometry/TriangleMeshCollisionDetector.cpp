@@ -174,27 +174,27 @@ void TriangleMeshCollisionDetector::ComputeContactManifold(
 					contactPoint.Penetration = TMaths<Real>::Maximum;
 					for (size_t unVertex = 0; unVertex < 3; unVertex++)
 					{
-						const TPoint3<Real>& ptVertex2 = triangle2.Vertices[unVertex];
-						Real rSignedDistange = triangle1.SignedDistanceFromPlane(ptVertex2);
+						const TVector3<Real>& vecVertex2 = triangle2.Vertices[unVertex];
+						Real rSignedDistange = triangle1.SignedDistanceFromPlane(vecVertex2);
 						if (rSignedDistange <= (Real) 0.0)
 						{
 							if (contactPoint.Penetration > -rSignedDistange)
 							{
 								contactPoint.Penetration = -rSignedDistange;
 								contactPoint.Normal = vecNormal1;
-								contactPoint.Position = ptVertex2;
+								contactPoint.Position = vecVertex2;
 							}
 						}
 
-						const TPoint3<Real>& ptVertex1 = triangle1.Vertices[unVertex];
-						rSignedDistange = triangle2.SignedDistanceFromPlane(ptVertex1);
+						const TVector3<Real>& vecVertex1 = triangle1.Vertices[unVertex];
+						rSignedDistange = triangle2.SignedDistanceFromPlane(vecVertex1);
 						if (rSignedDistange <= (Real) 0.0)
 						{
 							if (contactPoint.Penetration > -rSignedDistange)
 							{
 								contactPoint.Penetration = -rSignedDistange;
 								contactPoint.Normal = -vecNormal2;
-								contactPoint.Position = ptVertex1;
+								contactPoint.Position = vecVertex1;
 							}
 						}
 					}

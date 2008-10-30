@@ -51,23 +51,23 @@ struct GeometryCompositeState
 		, m_listGeometryComponents() { }
 };
 
-TPoint3<Real> GeometryComposite::GetCentroid(void) const
+TVector3<Real> GeometryComposite::GetCentroid(void) const
 {
 	TArrayList<GeometryComponent> &listGeometryComponents
 		= m_pGeometryCompositeState->m_listGeometryComponents;
 
-	TPoint3<Real> ptCentroid = TPoint3<Real>::Origin;
+	TVector3<Real> vecCentroid = TVector3<Real>::Zero;
 	Real rVolumeTotal = (Real) 0.0;
 	for (size_t unIndex = 0; unIndex < listGeometryComponents.Size(); unIndex++)
 	{
 		GeometryComponent &geometryComponent = listGeometryComponents(unIndex);
 		Real rVolumeComponent = geometryComponent.Geometry->GetVolume();
-		ptCentroid += geometryComponent.Transform.ApplyCopy(TPoint3<Real>::Origin).ToVector()
+		vecCentroid += geometryComponent.Transform.ApplyCopy(TVector3<Real>::Zero)
 			* rVolumeComponent;
 		rVolumeTotal += rVolumeComponent;
 	}
-	ptCentroid.ToVector() /= rVolumeTotal;
-	return ptCentroid;
+	vecCentroid /= rVolumeTotal;
+	return vecCentroid;
 }
 
 GeometryComposite::GeometryComposite(void)
@@ -189,7 +189,7 @@ void GeometryComposite::ComputeBoundingVolume(BoundingSphere &p_boundingSphere) 
 		= m_pGeometryCompositeState->m_listGeometryComponents;
 
 	// initialise bounding sphere
-	p_boundingSphere.Centre = TPoint3<Real>::Origin;
+	p_boundingSphere.Centre = TVector3<Real>::Zero;
 	p_boundingSphere.Radius = p_boundingSphere.RadiusSquared = (Real) 0.0;
 
 	// process all component geometries
@@ -207,14 +207,14 @@ void GeometryComposite::ComputeBoundingVolume(BoundingSphere &p_boundingSphere) 
 		// grow sphere to include component sphere
 		TVector3<Real> vecOffset = boundingSphereComponent.Centre - p_boundingSphere.Centre;
 		TVector3<Real> vecDirection = vecOffset.NormaliseCopy();
-		TPoint3<Real> ptExtreme1 = p_boundingSphere.Centre
+		TVector3<Real> vecExtreme1 = p_boundingSphere.Centre
 			- vecDirection * p_boundingSphere.Radius;
-		TPoint3<Real> ptExtreme2 = boundingSphereComponent.Centre
+		TVector3<Real> vecExtreme2 = boundingSphereComponent.Centre
 			+ vecDirection * boundingSphereComponent.Radius;
 
-		p_boundingSphere.RadiusSquared = (ptExtreme2 - ptExtreme1).LengthSquared();
+		p_boundingSphere.RadiusSquared = (vecExtreme2 - vecExtreme1).LengthSquared();
 		p_boundingSphere.Radius = TMaths<Real>::Sqrt(p_boundingSphere.RadiusSquared);
-		p_boundingSphere.Centre = ptExtreme1 + (ptExtreme2 - ptExtreme1) * (Real) 0.5;
+		p_boundingSphere.Centre = (vecExtreme1 + vecExtreme2) * (Real) 0.5;
 	}
 }
 
@@ -229,7 +229,7 @@ void GeometryComposite::ComputeBoundingVolume(BoundingAxisAlignedBox &p_bounding
 		= m_pGeometryCompositeState->m_listGeometryComponents;
 
 	// initialise bounding box
-	p_boundingAxisAlignedBox.Min = p_boundingAxisAlignedBox.Max = TPoint3<Real>::Origin;
+	p_boundingAxisAlignedBox.Min = p_boundingAxisAlignedBox.Max = TVector3<Real>::Zero;
 
 	// process all component geometries
 	for (size_t unIndex = 0; unIndex < listGeometryComponents.Size(); unIndex++)
@@ -393,7 +393,7 @@ bool GeometryComposite::IntersectsRay(const Ray& p_ray) const
 }
 
 bool GeometryComposite::IntersectsRay(const Ray& p_ray,
-	TPoint3<Real>& p_ptIntersectionPoint) const
+	TVector3<Real>& p_vecIntersectionPoint) const
 {
 	TArrayList<GeometryComponent>& listGeometryComponents
 		= m_pGeometryCompositeState->m_listGeometryComponents;
@@ -402,7 +402,7 @@ bool GeometryComposite::IntersectsRay(const Ray& p_ray,
 	TArrayList<BoundingOrientedBox> listComponentBoxes;
 
 	bool bResult = false;
-	TPoint3<Real> ptIntersectionPointComponent;
+	TVector3<Real> vecIntersectionPointComponent;
 	Real rClosestDistanceSquared = TMaths<Real>::Maximum;
 
 	// process all component geometries
@@ -414,19 +414,19 @@ bool GeometryComposite::IntersectsRay(const Ray& p_ray,
 		Ray rayComponent = p_ray.TransformCopy(geometryComponent.Transform.InvertCopy());
 		
 		if (!geometryComponent.Geometry->IntersectsRay(
-			rayComponent, ptIntersectionPointComponent))
+			rayComponent, vecIntersectionPointComponent))
 			continue;
 
 		bResult = true;
 
 		// transform intersection point back to composite space
-		geometryComponent.Transform.Apply(ptIntersectionPointComponent);
+		geometryComponent.Transform.Apply(vecIntersectionPointComponent);
 
-		Real rDistanceSquared = (ptIntersectionPointComponent - p_ray.Source).LengthSquared();
+		Real rDistanceSquared = (vecIntersectionPointComponent - p_ray.Source).LengthSquared();
 		if (rClosestDistanceSquared > rDistanceSquared)
 		{
 			rClosestDistanceSquared = rDistanceSquared;
-			p_ptIntersectionPoint = ptIntersectionPointComponent;
+			p_vecIntersectionPoint = vecIntersectionPointComponent;
 		}
 	}
 
@@ -467,7 +467,7 @@ void GeometryComposite::RemoveGeometry(
 
 void GeometryComposite::RealignCentroid(void)
 {
-	TVector3<Real> ptCentroidOffset = GetCentroid().ToVector();
+	TVector3<Real> vecCentroidOffset = GetCentroid();
 
 	TArrayList<GeometryComponent>& listGeometryComponents
 		= m_pGeometryCompositeState->m_listGeometryComponents;
@@ -475,7 +475,7 @@ void GeometryComposite::RealignCentroid(void)
 	for (size_t unIndex = 0; unIndex < listGeometryComponents.Size(); unIndex++)
 	{
 		GeometryComponent& geometryComponent = listGeometryComponents[unIndex];
-		geometryComponent.Transform.Translation -= ptCentroidOffset;
+		geometryComponent.Transform.Translation -= vecCentroidOffset;
 	}
 }
 

@@ -21,10 +21,10 @@ RigidJointConstraint::RigidJointConstraint(void)
 	, m_pBody2(NULL)
 	, m_bBroken(true)
 	, m_rBreakingThreshold(TMaths<Real>::Maximum)
-	, m_ptBody1Anchor2()
-	, m_ptBody2Anchor1()
-	, m_ptBody1Anchor3()
-	, m_ptBody2Anchor3()
+	, m_vecBody1Anchor2()
+	, m_vecBody2Anchor1()
+	, m_vecBody1Anchor3()
+	, m_vecBody2Anchor3()
 	, m_listConstraintDiscrepancies()
 {
 }
@@ -35,10 +35,10 @@ RigidJointConstraint::RigidJointConstraint(const String& p_strId)
 	, m_pBody2(NULL)
 	, m_bBroken(true)
 	, m_rBreakingThreshold(TMaths<Real>::Maximum)
-	, m_ptBody1Anchor2()
-	, m_ptBody2Anchor1()
-	, m_ptBody1Anchor3()
-	, m_ptBody2Anchor3()
+	, m_vecBody1Anchor2()
+	, m_vecBody2Anchor1()
+	, m_vecBody1Anchor3()
+	, m_vecBody2Anchor3()
 	, m_listConstraintDiscrepancies()
 {
 }
@@ -50,10 +50,9 @@ RigidJointConstraint::~RigidJointConstraint(void)
 void RigidJointConstraint::RenderInstrumentation(
 	IInstrumentationDevice* p_pInstrumentationDevice)
 {
-	TPoint3<Real>& ptBodyPosition1 = m_pBody1->GetKineticProperties().Position;
-	TPoint3<Real>& ptBodyPosition2 = m_pBody2->GetKineticProperties().Position;
-
-	p_pInstrumentationDevice->DrawLine(ptBodyPosition1, ptBodyPosition2);
+	p_pInstrumentationDevice->DrawLine(
+		m_pBody1->GetKineticProperties().Position,
+		m_pBody2->GetKineticProperties().Position);
 }
 
 const String& RigidJointConstraint::GetType(void) const
@@ -88,19 +87,19 @@ void RigidJointConstraint::Bind(void)
 
 	// compute axis anchor points for local body coords
 
-	TPoint3<Real>& ptPosition1
+	TVector3<Real>& vecPosition1
 		= m_pBody1->GetKineticProperties().Position;
-	TPoint3<Real>& ptPosition2
+	TVector3<Real>& vecPosition2
 		= m_pBody2->GetKineticProperties().Position;
 
 	// body 1 and 2 distance anchors
 	m_pBody1->GetKineticProperties().TransformPointToLocal(
-		ptPosition2, m_ptBody1Anchor2);
+		vecPosition2, m_vecBody1Anchor2);
 	m_pBody2->GetKineticProperties().TransformPointToLocal(
-		ptPosition1, m_ptBody2Anchor1);
+		vecPosition1, m_vecBody2Anchor1);
 
 	// body rotation anchor
-	TVector3<Real> vecOffset(ptPosition2 - ptPosition1);
+	TVector3<Real> vecOffset(vecPosition2 - vecPosition1);
 	Real rHalfDistance; 
 	TVector3<Real> vecNormal1, vecNormal2;
 	if (vecOffset.IsZero())
@@ -113,12 +112,12 @@ void RigidJointConstraint::Bind(void)
 		vecOffset.ComputeOrthonormals(vecNormal1, vecNormal2);
 		rHalfDistance = vecOffset.Length() * (Real) 0.5;
 	}
-	TPoint3<Real> ptRotationAnchorWorld
-		= ptPosition1 + vecOffset * (Real) 0.5 + vecNormal1 * rHalfDistance;
+	TVector3<Real> vecRotationAnchorWorld
+		= vecPosition1 + vecOffset * (Real) 0.5 + vecNormal1 * rHalfDistance;
 	m_pBody1->GetKineticProperties().TransformPointToLocal(
-		ptRotationAnchorWorld, m_ptBody1Anchor3);
+		vecRotationAnchorWorld, m_vecBody1Anchor3);
 	m_pBody2->GetKineticProperties().TransformPointToLocal(
-		ptRotationAnchorWorld, m_ptBody2Anchor3);
+		vecRotationAnchorWorld, m_vecBody2Anchor3);
 
 	m_bBroken = false;
 }
@@ -167,33 +166,33 @@ void RigidJointConstraint::ComputeDiscrepancies(void)
 	// compute local anchor points in world space
 
 	// axis anchor 1
-	TPoint3<Real> ptWorldBody2Anchor1;
+	TVector3<Real> vecWorldBody2Anchor1;
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptBody2Anchor1, ptWorldBody2Anchor1);
+		m_vecBody2Anchor1, vecWorldBody2Anchor1);
 
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(m_pBody1->GetKineticProperties().Position,
-		ptWorldBody2Anchor1));
+		vecWorldBody2Anchor1));
 
 	// axis anchor 2
-	TPoint3<Real> ptWorldBody1Anchor2;
+	TVector3<Real> vecWorldBody1Anchor2;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptBody1Anchor2, ptWorldBody1Anchor2);
+		m_vecBody1Anchor2, vecWorldBody1Anchor2);
 
 	m_listConstraintDiscrepancies.Add(
-		ConstraintDiscrepancy(ptWorldBody1Anchor2,
+		ConstraintDiscrepancy(vecWorldBody1Anchor2,
 		m_pBody2->GetKineticProperties().Position));
 
 	// axis anchor 3
-	TPoint3<Real> ptWorldBody1Anchor3, ptWorldBody2Anchor3;
+	TVector3<Real> vecWorldBody1Anchor3, vecWorldBody2Anchor3;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptBody1Anchor3, ptWorldBody1Anchor3);
+		m_vecBody1Anchor3, vecWorldBody1Anchor3);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptBody2Anchor3, ptWorldBody2Anchor3);
+		m_vecBody2Anchor3, vecWorldBody2Anchor3);
 
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(
-		ptWorldBody1Anchor3, ptWorldBody2Anchor3, TVector3<Real>::Zero, (Real) 0.2));
+		vecWorldBody1Anchor3, vecWorldBody2Anchor3, TVector3<Real>::Zero, (Real) 0.2));
 }
 
 const ConstraintDiscrepancyList& RigidJointConstraint::GetDiscrepancies(void)

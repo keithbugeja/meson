@@ -184,10 +184,10 @@ void SweepAndPruneSpace::RenderInstrumentation(
 				Real rValueBegin = pLimit->Value[unAxisIndex];
 				Real rValueEnd = pEntity->End.Value[unAxisIndex];
 
-				TPoint3<Real> ptStart = TPoint3<Real>::Origin + vecAxis * rValueBegin;
-				TPoint3<Real> ptEnd = TPoint3<Real>::Origin + vecAxis * rValueEnd;
-				p_pInstrumentationDevice->DrawArrow(ptStart, ptEnd);
-				p_pInstrumentationDevice->DrawArrow(ptEnd, ptStart);
+				TVector3<Real> vecStart = vecAxis * rValueBegin;
+				TVector3<Real> vecEnd = vecAxis * rValueEnd;
+				p_pInstrumentationDevice->DrawArrow(vecStart, vecEnd);
+				p_pInstrumentationDevice->DrawArrow(vecEnd, vecStart);
 			}
 
 			pLimit = pLimit->Next[unAxisIndex];
@@ -466,7 +466,7 @@ void SweepAndPruneSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ra
 {
 	p_listBodyRayIntersections.Clear();
 
-	TPoint3<Real> ptIntersection;
+	TVector3<Real> vecIntersection;
 	Transform trnWorld, trnLocal;
 	size_t unBodyCount = m_listBodies.Size();
 	for (size_t unBodyIndex = 0; unBodyIndex < unBodyCount; unBodyIndex++)
@@ -480,7 +480,7 @@ void SweepAndPruneSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ra
 
 		// prepare world and local transforms
 		KineticProperties& kineticProperties = pBody->GetKineticProperties();
-		trnWorld.Translation = kineticProperties.Position.ToVector();
+		trnWorld.Translation = kineticProperties.Position;
 		trnWorld.Rotation = kineticProperties.Orientation;
 		trnLocal = trnWorld.InvertCopy();
 
@@ -490,14 +490,14 @@ void SweepAndPruneSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ra
 
 		// do local ray cast but skip on failure
 		GeometryPtr pGeometry(pBody->GetGeometry());
-		if (!pGeometry->IntersectsRay(rayLocal, ptIntersection))
+		if (!pGeometry->IntersectsRay(rayLocal, vecIntersection))
 			continue;
 		
 		// transform local intersection point to world coords
-		trnWorld.Apply(ptIntersection);
+		trnWorld.Apply(vecIntersection);
 
 		// insert in sorted order
-		BodyRayIntersection bodyRayIntersection(p_ray, pBody, ptIntersection);
+		BodyRayIntersection bodyRayIntersection(p_ray, pBody, vecIntersection);
 		size_t unListCount = p_listBodyRayIntersections.Size();
 		int nInsertIndex = 0;
 		for (size_t unListIndex = 0; unListIndex < unListCount; unListIndex++)

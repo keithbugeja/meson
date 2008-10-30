@@ -118,7 +118,7 @@ void InstrumentationManager::RenderInstrumentation(
 				{
 					// set device transform to allow rendering in body coords
 					KineticProperties& kineticProperties = pBody->GetKineticProperties();
-					Transform transform(kineticProperties.Orientation, kineticProperties.Position.ToVector());
+					Transform transform(kineticProperties.Orientation, kineticProperties.Position);
 					transform.ExtractMatrix(matTransform);
 					pInstrumentationDevice->SetTransform(matTransform);
 					pInstrumentationDevice->SetColour(Colour::Yellow);
@@ -136,19 +136,19 @@ void InstrumentationManager::RenderInstrumentation(
 					for (size_t unIndex = 0; unIndex < listForces.Size(); unIndex++)
 					{
 						ForcePtr pForce = listForces[unIndex];
-						TPoint3<Real> ptApplicationPointLocal = pForce->GetApplicationPoint(
+						TVector3<Real> vecApplicationPointLocal = pForce->GetApplicationPoint(
 							&pBody->GetMassProperties(), &pBody->GetKineticProperties(),
 							pBody->GetGeometry(), p_rCurrentTime);
 
-						TPoint3<Real> ptApplicationPointWorld;
-						pBody->GetKineticProperties().TransformPointToWorld(ptApplicationPointLocal, ptApplicationPointWorld);
+						TVector3<Real> vecApplicationPointWorld;
+						pBody->GetKineticProperties().TransformPointToWorld(vecApplicationPointLocal, vecApplicationPointWorld);
 
 						TVector3<Real> vecForceValue = pForce->GetForceValue(
 							&pBody->GetMassProperties(), &pBody->GetKineticProperties(),
 							pBody->GetGeometry(), p_rCurrentTime);
 
 						pInstrumentationDevice->DrawArrow(
-							ptApplicationPointWorld + vecForceValue, ptApplicationPointWorld);
+							vecApplicationPointWorld + vecForceValue, vecApplicationPointWorld);
 					}
 				}
 			}

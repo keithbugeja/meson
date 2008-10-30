@@ -72,20 +72,20 @@ void RigidBody::RenderInstrumentation(IInstrumentationDevice* p_pInstrumentation
 	// draw local coordinate axes
 	KineticProperties& kineticProperties = m_pRigidBodyState->KineticProperties;
 
-	Transform transform(kineticProperties.Orientation, kineticProperties.Position.ToVector());
+	Transform transform(kineticProperties.Orientation, kineticProperties.Position);
 	TMatrix4<Real> matOrientation;
 	transform.ExtractMatrix(matOrientation);
 	p_pInstrumentationDevice->SetTransform(matOrientation);
 
 	p_pInstrumentationDevice->DrawLine(
-		TPoint3<Real>((Real) -1.0, (Real)  0.0, (Real)  0.0),
-		TPoint3<Real>((Real)  1.0, (Real)  0.0, (Real)  0.0));
+		TVector3<Real>((Real) -1.0, (Real)  0.0, (Real)  0.0),
+		TVector3<Real>((Real)  1.0, (Real)  0.0, (Real)  0.0));
 	p_pInstrumentationDevice->DrawLine(
-		TPoint3<Real>((Real)  0.0, (Real) -1.0, (Real)  0.0),
-		TPoint3<Real>((Real)  0.0, (Real)  1.0, (Real)  0.0));
+		TVector3<Real>((Real)  0.0, (Real) -1.0, (Real)  0.0),
+		TVector3<Real>((Real)  0.0, (Real)  1.0, (Real)  0.0));
 	p_pInstrumentationDevice->DrawLine(
-		TPoint3<Real>((Real)  0.0, (Real)  0.0, (Real) -1.0),
-		TPoint3<Real>((Real)  0.0, (Real)  0.0, (Real)  1.0));
+		TVector3<Real>((Real)  0.0, (Real)  0.0, (Real) -1.0),
+		TVector3<Real>((Real)  0.0, (Real)  0.0, (Real)  1.0));
 
 	// draw bounding volume if set
 	IBoundingVolume* pBoundingVolume = m_pRigidBodyState->BoundingVolumeWorld;
@@ -197,7 +197,7 @@ BoundingVolumePtr RigidBody::GetBoundingVolume(void) const
 		m_pRigidBodyState->BoundingVolumeLocal);
 
 	KineticProperties& kineticProperties = m_pRigidBodyState->KineticProperties;
-	Transform transform(kineticProperties.Orientation, kineticProperties.Position.ToVector());
+	Transform transform(kineticProperties.Orientation, kineticProperties.Position);
 
 	m_pRigidBodyState->BoundingVolumeWorld->Transform(transform);
 	return m_pRigidBodyState->BoundingVolumeWorld;

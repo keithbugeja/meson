@@ -103,9 +103,9 @@ void ConvexPolyhedron::EnumerateProperties(
 {
 	p_mapProperties.Clear();
 	p_mapProperties.Insert("Vertices",
-		PropertyDescriptor("Vertices", PropertyType::PointList, false));
+		PropertyDescriptor("Vertices", PropertyType::VectorList, false));
 	p_mapProperties.Insert("Vertex",
-		PropertyDescriptor("Vertex", PropertyType::IndexedPoint, false));
+		PropertyDescriptor("Vertex", PropertyType::IndexedVector, false));
 	p_mapProperties.Insert("FaceIndex",
 		PropertyDescriptor("FaceIndex", PropertyType::Integer, false));
 	p_mapProperties.Insert("FaceVertices",
@@ -149,10 +149,10 @@ void ConvexPolyhedron::GetProperty(const String& p_strName, String& p_strValue) 
 }
 
 void ConvexPolyhedron::GetProperty(const String& p_strName, size_t p_unIndex,
-	TPoint3<Real>& p_ptValue) const
+	TVector3<Real>& p_vecValue) const
 {
 	if (p_strName == "Vertex")
-		p_ptValue = Vertices[p_unIndex];
+		p_vecValue = Vertices[p_unIndex];
 	else
 		throw new MesonException(
 			"ConvexPolyhedron geometry: Unsupported property: " + p_strName,
@@ -178,7 +178,7 @@ void ConvexPolyhedron::GetProperty(const String& p_strName, TList<int>& p_listVa
 }
 
 void ConvexPolyhedron::GetProperty(const String& p_strName,
-	PointList& p_listValues) const
+	VectorList& p_listValues) const
 {
 	if (p_strName == "Vertices")
 		p_listValues = Vertices;
@@ -268,13 +268,13 @@ void ConvexPolyhedron::SetProperty(const String& p_strName, const String& p_strV
 			__FILE__, __LINE__);
 }
 
-void ConvexPolyhedron::SetProperty(const String& p_strName, size_t p_unIndex, const TPoint3<Real>& p_ptValue)
+void ConvexPolyhedron::SetProperty(const String& p_strName, size_t p_unIndex, const TVector3<Real>& p_vecValue)
 {
 	if (p_strName == "Vertex")
 	{
 		while (Vertices.Size() <= p_unIndex)
-			Vertices.Add(TPoint3<Real>((Real) 0.0, (Real) 0.0, (Real) 0.0));
-		Vertices[p_unIndex] = p_ptValue;
+			Vertices.Add(TVector3<Real>::Zero);
+		Vertices[p_unIndex] = p_vecValue;
 		m_strWavefrontModelFilename = "";
 	}
 	else
@@ -302,7 +302,7 @@ void ConvexPolyhedron::SetProperty(const String& p_strName, const TList<int>& p_
 			__FILE__, __LINE__);
 }
 
-void ConvexPolyhedron::SetProperty(const String& p_strName, const PointList& p_listValues)
+void ConvexPolyhedron::SetProperty(const String& p_strName, const VectorList& p_listValues)
 {
 	if (p_strName == "Vertices")
 	{
@@ -337,7 +337,7 @@ Real ConvexPolyhedron::GetVolume(void) const
 	Real rVolume((Real) 0.0);
 	size_t unCount(Faces.Size());
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
-		rVolume += Faces[unIndex].ComputeSignedVolume(TPoint3<Real>::Origin);
+		rVolume += Faces[unIndex].ComputeSignedVolume(TVector3<Real>::Zero);
 
 	return rVolume;
 }
@@ -434,48 +434,50 @@ bool ConvexPolyhedron::IsBounded(void) const
 
 void ConvexPolyhedron::ComputeBoundingVolume(BoundingSphere &p_boundingSphere) const
 {
-	TPoint3<Real> ptMin(TPoint3<Real>::Origin), ptMax(TPoint3<Real>::Origin);
+	TVector3<Real> vecMin(TMaths<Real>::Maximum, TMaths<Real>::Maximum, TMaths<Real>::Maximum),
+		vecMax(-TMaths<Real>::Maximum, -TMaths<Real>::Maximum, -TMaths<Real>::Maximum);
 
 	size_t unCount(Vertices.Size());
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = Vertices[unIndex];
-		ptMin.X = TMaths<Real>::Min(ptMin.X, ptVertex.X);
-		ptMin.Y = TMaths<Real>::Min(ptMin.Y, ptVertex.Y);
-		ptMin.Z = TMaths<Real>::Min(ptMin.Z, ptVertex.Z);
+		TVector3<Real>& vecVertex = Vertices[unIndex];
+		vecMin.X = TMaths<Real>::Min(vecMin.X, vecVertex.X);
+		vecMin.Y = TMaths<Real>::Min(vecMin.Y, vecVertex.Y);
+		vecMin.Z = TMaths<Real>::Min(vecMin.Z, vecVertex.Z);
 
-		ptMax.X = TMaths<Real>::Max(ptMax.X, ptVertex.X);
-		ptMax.Y = TMaths<Real>::Max(ptMax.Y, ptVertex.Y);
-		ptMax.Z = TMaths<Real>::Max(ptMax.Z, ptVertex.Z);
+		vecMax.X = TMaths<Real>::Max(vecMax.X, vecVertex.X);
+		vecMax.Y = TMaths<Real>::Max(vecMax.Y, vecVertex.Y);
+		vecMax.Z = TMaths<Real>::Max(vecMax.Z, vecVertex.Z);
 	}
 
-	p_boundingSphere.Centre = ptMin + (ptMax - ptMin) * (Real) 0.5;
+	p_boundingSphere.Centre = (vecMin + vecMax) * (Real) 0.5;
 	p_boundingSphere.RadiusSquared = (Real) 0.0;
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = Vertices[unIndex];
+		TVector3<Real>& vecVertex = Vertices[unIndex];
 		p_boundingSphere.RadiusSquared = TMaths<Real>::Max(
 			p_boundingSphere.RadiusSquared,
-			(ptVertex - p_boundingSphere.Centre).LengthSquared());
+			(vecVertex - p_boundingSphere.Centre).LengthSquared());
 	}
 	p_boundingSphere.Radius = TMaths<Real>::Sqrt(p_boundingSphere.RadiusSquared);
 }
 
 void ConvexPolyhedron::ComputeBoundingVolume(BoundingAxisAlignedBox &p_boundingAxisAlignedBox) const
 {
-	p_boundingAxisAlignedBox.Min = p_boundingAxisAlignedBox.Max = TPoint3<Real>::Origin;
+	p_boundingAxisAlignedBox.Min = TVector3<Real>(TMaths<Real>::Maximum, TMaths<Real>::Maximum, TMaths<Real>::Maximum);
+	p_boundingAxisAlignedBox.Max = -p_boundingAxisAlignedBox.Min;
 
 	size_t unCount(Vertices.Size());
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = Vertices[unIndex];
-		p_boundingAxisAlignedBox.Min.X = TMaths<Real>::Min(p_boundingAxisAlignedBox.Min.X, ptVertex.X);
-		p_boundingAxisAlignedBox.Min.Y = TMaths<Real>::Min(p_boundingAxisAlignedBox.Min.Y, ptVertex.Y);
-		p_boundingAxisAlignedBox.Min.Z = TMaths<Real>::Min(p_boundingAxisAlignedBox.Min.Z, ptVertex.Z);
+		TVector3<Real>& vecVertex = Vertices[unIndex];
+		p_boundingAxisAlignedBox.Min.X = TMaths<Real>::Min(p_boundingAxisAlignedBox.Min.X, vecVertex.X);
+		p_boundingAxisAlignedBox.Min.Y = TMaths<Real>::Min(p_boundingAxisAlignedBox.Min.Y, vecVertex.Y);
+		p_boundingAxisAlignedBox.Min.Z = TMaths<Real>::Min(p_boundingAxisAlignedBox.Min.Z, vecVertex.Z);
 
-		p_boundingAxisAlignedBox.Max.X = TMaths<Real>::Max(p_boundingAxisAlignedBox.Max.X, ptVertex.X);
-		p_boundingAxisAlignedBox.Max.Y = TMaths<Real>::Max(p_boundingAxisAlignedBox.Max.Y, ptVertex.Y);
-		p_boundingAxisAlignedBox.Max.Z = TMaths<Real>::Max(p_boundingAxisAlignedBox.Max.Z, ptVertex.Z);
+		p_boundingAxisAlignedBox.Max.X = TMaths<Real>::Max(p_boundingAxisAlignedBox.Max.X, vecVertex.X);
+		p_boundingAxisAlignedBox.Max.Y = TMaths<Real>::Max(p_boundingAxisAlignedBox.Max.Y, vecVertex.Y);
+		p_boundingAxisAlignedBox.Max.Z = TMaths<Real>::Max(p_boundingAxisAlignedBox.Max.Z, vecVertex.Z);
 	}
 }
 
@@ -543,8 +545,8 @@ void ConvexPolyhedron::ComputeBoundingVolume(BoundingOrientedBox &p_boundingOrie
 			p_boundingOrientedBox.Extent.Y = rSpan2 * (Real) 0.5;
 			p_boundingOrientedBox.Extent.Z = rSpan3 * (Real) 0.5;
 			// centre
-			p_boundingOrientedBox.Centre = TPoint3<Real>::Origin
-				+ vecAxis1 * interval1.Median()
+			p_boundingOrientedBox.Centre
+				= vecAxis1 * interval1.Median()
 				+ vecAxis2 * interval2.Median()
 				+ vecAxis3 * interval3.Median();
 
@@ -556,17 +558,17 @@ void ConvexPolyhedron::ComputeBoundingVolume(BoundingOrientedBox &p_boundingOrie
 
 bool ConvexPolyhedron::IntersectsRay(const Ray& p_ray) const
 {
-	static TPoint3<Real> s_ptIntersectionPoint;
-	return IntersectsRay(p_ray, s_ptIntersectionPoint);
+	static TVector3<Real> s_vecIntersectionPoint;
+	return IntersectsRay(p_ray, s_vecIntersectionPoint);
 }
 
 bool ConvexPolyhedron::IntersectsRay(const Ray& p_ray,
-	TPoint3<Real>& p_ptIntersectionPoint) const
+	TVector3<Real>& p_vecIntersectionPoint) const
 {
 	// if ray source itself is inside, it is intersection point
 	if (ContainsPoint(p_ray.Source))
 	{
-		p_ptIntersectionPoint = p_ray.Source;
+		p_vecIntersectionPoint = p_ray.Source;
 		return true;
 	}
 
@@ -579,7 +581,7 @@ bool ConvexPolyhedron::IntersectsRay(const Ray& p_ray,
 		if (face.IsPointBelowPlane(p_ray.Source))
 			continue;
 
-		if (face.IntersectsRay(p_ray, p_ptIntersectionPoint))
+		if (face.IntersectsRay(p_ray, p_vecIntersectionPoint))
 			return true;
 	}
 
@@ -632,11 +634,11 @@ void ConvexPolyhedron::UpdateDerivativeData(bool p_bAlignCentroid)
 		AlignCentroid();
 }
 
-TPoint3<Real> ConvexPolyhedron::GetCentroid(void) const
+TVector3<Real> ConvexPolyhedron::GetCentroid(void) const
 {
 	size_t unFaceCount(Faces.Size());
 	if (unFaceCount == 0)
-		return TPoint3<Real>::Origin;
+		return TVector3<Real>::Zero;
 
 	// initialise centroid integrals
 	Real rVolumeIntegral = (Real) 0.0;
@@ -686,22 +688,22 @@ TPoint3<Real> ConvexPolyhedron::GetCentroid(void) const
 	}
 
 	// centroid
-	TPoint3<Real> ptCentroid(TPoint3<Real>::Origin);
+	TVector3<Real> vecCentroid(TVector3<Real>::Zero);
 
 	if (TMaths<Real>::Equals(rVolumeIntegral, (Real) 0.0))
-		return ptCentroid;
+		return vecCentroid;
 
 	Real rMultiplier((Real) 0.25 / rVolumeIntegral);
-	ptCentroid.X = rCentroidIntegralX * rMultiplier;
-	ptCentroid.Y = rCentroidIntegralY * rMultiplier;
-	ptCentroid.Z = rCentroidIntegralZ * rMultiplier;
+	vecCentroid.X = rCentroidIntegralX * rMultiplier;
+	vecCentroid.Y = rCentroidIntegralY * rMultiplier;
+	vecCentroid.Z = rCentroidIntegralZ * rMultiplier;
 
-	return ptCentroid;
+	return vecCentroid;
 }
 
 void ConvexPolyhedron::AlignCentroid(void)
 {
-	TVector3<Real> vecOffset(TPoint3<Real>::Origin - GetCentroid());
+	TVector3<Real> vecOffset(-GetCentroid());
 	for (size_t unIndex = 0; unIndex < Vertices.Size(); unIndex++)
 		Vertices[unIndex] += vecOffset;
 }
@@ -712,11 +714,11 @@ void ConvexPolyhedron::ProjectToInterval(
 {
 	p_interval.MakeEmpty();
 	for (size_t unVertexIndex = 0; unVertexIndex < Vertices.Size(); unVertexIndex++)
-		p_interval.Extend(Vertices[unVertexIndex].ToVector() * p_vecAxis);
+		p_interval.Extend(Vertices[unVertexIndex] * p_vecAxis);
 }
 
 void ConvexPolyhedron::EnumerateMaximalVertices(
-	const TVector3<Real>& p_vecDirection, PointList& p_listVertices) const
+	const TVector3<Real>& p_vecDirection, VectorList& p_listVertices) const
 {
 	// clear vertex list
 	p_listVertices.Clear();
@@ -726,8 +728,8 @@ void ConvexPolyhedron::EnumerateMaximalVertices(
 	// determine maximal vertices in terms of projection
 	for (size_t unIndex = 0; unIndex < Vertices.Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = Vertices[unIndex];
-		Real rProjection(p_vecDirection * ptVertex.ToVector());
+		TVector3<Real>& vecVertex = Vertices[unIndex];
+		Real rProjection(p_vecDirection * vecVertex);
 
 		// ignore vertices that are definitely less extreme than current
 		if (rProjection + TMaths<Real>::Epsilon < rMaximumProjection) continue;
@@ -738,29 +740,29 @@ void ConvexPolyhedron::EnumerateMaximalVertices(
 			p_listVertices.Clear();
 
 		rMaximumProjection = rProjection;
-		p_listVertices.Add(ptVertex);
+		p_listVertices.Add(vecVertex);
 	}
 }
 
-bool ConvexPolyhedron::ContainsPoint(const TPoint3<Real>& ptPoint) const
+bool ConvexPolyhedron::ContainsPoint(const TVector3<Real>& p_vecPoint) const
 {
 	for (size_t unIndex = 0; unIndex < Faces.Size(); unIndex++)
-		if (Faces[unIndex].IsPointAbovePlane(ptPoint))
+		if (Faces[unIndex].IsPointAbovePlane(p_vecPoint))
 			return false;
 
 	return true;
 }
 
-TPoint3<Real> ConvexPolyhedron::GetClosestPoint(
-	const Meson::Common::Maths::TPoint3<Real>& ptPoint) const
+TVector3<Real> ConvexPolyhedron::GetClosestPoint(
+	const TVector3<Real>& p_vecPoint) const
 {
 	// if no vertices, return origin
 	if (Vertices.Size() == 0)
-		return TPoint3<Real>::Origin;
+		return TVector3<Real>::Zero;
 
 	// prepare variables
-	static PointArrayList listSimplexVertices, listMaximalVertices;
-	TPoint3<Real> ptClosest;
+	static VectorArrayList listSimplexVertices, listMaximalVertices;
+	TVector3<Real> vecClosest;
 	LineSegment lineSegment;
 	Triangle triangle;
 	Tetrahedron tetrahedron;
@@ -776,20 +778,20 @@ TPoint3<Real> ConvexPolyhedron::GetClosestPoint(
 		{
 		case 1:
 			// closest of 0D simplex is point itself
-			ptClosest = listSimplexVertices[0];
+			vecClosest = listSimplexVertices[0];
 			break;
 		case 2:
 			// closest of 1D simplex is closest to line segment
 			lineSegment.Start = listSimplexVertices[0];
 			lineSegment.End = listSimplexVertices[1];
-			ptClosest = lineSegment.ClosestPoint(ptPoint);
+			vecClosest = lineSegment.ClosestPoint(p_vecPoint);
 			break;
 		case 3:
 			// closest of 2D simplex is closest to triangle
 			triangle.Vertices[0] = listSimplexVertices[0];
 			triangle.Vertices[1] = listSimplexVertices[1];
 			triangle.Vertices[2] = listSimplexVertices[2];
-			ptClosest = triangle.ClosestPoint(ptPoint);
+			vecClosest = triangle.ClosestPoint(p_vecPoint);
 			break;
 		case 4:
 			// closest of 2D simplex is closest to tetrahedron
@@ -797,7 +799,7 @@ TPoint3<Real> ConvexPolyhedron::GetClosestPoint(
 			tetrahedron.Vertices[1] = listSimplexVertices[1];
 			tetrahedron.Vertices[2] = listSimplexVertices[2];
 			tetrahedron.Vertices[3] = listSimplexVertices[3];
-			ptClosest = tetrahedron.ClosestPoint(ptPoint);
+			vecClosest = tetrahedron.ClosestPoint(p_vecPoint);
 			break;
 		default:
 			MESON_ASSERT(false, "GJK point containment algorithm error.")
@@ -806,14 +808,14 @@ TPoint3<Real> ConvexPolyhedron::GetClosestPoint(
 
 		// if current simplex contains point, return it as closest
 		// (contained inside)
-		if (ptClosest == ptPoint)
-			return ptPoint;
+		if (vecClosest == p_vecPoint)
+			return p_vecPoint;
 
 		// reduce current simplex by eliminating redundant vertices
-		TVector3<Real> vecPointOffset(ptPoint - ptClosest);
+		TVector3<Real> vecPointOffset(p_vecPoint - vecClosest);
 		for (size_t unIndex = 0; unIndex < listSimplexVertices.Size();)
 		{
-			TVector3<Real> vecVertexOffset(listSimplexVertices[unIndex] - ptClosest);
+			TVector3<Real> vecVertexOffset(listSimplexVertices[unIndex] - vecClosest);
 			if (vecPointOffset * vecVertexOffset < -TMaths<Real>::Epsilon)
 				listSimplexVertices.RemoveAt(unIndex);
 			else
@@ -822,19 +824,19 @@ TPoint3<Real> ConvexPolyhedron::GetClosestPoint(
 
 		// find new max vertex in direction of point (chose one if many)
 		EnumerateMaximalVertices(vecPointOffset, listMaximalVertices);
-		TPoint3<Real>& ptNewVertex = listMaximalVertices[0];
+		TVector3<Real>& vecNewVertex = listMaximalVertices[0];
 
 		// if new vertex is already part of simplex, cannot find closer point
 		// (point is external and closest is on boundary)
 		for (size_t unIndex = 0; unIndex < listSimplexVertices.Size(); unIndex++)
-			if (listSimplexVertices[unIndex] == ptNewVertex)
-				return ptClosest;
+			if (listSimplexVertices[unIndex] == vecNewVertex)
+				return vecClosest;
 
 		// otherwise, add new vertex to simplex
 		listSimplexVertices.Add(listMaximalVertices[0]);
 	}
 
-	return ptClosest;
+	return vecClosest;
 }
 
 ConvexPolyhedron ConvexPolyhedron::TransformCopy(

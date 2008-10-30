@@ -215,26 +215,26 @@ void TriangleMeshToConvexPolyhedronCollisionDetector::ComputeContactManifold(
 		vecPenetrationNormal = -vecPenetrationNormal;
 
 	// add contact points from triangle
-	static PointArrayList listVertices;
+	static VectorArrayList listVertices;
 	p_triangle.EnumerateMaximalVertices(vecPenetrationNormal, listVertices);
 	for (size_t unIndex = 0; unIndex < listVertices.Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = listVertices[unIndex];
-		if (p_convexPolyhedron.ContainsPoint(ptVertex))
+		TVector3<Real>& vecVertex = listVertices[unIndex];
+		if (p_convexPolyhedron.ContainsPoint(vecVertex))
 			p_contactManifold.ContactPoints.Add(
-				ContactPoint(ptVertex, vecPenetrationNormal, rPenetration));
+				ContactPoint(vecVertex, vecPenetrationNormal, rPenetration));
 	}
 
 	// add contact points from polyhedron
 	p_convexPolyhedron.EnumerateMaximalVertices(-vecPenetrationNormal, listVertices);
 	for (size_t unIndex = 0; unIndex < listVertices.Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = listVertices[unIndex];
-		if (p_triangle.ContainsPointProjection(ptVertex))
+		TVector3<Real>& vecVertex = listVertices[unIndex];
+		if (p_triangle.ContainsPointProjection(vecVertex))
 		{
-			rPenetration = TMaths<Real>::Abs(p_triangle.SignedDistanceFromPlane(ptVertex));
+			rPenetration = TMaths<Real>::Abs(p_triangle.SignedDistanceFromPlane(vecVertex));
 			p_contactManifold.ContactPoints.Add(
-				ContactPoint(ptVertex, vecPenetrationNormal, rPenetration));
+				ContactPoint(vecVertex, vecPenetrationNormal, rPenetration));
 		}
 	}
 

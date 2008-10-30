@@ -21,13 +21,13 @@ using namespace Meson::Gravitas::Geometry;
 
 bool TriangleMeshToHalfspaceCollisionDetector::TestIntersection(
 	const Meson::Gravitas::Geometry::TriangleMeshNode* pTriangleMeshNode,
-	const TPoint3<Real>& p_ptPlanePoint,
+	const TVector3<Real>& p_vecPlanePoint,
 	const TVector3<Real>& p_vecPlaneNormal) const
 {
 	static TInterval<Real> itvVolumeProjection;
 	pTriangleMeshNode->BoundingVolume.ProjectToInterval(p_vecPlaneNormal, itvVolumeProjection);
 
-	Real rPlaneProjection = p_ptPlanePoint.ToVector() * p_vecPlaneNormal;
+	Real rPlaneProjection = p_vecPlanePoint * p_vecPlaneNormal;
 
 	if (!itvVolumeProjection.Contains(rPlaneProjection))
 		return false;
@@ -50,11 +50,11 @@ bool TriangleMeshToHalfspaceCollisionDetector::TestIntersection(
 	}
 
 	if (pTriangleMeshNode->Child[0] != NULL
-		&& TestIntersection(pTriangleMeshNode->Child[0], p_ptPlanePoint, p_vecPlaneNormal))
+		&& TestIntersection(pTriangleMeshNode->Child[0], p_vecPlanePoint, p_vecPlaneNormal))
 		return true;
 
 	if (pTriangleMeshNode->Child[1] != NULL
-		&& TestIntersection(pTriangleMeshNode->Child[1], p_ptPlanePoint, p_vecPlaneNormal))
+		&& TestIntersection(pTriangleMeshNode->Child[1], p_vecPlanePoint, p_vecPlaneNormal))
 		return true;
 
 	return false;
@@ -62,14 +62,14 @@ bool TriangleMeshToHalfspaceCollisionDetector::TestIntersection(
 
 void TriangleMeshToHalfspaceCollisionDetector::ComputeContactManifold(
 	const TriangleMeshNode* pTriangleMeshNode,
-	const Meson::Common::Maths::TPoint3<Real>& p_ptPlanePoint,
+	const Meson::Common::Maths::TVector3<Real>& p_vecPlanePoint,
 	const Meson::Common::Maths::TVector3<Real>& p_vecPlaneNormal,
 	ContactManifold& p_contactManifold) const
 {
 	static TInterval<Real> itvVolumeProjection;
 	pTriangleMeshNode->BoundingVolume.ProjectToInterval(p_vecPlaneNormal, itvVolumeProjection);
 
-	Real rPlaneProjection = p_ptPlanePoint.ToVector() * p_vecPlaneNormal;
+	Real rPlaneProjection = p_vecPlanePoint * p_vecPlaneNormal;
 
 	if (!itvVolumeProjection.Contains(rPlaneProjection))
 		return;
@@ -87,7 +87,7 @@ void TriangleMeshToHalfspaceCollisionDetector::ComputeContactManifold(
 
 			for (size_t unVertexIndex = 0; unVertexIndex < 3; unVertexIndex++)
 			{
-				Real rVertexProjection = triangle.Vertices[unVertexIndex].ToVector() * p_vecPlaneNormal;
+				Real rVertexProjection = triangle.Vertices[unVertexIndex] * p_vecPlaneNormal;
 				if (rVertexProjection < rPlaneProjection)
 					p_contactManifold.ContactPoints.Add(ContactPoint(
 						triangle.Vertices[unVertexIndex],
@@ -99,11 +99,11 @@ void TriangleMeshToHalfspaceCollisionDetector::ComputeContactManifold(
 
 	if (pTriangleMeshNode->Child[0] != NULL)
 		ComputeContactManifold(
-			pTriangleMeshNode->Child[0], p_ptPlanePoint, p_vecPlaneNormal, p_contactManifold);
+			pTriangleMeshNode->Child[0], p_vecPlanePoint, p_vecPlaneNormal, p_contactManifold);
 
 	if (pTriangleMeshNode->Child[1] != NULL)
 		ComputeContactManifold(
-			pTriangleMeshNode->Child[1], p_ptPlanePoint, p_vecPlaneNormal, p_contactManifold);
+			pTriangleMeshNode->Child[1], p_vecPlanePoint, p_vecPlaneNormal, p_contactManifold);
 }
 
 TriangleMeshToHalfspaceCollisionDetector::TriangleMeshToHalfspaceCollisionDetector(void)
@@ -141,11 +141,11 @@ bool TriangleMeshToHalfspaceCollisionDetector::TestIntersection(
 	else
 	{
 		// transform plane point and normal
-		TPoint3<Real> ptPlanePoint = TPoint3<Real>::Origin + p_trnRelativePlacement.Translation;
+		const TVector3<Real>& vecPlanePoint = p_trnRelativePlacement.Translation;
 		TVector3<Real> vecPlaneNormal
 			= (p_trnRelativePlacement.Rotation * TVector3<Real>::Up * p_trnRelativePlacement.Rotation.ConjugateCopy()).Vector;
 
-		return TestIntersection(triangleMesh.Root, ptPlanePoint, vecPlaneNormal);
+		return TestIntersection(triangleMesh.Root, vecPlanePoint, vecPlaneNormal);
 	}
 }
 
@@ -181,12 +181,12 @@ void TriangleMeshToHalfspaceCollisionDetector::ComputeContactManifold(
 	else
 	{
 		// transform plane point and normal
-		TPoint3<Real> ptPlanePoint = TPoint3<Real>::Origin + p_trnRelativePlacement.Translation;
+		const TVector3<Real>& vecPlanePoint = p_trnRelativePlacement.Translation;
 		TVector3<Real> vecPlaneNormal
 			= (p_trnRelativePlacement.Rotation * TVector3<Real>::Up
 				* p_trnRelativePlacement.Rotation.ConjugateCopy()).Vector;
 
-		ComputeContactManifold(triangleMesh.Root, ptPlanePoint, vecPlaneNormal, p_contactManifold);
+		ComputeContactManifold(triangleMesh.Root, vecPlanePoint, vecPlaneNormal, p_contactManifold);
 
 		// reduce excessive contacts
 		RandomGeneric& randomGeneric = GravitasEngine::GetInstance()->Random();

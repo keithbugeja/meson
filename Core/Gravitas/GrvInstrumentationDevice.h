@@ -3,7 +3,6 @@
 #include "Pointer.h"
 #include "String8.h"
 #include "Vector3.h"
-#include "Point3.h"
 #include "Matrix4.h"
 
 #include "GrvNamespaces.h"
@@ -189,72 +188,72 @@ public:
 	/// label objects or display object properties in the world. The text should be rendered with
 	/// the current device colour and the position should be transformed using the current world
 	/// transform.
-	/// \param p_ptPosition World coordinates to render the text.
+	/// \param p_vecPosition World coordinates to render the text.
 	/// \param p_strText Text to render at the givne position.
 	//----------------------------------------------------------------------------------------------
 	virtual void DrawText(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPosition,
+		const Meson::Common::Maths::TVector3<Real>& p_vecPosition,
 		const Meson::Common::Text::String& p_strText) = 0;
 
 	//----------------------------------------------------------------------------------------------
 	/// Renders a point with the current device colour at the given world position. The position
 	/// should be transformed using the current world transform.
-	/// \param p_ptPosition World coordinate where to render the point.
+	/// \param p_vecPosition World coordinate where to render the point.
 	//----------------------------------------------------------------------------------------------
 	virtual void DrawPoint(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPosition) = 0;
+		const Meson::Common::Maths::TVector3<Real>& p_vecPosition) = 0;
 
 	//----------------------------------------------------------------------------------------------
 	/// Renders a line with the given device colour using the given points transformed using the
 	/// current world transform.
-	/// \param p_ptStart Starting point for the line.
-	/// \param p_ptEnd Ending point for the line.
+	/// \param p_vecStart Starting point for the line.
+	/// \param p_vecEnd Ending point for the line.
 	//----------------------------------------------------------------------------------------------
 	virtual void DrawLine(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptStart,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptEnd) = 0;
+		const Meson::Common::Maths::TVector3<Real>& p_vecStart,
+		const Meson::Common::Maths::TVector3<Real>& p_vecEnd) = 0;
 
 	//----------------------------------------------------------------------------------------------
 	/// Renders a representation of an arrow with the given device colour using the given points
 	/// transformed using the current world transform.
-	/// \param p_ptHead Position representing the head of the arrow.
-	/// \param p_ptTail Position representing the tail of the arrow.
+	/// \param p_vecHead Position representing the head of the arrow.
+	/// \param p_vecTail Position representing the tail of the arrow.
 	//----------------------------------------------------------------------------------------------
 	virtual void DrawArrow(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptHead,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptTail) = 0;
+		const Meson::Common::Maths::TVector3<Real>& p_vecHead,
+		const Meson::Common::Maths::TVector3<Real>& p_vecTail) = 0;
 
 	//----------------------------------------------------------------------------------------------
 	/// Renders a sphere using the current device colour with the given centre transformed using
 	/// the current world transform and the given radius.
-	/// \param p_ptCentre Sphere centre.
+	/// \param p_vecCentre Sphere centre.
 	/// \param p_rRadius Sphere radius.
 	//----------------------------------------------------------------------------------------------
 	virtual void DrawSphere(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptCentre,
+		const Meson::Common::Maths::TVector3<Real>& p_vecCentre,
 		Real p_rRadius) = 0;
 
 	//----------------------------------------------------------------------------------------------
 	/// Renders a box using the current device colour with the given box centre transformed using
 	/// the current world transform and the given extents also transformed. Prior to transformation,
 	/// the box is axis-aligned.
-	/// \param p_ptCentre Box centroid.
+	/// \param p_vecCentre Box centroid.
 	/// \param p_vecExtents A vector of box extents.
 	//----------------------------------------------------------------------------------------------
 	virtual void DrawBox(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptCentre,
+		const Meson::Common::Maths::TVector3<Real>& p_vecCentre,
 		const Meson::Common::Maths::TVector3<Real>& p_vecExtents) = 0;
 
 	//----------------------------------------------------------------------------------------------
 	/// Renders a box using the current device colour with the given box centre and extents. The
 	/// box is transformed by the given orientation and also the current world transform.
 	/// \param p_matOrientation Box orientation prior to world transform.
-	/// \param p_ptCentre Box centroid.
+	/// \param p_vecCentre Box centroid.
 	/// \param p_vecExtents A vector of box extents.
 	//----------------------------------------------------------------------------------------------
 	virtual void DrawBox(
 		const Meson::Common::Maths::TMatrix3<Real>& p_matOrientation,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptCentre,
+		const Meson::Common::Maths::TVector3<Real>& p_vecCentre,
 		const Meson::Common::Maths::TVector3<Real>& p_vecExtents) = 0;
 };
 

@@ -33,7 +33,7 @@ struct BodyRayIntersection
 	//------------------------------------------------------------------------------------------
 	/// The point of intersection between the ray and body in world coordinates.
 	//------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Position;
+	Meson::Common::Maths::TVector3<Real> Position;
 
 	//------------------------------------------------------------------------------------------
 	/// Constructs a body ray intersection structure.
@@ -45,12 +45,12 @@ struct BodyRayIntersection
 	/// pointer to a body and position.
 	/// \param p_ray A reference to the ray intersecting the body.
 	/// \param p_pBody A managed pointer to the body intersected by the ray.
-	/// \param p_ptPosition A point of intersection in world space.
+	/// \param p_vecPosition A point of intersection in world space.
 	//------------------------------------------------------------------------------------------
 	BodyRayIntersection(
 		const Meson::Gravitas::Geometry::Ray& p_ray,
 		Meson::Gravitas::Body::BodyPtr p_pBody,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPosition);
+		const Meson::Common::Maths::TVector3<Real>& p_vecPosition);
 
 	//------------------------------------------------------------------------------------------
 	/// Constructs a body ray intersection structure using the given source structure.

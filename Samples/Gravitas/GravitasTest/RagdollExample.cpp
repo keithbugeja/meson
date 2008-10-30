@@ -61,7 +61,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	pRigidBodyHead->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position head
-	pRigidBodyHead->GetKineticProperties().Position = TPoint3<Real>(0.0, 3.0, 0.0);
+	pRigidBodyHead->GetKineticProperties().Position = TVector3<Real>(0.0, 3.0, 0.0);
 	pRigidBodyHead->GetKineticProperties().LinearVelocity = TVector3<Real>(1.0, 0.0, -4.0);
 
 	// bounding sphere
@@ -106,7 +106,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	pRigidBodyTorso->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position torso
-	pRigidBodyTorso->GetKineticProperties().Position = TPoint3<Real>(0.0, 1.5, 0.0);
+	pRigidBodyTorso->GetKineticProperties().Position = TVector3<Real>(0.0, 1.5, 0.0);
 
 	// bounding sphere
 	pBoundingSphere = new Meson::Gravitas::Geometry::BoundingSphere();
@@ -157,7 +157,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	pRigidBodyUpperArmLeft->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position upper arm left
-	pRigidBodyUpperArmLeft->GetKineticProperties().Position = TPoint3<Real>(1.5, 2.25, 0.0);
+	pRigidBodyUpperArmLeft->GetKineticProperties().Position = TVector3<Real>(1.5, 2.25, 0.0);
 	pRigidBodyUpperArmLeft->GetKineticProperties().Orientation.MakeRotation(TVector3<Real>::Out, TMaths<Real>::PiHalf);
 	pRigidBodyUpperArmLeft->GetKineticProperties().OrientationConjugate = pRigidBodyUpperArmLeft->GetKineticProperties().Orientation.ConjugateCopy();
 
@@ -189,7 +189,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 
 
 	// position upper arm right
-	pRigidBodyUpperArmRight->GetKineticProperties().Position = TPoint3<Real>(-1.5, 2.25, 0.0);
+	pRigidBodyUpperArmRight->GetKineticProperties().Position = TVector3<Real>(-1.5, 2.25, 0.0);
 	pRigidBodyUpperArmRight->GetKineticProperties().Orientation.MakeRotation(TVector3<Real>::Out, TMaths<Real>::PiHalf);
 	pRigidBodyUpperArmRight->GetKineticProperties().OrientationConjugate = pRigidBodyUpperArmLeft->GetKineticProperties().Orientation.ConjugateCopy();
 
@@ -219,7 +219,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	pRigidBodyLowerArmLeft->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position lower arm right
-	pRigidBodyLowerArmLeft->GetKineticProperties().Position = TPoint3<Real>(2.75, 2.25, 0.0);
+	pRigidBodyLowerArmLeft->GetKineticProperties().Position = TVector3<Real>(2.75, 2.25, 0.0);
 	pRigidBodyLowerArmLeft->GetKineticProperties().Orientation.MakeRotation(TVector3<Real>::Out, TMaths<Real>::PiHalf);
 	pRigidBodyLowerArmLeft->GetKineticProperties().OrientationConjugate = pRigidBodyUpperArmLeft->GetKineticProperties().Orientation.ConjugateCopy();
 
@@ -249,7 +249,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	pRigidBodyLowerArmRight->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position lower arm right
-	pRigidBodyLowerArmRight->GetKineticProperties().Position = TPoint3<Real>(-2.75, 2.25, 0.0);
+	pRigidBodyLowerArmRight->GetKineticProperties().Position = TVector3<Real>(-2.75, 2.25, 0.0);
 	pRigidBodyLowerArmRight->GetKineticProperties().Orientation.MakeRotation(TVector3<Real>::Out, TMaths<Real>::PiHalf);
 	pRigidBodyLowerArmRight->GetKineticProperties().OrientationConjugate = pRigidBodyUpperArmLeft->GetKineticProperties().Orientation.ConjugateCopy();
 
@@ -279,7 +279,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	pRigidBodyUpperLegLeft->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position upper leg left
-	pRigidBodyUpperLegLeft->GetKineticProperties().Position = TPoint3<Real>(0.3, 0.0, 0.0);
+	pRigidBodyUpperLegLeft->GetKineticProperties().Position = TVector3<Real>(0.3, 0.0, 0.0);
 
 	// bounding sphere
 	pRigidBodyUpperLegLeft->SetBoundingVolume(Meson::Gravitas::Geometry::BoundingVolumePtr(pBoundingSphere));
@@ -307,7 +307,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	pRigidBodyUpperLegRight->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position upper leg right
-	pRigidBodyUpperLegRight->GetKineticProperties().Position = TPoint3<Real>(-0.3, 0.0, 0.0);
+	pRigidBodyUpperLegRight->GetKineticProperties().Position = TVector3<Real>(-0.3, 0.0, 0.0);
 
 	// bounding sphere
 	pRigidBodyUpperLegRight->SetBoundingVolume(Meson::Gravitas::Geometry::BoundingVolumePtr(pBoundingSphere));
@@ -335,7 +335,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	pRigidBodyLowerLegLeft->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position lower leg left
-	pRigidBodyLowerLegLeft->GetKineticProperties().Position = TPoint3<Real>(0.3, -1.25, 0.0);
+	pRigidBodyLowerLegLeft->GetKineticProperties().Position = TVector3<Real>(0.3, -1.25, 0.0);
 
 	// bounding sphere
 	pRigidBodyLowerLegLeft->SetBoundingVolume(Meson::Gravitas::Geometry::BoundingVolumePtr(pBoundingSphere));
@@ -363,7 +363,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	pRigidBodyLowerLegRight->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position lower leg left
-	pRigidBodyLowerLegRight->GetKineticProperties().Position = TPoint3<Real>(-0.3, -1.25, 0.0);
+	pRigidBodyLowerLegRight->GetKineticProperties().Position = TVector3<Real>(-0.3, -1.25, 0.0);
 
 	// bounding sphere
 	pRigidBodyLowerLegRight->SetBoundingVolume(Meson::Gravitas::Geometry::BoundingVolumePtr(pBoundingSphere));
@@ -390,7 +390,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	ConstraintPtr pConstraintNeck = pConstraintFactorySphericalJoint->CreateConstraint();
 	pConstraintNeck->SetBody1(pBodyHead);
 	pConstraintNeck->SetBody2(pBodyTorso);
-	pConstraintNeck->SetProperty("BindPoint", TPoint3<Real>(0.0, 2.375, 0.0));
+	pConstraintNeck->SetProperty("BindPoint", TVector3<Real>(0.0, 2.375, 0.0));
 	pConstraintNeck->SetProperty("AngleLimit", TMaths<Real>::Pi * 0.125);
 	pConstraintNeck->Bind();
 	p_pConstraintList->Add(pConstraintNeck);
@@ -399,7 +399,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	ConstraintPtr pConstraintShoulderLeft = pConstraintFactorySphericalJoint->CreateConstraint();
 	pConstraintShoulderLeft->SetBody1(pBodyTorso);
 	pConstraintShoulderLeft->SetBody2(pBodyUpperArmLeft);
-	pConstraintShoulderLeft->SetProperty("BindPoint", TPoint3<Real>(0.75, 2.25, 0.0));
+	pConstraintShoulderLeft->SetProperty("BindPoint", TVector3<Real>(0.75, 2.25, 0.0));
 	pConstraintShoulderLeft->SetProperty("AngleLimit", TMaths<Real>::Pi * 0.75);
 	pConstraintShoulderLeft->Bind();
 	p_pConstraintList->Add(pConstraintShoulderLeft);
@@ -408,7 +408,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	ConstraintPtr pConstraintShoulderRight = pConstraintFactorySphericalJoint->CreateConstraint();
 	pConstraintShoulderRight->SetBody1(pBodyTorso);
 	pConstraintShoulderRight->SetBody2(pBodyUpperArmRight);
-	pConstraintShoulderRight->SetProperty("BindPoint", TPoint3<Real>(-0.75, 2.25, 0.0));
+	pConstraintShoulderRight->SetProperty("BindPoint", TVector3<Real>(-0.75, 2.25, 0.0));
 	pConstraintShoulderRight->SetProperty("AngleLimit", TMaths<Real>::Pi * 0.75);
 	pConstraintShoulderRight->Bind();
 	p_pConstraintList->Add(pConstraintShoulderRight);
@@ -417,8 +417,8 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	ConstraintPtr pConstraintElbowLeft = pConstraintFactoryRevoluteJoint->CreateConstraint();
 	pConstraintElbowLeft->SetBody1(pBodyUpperArmLeft);
 	pConstraintElbowLeft->SetBody2(pBodyLowerArmLeft);
-	pConstraintElbowLeft->SetProperty("BindAxisPoint1", TPoint3<Real>(2.125, 2.35, 0.0));
-	pConstraintElbowLeft->SetProperty("BindAxisPoint2", TPoint3<Real>(2.125, 2.15, 0.0));
+	pConstraintElbowLeft->SetProperty("BindAxisPoint1", TVector3<Real>(2.125, 2.35, 0.0));
+	pConstraintElbowLeft->SetProperty("BindAxisPoint2", TVector3<Real>(2.125, 2.15, 0.0));
 	pConstraintElbowLeft->Bind();
 	p_pConstraintList->Add(pConstraintElbowLeft);
 
@@ -426,8 +426,8 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	ConstraintPtr pConstraintElbowRight = pConstraintFactoryRevoluteJoint->CreateConstraint();
 	pConstraintElbowRight->SetBody1(pBodyUpperArmRight);
 	pConstraintElbowRight->SetBody2(pBodyLowerArmRight);
-	pConstraintElbowRight->SetProperty("BindAxisPoint1", TPoint3<Real>(-2.125, 2.35, 0.0));
-	pConstraintElbowRight->SetProperty("BindAxisPoint2", TPoint3<Real>(-2.125, 2.15, 0.0));
+	pConstraintElbowRight->SetProperty("BindAxisPoint1", TVector3<Real>(-2.125, 2.35, 0.0));
+	pConstraintElbowRight->SetProperty("BindAxisPoint2", TVector3<Real>(-2.125, 2.15, 0.0));
 	pConstraintElbowRight->Bind();
 	p_pConstraintList->Add(pConstraintElbowRight);
 
@@ -435,7 +435,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	ConstraintPtr pConstraintHipLeft = pConstraintFactorySphericalJoint->CreateConstraint();
 	pConstraintHipLeft->SetBody1(pBodyTorso);
 	pConstraintHipLeft->SetBody2(pBodyUpperLegLeft);
-	pConstraintHipLeft->SetProperty("BindPoint", TPoint3<Real>(0.3, 0.625, 0.0));
+	pConstraintHipLeft->SetProperty("BindPoint", TVector3<Real>(0.3, 0.625, 0.0));
 	pConstraintHipLeft->SetProperty("AngleLimit", TMaths<Real>::Pi * 0.25);
 	pConstraintHipLeft->Bind();
 	p_pConstraintList->Add(pConstraintHipLeft);
@@ -444,7 +444,7 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	ConstraintPtr pConstraintHipRight = pConstraintFactorySphericalJoint->CreateConstraint();
 	pConstraintHipRight->SetBody1(pBodyTorso);
 	pConstraintHipRight->SetBody2(pBodyUpperLegRight);
-	pConstraintHipRight->SetProperty("BindPoint", TPoint3<Real>(-0.3, 0.625, 0.0));
+	pConstraintHipRight->SetProperty("BindPoint", TVector3<Real>(-0.3, 0.625, 0.0));
 	pConstraintHipRight->SetProperty("AngleLimit", TMaths<Real>::Pi * 0.25);
 	pConstraintHipRight->Bind();
 	p_pConstraintList->Add(pConstraintHipRight);
@@ -453,8 +453,8 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	ConstraintPtr pConstraintKneeLeft = pConstraintFactoryRevoluteJoint->CreateConstraint();
 	pConstraintKneeLeft->SetBody1(pBodyUpperLegLeft);
 	pConstraintKneeLeft->SetBody2(pBodyLowerLegLeft);
-	pConstraintKneeLeft->SetProperty("BindAxisPoint1", TPoint3<Real>(0.55, -0.625, 0.1));
-	pConstraintKneeLeft->SetProperty("BindAxisPoint2", TPoint3<Real>(0.05, -0.625, 0.1));
+	pConstraintKneeLeft->SetProperty("BindAxisPoint1", TVector3<Real>(0.55, -0.625, 0.1));
+	pConstraintKneeLeft->SetProperty("BindAxisPoint2", TVector3<Real>(0.05, -0.625, 0.1));
 	pConstraintKneeLeft->SetProperty("AngleLimit", TMaths<Real>::Pi * 0.5);
 	pConstraintKneeLeft->Bind();
 	p_pConstraintList->Add(pConstraintKneeLeft);
@@ -463,8 +463,8 @@ void CreateRagdoll(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList*
 	ConstraintPtr pConstraintKneeRight = pConstraintFactoryRevoluteJoint->CreateConstraint();
 	pConstraintKneeRight->SetBody1(pBodyUpperLegRight);
 	pConstraintKneeRight->SetBody2(pBodyLowerLegRight);
-	pConstraintKneeRight->SetProperty("BindAxisPoint1", TPoint3<Real>(-0.05, -0.625, 0.0));
-	pConstraintKneeRight->SetProperty("BindAxisPoint2", TPoint3<Real>(-0.55, -0.625, 0.0));
+	pConstraintKneeRight->SetProperty("BindAxisPoint1", TVector3<Real>(-0.05, -0.625, 0.0));
+	pConstraintKneeRight->SetProperty("BindAxisPoint2", TVector3<Real>(-0.55, -0.625, 0.0));
 	pConstraintKneeRight->SetProperty("AngleLimit", TMaths<Real>::Pi * 0.5);
 	pConstraintKneeRight->Bind();
 	p_pConstraintList->Add(pConstraintKneeRight);

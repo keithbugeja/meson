@@ -18,13 +18,13 @@ Triangle::Triangle(const Triangle& p_triangle)
 }
 
 Triangle::Triangle(
-	const TPoint3<Real>& p_ptVertex0,
-	const TPoint3<Real>& p_ptVertex1,
-	const TPoint3<Real>& p_ptVertex2)
+	const TVector3<Real>& p_vecVertex0,
+	const TVector3<Real>& p_vecVertex1,
+	const TVector3<Real>& p_vecVertex2)
 {
-	Vertices[0] = p_ptVertex0;
-	Vertices[1] = p_ptVertex1;
-	Vertices[2] = p_ptVertex2;
+	Vertices[0] = p_vecVertex0;
+	Vertices[1] = p_vecVertex1;
+	Vertices[2] = p_vecVertex2;
 }
 
 Real Triangle::Area(void) const
@@ -37,13 +37,9 @@ TVector3<Real> Triangle::Normal(void) const
 	return ((Vertices[2] - Vertices[0]) ^ (Vertices[1] - Vertices[0])).NormaliseCopy();
 }
 
-TPoint3<Real> Triangle::Centroid(void) const
+TVector3<Real> Triangle::Centroid(void) const
 {
-	TPoint3<Real> ptCentroid(Vertices[0]);
-	ptCentroid += Vertices[1].ToVector();
-	ptCentroid += Vertices[2].ToVector();
-	ptCentroid.ToVector() *= (Real) 1.0 / (Real) 3.0;
-	return ptCentroid;
+	return (Vertices[0] + Vertices[1] + Vertices[2]) / (Real) 3.0;
 }
 
 TVector3<Real> Triangle::Edge(size_t p_unIndex) const
@@ -51,30 +47,30 @@ TVector3<Real> Triangle::Edge(size_t p_unIndex) const
 	return Vertices[(p_unIndex + 1) % 3] - Vertices[p_unIndex % 3];
 }
 
-Real Triangle::DistanceFromPoint(const TPoint3<Real>& p_ptPoint) const
+Real Triangle::DistanceFromPoint(const TVector3<Real>& p_vecPoint) const
 {
-	return (p_ptPoint - ClosestPoint(p_ptPoint)).Length();
+	return (p_vecPoint - ClosestPoint(p_vecPoint)).Length();
 }
 
 Real Triangle::DistanceFromPoint(
-	const TPoint3<Real>& p_ptPoint,
-	TPoint3<Real>& p_ptClosestPoint) const
+	const TVector3<Real>& p_vecPoint,
+	TVector3<Real>& p_vecClosestPoint) const
 {
-	p_ptClosestPoint = ClosestPoint(p_ptPoint);
-	return (p_ptPoint - p_ptClosestPoint).Length();
+	p_vecClosestPoint = ClosestPoint(p_vecPoint);
+	return (p_vecPoint - p_vecClosestPoint).Length();
 }
 
-Real Triangle::SignedDistanceFromPlane(const TPoint3<Real>& p_ptPoint) const
+Real Triangle::SignedDistanceFromPlane(const TVector3<Real>& p_vecPoint) const
 {
-	return (p_ptPoint - Vertices[0]) * Normal();
+	return (p_vecPoint - Vertices[0]) * Normal();
 }
 
-TPoint3<Real> Triangle::ClosestPoint(const TPoint3<Real>& p_ptPoint) const
+TVector3<Real> Triangle::ClosestPoint(const TVector3<Real>& p_vecPoint) const
 {
-	const TPoint3<Real>& p = p_ptPoint;
-	const TPoint3<Real>& a = Vertices[0];
-	const TPoint3<Real>& b = Vertices[1];
-	const TPoint3<Real>& c = Vertices[2];
+	const TVector3<Real>& p = p_vecPoint;
+	const TVector3<Real>& a = Vertices[0];
+	const TVector3<Real>& b = Vertices[1];
+	const TVector3<Real>& c = Vertices[2];
 
 	// test if point is vertex 0 or its voronoi region
 	TVector3<Real> ab(b - a), ac(c - a), ap(p - a);
@@ -123,19 +119,19 @@ TPoint3<Real> Triangle::ClosestPoint(const TPoint3<Real>& p_ptPoint) const
 	return a + ab * v + ac * w;
 }
 
-bool Triangle::Contains(const TPoint3<Real>& p_ptPoint) const
+bool Triangle::Contains(const TVector3<Real>& p_vecPoint) const
 {
-	return ClosestPoint(p_ptPoint) == p_ptPoint;
+	return ClosestPoint(p_vecPoint) == p_vecPoint;
 }
 
 bool Triangle::Intersects(const Ray& p_ray) const
 {
-	static TPoint3<Real> s_ptIntersectionPoint;
-	return Intersects(p_ray, s_ptIntersectionPoint);
+	static TVector3<Real> s_vecIntersectionPoint;
+	return Intersects(p_ray, s_vecIntersectionPoint);
 }
 
 bool Triangle::Intersects(const Ray& p_ray,
-	const Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const
+	const TVector3<Real>& p_vecIntersectionPoint) const
 {
 	// TODO!!
 	return false;
@@ -179,27 +175,27 @@ bool Triangle::Intersects(const Triangle& p_triangle) const
 	return true;
 }
 
-bool Triangle::PointOnPlane(const TPoint3<Real>& p_ptPoint) const
+bool Triangle::PointOnPlane(const TVector3<Real>& p_vecPoint) const
 {
-	return TMaths<Real>::Equals((p_ptPoint - Vertices[0]) * Normal(), (Real) 0.0);
+	return TMaths<Real>::Equals((p_vecPoint - Vertices[0]) * Normal(), (Real) 0.0);
 }
 
-bool Triangle::PointAbovePlane(const TPoint3<Real>& p_ptPoint) const
+bool Triangle::PointAbovePlane(const TVector3<Real>& p_vecPoint) const
 {
-	return (p_ptPoint - Vertices[0]) * Normal() > TMaths<Real>::Epsilon;
+	return (p_vecPoint - Vertices[0]) * Normal() > TMaths<Real>::Epsilon;
 }
 
-bool Triangle::PointBelowPlane(const TPoint3<Real>& p_ptPoint) const
+bool Triangle::PointBelowPlane(const TVector3<Real>& p_vecPoint) const
 {
-	return (p_ptPoint - Vertices[0]) * Normal() < -TMaths<Real>::Epsilon;
+	return (p_vecPoint - Vertices[0]) * Normal() < -TMaths<Real>::Epsilon;
 }
 
-bool Triangle::ContainsPointProjection(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const
+bool Triangle::ContainsPointProjection(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const
 {
 	// edge vectors and point offset
 	TVector3<Real> vecEdge02 = Vertices[2] - Vertices[0];
 	TVector3<Real> vecEdge01 = Vertices[1] - Vertices[0];
-	TVector3<Real> vecPointOffset = p_ptPoint - Vertices[0];
+	TVector3<Real> vecPointOffset = p_vecPoint - Vertices[0];
 
 	// dot products
 	Real rE02Sqr = vecEdge02.LengthSquared();
@@ -225,24 +221,23 @@ bool Triangle::ContainsPointProjection(const Meson::Common::Maths::TPoint3<Real>
 	return rBaryU + rBaryV <= (Real) 1.0;
 }
 
-void Triangle::ProjectToInterval(Meson::Common::Maths::TVector3<Real> p_vecAxis,
-	Meson::Common::Maths::TInterval<Real>& p_interval) const
+void Triangle::ProjectToInterval(TVector3<Real> p_vecAxis, TInterval<Real>& p_interval) const
 {
 	p_interval.MakeEmpty();
-	p_interval.Extend(Vertices[0].ToVector() * p_vecAxis);
-	p_interval.Extend(Vertices[1].ToVector() * p_vecAxis);
-	p_interval.Extend(Vertices[2].ToVector() * p_vecAxis);
+	p_interval.Extend(Vertices[0] * p_vecAxis);
+	p_interval.Extend(Vertices[1] * p_vecAxis);
+	p_interval.Extend(Vertices[2] * p_vecAxis);
 }
 
 void Triangle::EnumerateMaximalVertices(
-	const Meson::Common::Maths::TVector3<Real>& p_vecDirection,
-	Meson::Gravitas::PointList& p_listVertices) const
+	const TVector3<Real>& p_vecDirection,
+	VectorList& p_listVertices) const
 {
 	p_listVertices.Clear();
 
-	Real rVertexProjection0 = Vertices[0].ToVector() * p_vecDirection;
-	Real rVertexProjection1 = Vertices[1].ToVector() * p_vecDirection;
-	Real rVertexProjection2 = Vertices[2].ToVector() * p_vecDirection;
+	Real rVertexProjection0 = Vertices[0] * p_vecDirection;
+	Real rVertexProjection1 = Vertices[1] * p_vecDirection;
+	Real rVertexProjection2 = Vertices[2] * p_vecDirection;
 
 	if (rVertexProjection1 > rVertexProjection0)
 	{
@@ -297,9 +292,9 @@ void Triangle::EnumerateMaximalVertices(
 
 void Triangle::Invert(void)
 {
-	TPoint3<Real> ptTemp(Vertices[1]);
+	TVector3<Real> vecTemp(Vertices[1]);
 	Vertices[1] = Vertices[2];
-	Vertices[2] = ptTemp;
+	Vertices[2] = vecTemp;
 }
 
 void Triangle::Transform(const Meson::Gravitas::Geometry::Transform& p_transform)

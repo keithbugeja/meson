@@ -69,7 +69,7 @@ void CreateCart(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList* p_
 	pRigidBodyChassis->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position chassis
-	pRigidBodyChassis->GetKineticProperties().Position = TPoint3<Real>(-10.0, 0.0, 0.0);
+	pRigidBodyChassis->GetKineticProperties().Position = TVector3<Real>(-10.0, 0.0, 0.0);
 
 	// bounding sphere
 	Meson::Gravitas::Geometry::BoundingSphere* pBoundingSphere = new Meson::Gravitas::Geometry::BoundingSphere();
@@ -121,7 +121,7 @@ void CreateCart(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList* p_
 	pRigidBodyWheelFrontLeft->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position front left wheel
-	pRigidBodyWheelFrontLeft->GetKineticProperties().Position = TPoint3<Real>(-9.25, 0.0, -1.5);
+	pRigidBodyWheelFrontLeft->GetKineticProperties().Position = TVector3<Real>(-9.25, 0.0, -1.5);
 	pRigidBodyWheelFrontLeft->GetKineticProperties().Orientation.MakeRotation(TVector3<Real>::Right, TMaths<Real>::PiHalf);
 	pRigidBodyWheelFrontLeft->GetKineticProperties().OrientationConjugate = pRigidBodyWheelFrontLeft->GetKineticProperties().Orientation.ConjugateCopy();
 
@@ -152,7 +152,7 @@ void CreateCart(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList* p_
 	pRigidBodyWheelFrontRight->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position front left wheel
-	pRigidBodyWheelFrontRight->GetKineticProperties().Position = TPoint3<Real>(-9.25, 0.0, 1.5);
+	pRigidBodyWheelFrontRight->GetKineticProperties().Position = TVector3<Real>(-9.25, 0.0, 1.5);
 	pRigidBodyWheelFrontRight->GetKineticProperties().Orientation.MakeRotation(TVector3<Real>::Right, TMaths<Real>::PiHalf);
 	pRigidBodyWheelFrontRight->GetKineticProperties().OrientationConjugate = pRigidBodyWheelFrontRight->GetKineticProperties().Orientation.ConjugateCopy();
 
@@ -182,7 +182,7 @@ void CreateCart(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList* p_
 	pRigidBodyWheelRearLeft->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position rear rear wheel
-	pRigidBodyWheelRearLeft->GetKineticProperties().Position = TPoint3<Real>(-10.75, 0.0, -1.5);
+	pRigidBodyWheelRearLeft->GetKineticProperties().Position = TVector3<Real>(-10.75, 0.0, -1.5);
 	pRigidBodyWheelRearLeft->GetKineticProperties().Orientation.MakeRotation(TVector3<Real>::Right, TMaths<Real>::PiHalf);
 	pRigidBodyWheelRearLeft->GetKineticProperties().OrientationConjugate = pRigidBodyWheelRearLeft->GetKineticProperties().Orientation.ConjugateCopy();
 
@@ -213,7 +213,7 @@ void CreateCart(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList* p_
 	pRigidBodyWheelRearRight->GetForceAccumulator().AddForce(pForceGravity);
 
 	// position front left wheel
-	pRigidBodyWheelRearRight->GetKineticProperties().Position = TPoint3<Real>(-10.75, 0.0, 1.5);
+	pRigidBodyWheelRearRight->GetKineticProperties().Position = TVector3<Real>(-10.75, 0.0, 1.5);
 	pRigidBodyWheelRearRight->GetKineticProperties().Orientation.MakeRotation(TVector3<Real>::Right, TMaths<Real>::PiHalf);
 	pRigidBodyWheelRearRight->GetKineticProperties().OrientationConjugate = pRigidBodyWheelRearRight->GetKineticProperties().Orientation.ConjugateCopy();
 
@@ -239,8 +239,8 @@ void CreateCart(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList* p_
 	ConstraintPtr pConstraintFrontLeftMotor = pConstraintFactoryAngularMotor->CreateConstraint();
 	pConstraintFrontLeftMotor->SetBody1(pBodyChassis);
 	pConstraintFrontLeftMotor->SetBody2(pBodyWheelFrontLeft);
-	pConstraintFrontLeftMotor->SetProperty("BindAxisPoint1", TPoint3<Real>(-9.25, 0.0, -0.75 + rAxleLength));
-	pConstraintFrontLeftMotor->SetProperty("BindAxisPoint2", TPoint3<Real>(-9.25, 0.0, -0.75 - rAxleLength));
+	pConstraintFrontLeftMotor->SetProperty("BindAxisPoint1", TVector3<Real>(-9.25, 0.0, -0.75 + rAxleLength));
+	pConstraintFrontLeftMotor->SetProperty("BindAxisPoint2", TVector3<Real>(-9.25, 0.0, -0.75 - rAxleLength));
 	pConstraintFrontLeftMotor->SetProperty("AngularSpeed", TMaths<Real>::Pi);
 	pConstraintFrontLeftMotor->Bind();
 	p_pConstraintList->Add(pConstraintFrontLeftMotor);
@@ -249,8 +249,8 @@ void CreateCart(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList* p_
 	ConstraintPtr pConstraintFrontRightMotor = pConstraintFactoryAngularMotor->CreateConstraint();
 	pConstraintFrontRightMotor->SetBody1(pBodyChassis);
 	pConstraintFrontRightMotor->SetBody2(pBodyWheelFrontRight);
-	pConstraintFrontRightMotor->SetProperty("BindAxisPoint1", TPoint3<Real>(-9.25, 0.0, 0.75 + rAxleLength));
-	pConstraintFrontRightMotor->SetProperty("BindAxisPoint2", TPoint3<Real>(-9.25, 0.0, 0.75 - rAxleLength));
+	pConstraintFrontRightMotor->SetProperty("BindAxisPoint1", TVector3<Real>(-9.25, 0.0, 0.75 + rAxleLength));
+	pConstraintFrontRightMotor->SetProperty("BindAxisPoint2", TVector3<Real>(-9.25, 0.0, 0.75 - rAxleLength));
 	pConstraintFrontRightMotor->SetProperty("AngularSpeed", TMaths<Real>::Pi);
 	pConstraintFrontRightMotor->Bind();
 	p_pConstraintList->Add(pConstraintFrontRightMotor);
@@ -259,8 +259,8 @@ void CreateCart(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList* p_
 	ConstraintPtr pConstraintRearLeftMotor = pConstraintFactoryAngularMotor->CreateConstraint();
 	pConstraintRearLeftMotor->SetBody1(pBodyChassis);
 	pConstraintRearLeftMotor->SetBody2(pBodyWheelRearLeft);
-	pConstraintRearLeftMotor->SetProperty("BindAxisPoint1", TPoint3<Real>(-10.75, 0.0, -0.75 + rAxleLength));
-	pConstraintRearLeftMotor->SetProperty("BindAxisPoint2", TPoint3<Real>(-10.75, 0.0, -0.75 - rAxleLength));
+	pConstraintRearLeftMotor->SetProperty("BindAxisPoint1", TVector3<Real>(-10.75, 0.0, -0.75 + rAxleLength));
+	pConstraintRearLeftMotor->SetProperty("BindAxisPoint2", TVector3<Real>(-10.75, 0.0, -0.75 - rAxleLength));
 	pConstraintRearLeftMotor->SetProperty("AngularSpeed", TMaths<Real>::Pi);
 	pConstraintRearLeftMotor->Bind();
 	p_pConstraintList->Add(pConstraintRearLeftMotor);
@@ -269,8 +269,8 @@ void CreateCart(SpacePtr p_pSpace, EntityList* p_pEntityList, ConstraintList* p_
 	ConstraintPtr pConstraintRearRightMotor = pConstraintFactoryAngularMotor->CreateConstraint();
 	pConstraintRearRightMotor->SetBody1(pBodyChassis);
 	pConstraintRearRightMotor->SetBody2(pBodyWheelRearRight);
-	pConstraintRearRightMotor->SetProperty("BindAxisPoint1", TPoint3<Real>(-10.75, 0.0, 0.75 + rAxleLength));
-	pConstraintRearRightMotor->SetProperty("BindAxisPoint2", TPoint3<Real>(-10.75, 0.0, 0.75 - rAxleLength));
+	pConstraintRearRightMotor->SetProperty("BindAxisPoint1", TVector3<Real>(-10.75, 0.0, 0.75 + rAxleLength));
+	pConstraintRearRightMotor->SetProperty("BindAxisPoint2", TVector3<Real>(-10.75, 0.0, 0.75 - rAxleLength));
 	pConstraintRearRightMotor->SetProperty("AngularSpeed", TMaths<Real>::Pi);
 	pConstraintRearRightMotor->Bind();
 	p_pConstraintList->Add(pConstraintRearRightMotor);

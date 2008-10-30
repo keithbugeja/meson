@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ArrayList.h"
-#include "Point3.h"
 #include "Interval.h"
 
 #include "GrvGeometry.h"
@@ -28,7 +27,7 @@ private: // private methods
 	bool IsConvex(Real p_rCoplanarTollerance) const;
 
 public: // public variables
-	PointArrayList Vertices;
+	VectorArrayList Vertices;
 	Meson::Common::Collections::TArrayList<ConvexPolyhedronEdge> Edges;
 	Meson::Common::Collections::TArrayList<ConvexPolyhedronFace> Faces;
 
@@ -48,11 +47,11 @@ public: // public methods
 	void GetProperty(const Meson::Common::Text::String& p_strName,
 		Meson::Common::Text::String& p_strValue) const;
 	void GetProperty(const Meson::Common::Text::String& p_strName, size_t p_unIndex,
-		Meson::Common::Maths::TPoint3<Real>& p_ptValue) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecValue) const;
 	void GetProperty(const Meson::Common::Text::String& p_strName,
 		Meson::Common::Collections::TList<int> &p_listValues) const;
 	void GetProperty(const Meson::Common::Text::String& p_strName,
-		PointList& p_listValues) const;
+		VectorList& p_listValues) const;
 
 	void SetProperty(const Meson::Common::Text::String& p_strName, bool p_bValue);
 	void SetProperty(const Meson::Common::Text::String& p_strName, int p_nValue);
@@ -60,11 +59,11 @@ public: // public methods
 		const Meson::Common::Text::String& p_strValue);
 	void SetProperty(const Meson::Common::Text::String& p_strName,
 		size_t p_unIndex,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptValue);
+		const Meson::Common::Maths::TVector3<Real>& p_vecValue);
 	void SetProperty(const Meson::Common::Text::String& p_strName,
 		const Meson::Common::Collections::TList<int>& p_listValues);
 	void SetProperty(const Meson::Common::Text::String& p_strName,
-		const PointList& p_listValues);
+		const VectorList& p_listValues);
 
 	// IGeometry methods
 	const Meson::Common::Text::String& GetTypeName(void) const;
@@ -80,11 +79,11 @@ public: // public methods
 
 	bool IntersectsRay(const Ray& p_ray) const;
 	bool IntersectsRay(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 
 	// custom methods
 	void UpdateDerivativeData(bool p_bAlignCentroid = false);
-	Meson::Common::Maths::TPoint3<Real> GetCentroid(void) const;
+	Meson::Common::Maths::TVector3<Real> GetCentroid(void) const;
 	void AlignCentroid(void);
 
 	void ProjectToInterval(
@@ -92,11 +91,11 @@ public: // public methods
 		Meson::Common::Maths::TInterval<Real>& p_interval) const;
 	void EnumerateMaximalVertices(
 		const Meson::Common::Maths::TVector3<Real>& p_vecDirection,
-		Meson::Gravitas::PointList& p_listVertices) const;
+		Meson::Gravitas::VectorList& p_listVertices) const;
 
-	bool ContainsPoint(const Meson::Common::Maths::TPoint3<Real>& ptPoint) const;
-	Meson::Common::Maths::TPoint3<Real> GetClosestPoint(
-		const Meson::Common::Maths::TPoint3<Real>& ptPoint) const;
+	bool ContainsPoint(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
+	Meson::Common::Maths::TVector3<Real> GetClosestPoint(
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	ConvexPolyhedron TransformCopy(
 		const Meson::Gravitas::Geometry::Transform& p_transform) const;

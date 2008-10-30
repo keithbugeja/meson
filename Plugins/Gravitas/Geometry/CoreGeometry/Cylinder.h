@@ -22,10 +22,10 @@ public: // public static methods
 	static void EnumerateMaximalVertices(
 		const Meson::Gravitas::Geometry::LineSegment &p_lnsShaft, Real p_rRadius,
 		const Meson::Common::Maths::TVector3<Real>& p_vecAxis,
-		Meson::Gravitas::PointList& p_listVertices);
+		Meson::Gravitas::VectorList& p_listVertices);
 	static bool IntersectsPoint(
 		const Meson::Gravitas::Geometry::LineSegment &p_lnsShaft, Real p_rRadius,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint);
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint);
 
 public: // public methods
 	Cylinder(void);
@@ -55,7 +55,7 @@ public: // public methods
 
 	bool IntersectsRay(const Ray& p_ray) const;
 	bool IntersectsRay(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 };
 
 Meson_Gravitas_Geometry_END

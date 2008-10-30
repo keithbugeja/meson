@@ -23,7 +23,7 @@ void CreateTriangleMesh(SpacePtr p_pSpace, EntityList* p_pEntityList, Constraint
 	// load wavefront model
 	WavefrontModelLoader wavefrontModelLoader;
 
-	PointArrayList listVertices;
+	VectorArrayList listVertices;
 	VectorArrayList listNormals;
 	TArrayList< TVector2<Real> > listTextureCoordinates;
 	WavefrontFaceArrayList listFaces;
@@ -120,7 +120,7 @@ void CreateTriangleMesh(SpacePtr p_pSpace, EntityList* p_pEntityList, Constraint
 	pRigidBody->GetForceAccumulator().AttachForceGenerator(pGravityForceGenerator);*/
 
 	// position body
-	pRigidBody->GetKineticProperties().Position = TPoint3<Real>(0.0, -3.0, 0.0);
+	pRigidBody->GetKineticProperties().Position = TVector3<Real>(0.0, -3.0, 0.0);
 
 	// bounding sphere
 	//Meson::Gravitas::Geometry::BoundingSphere* pBoundingSphere = new Meson::Gravitas::Geometry::BoundingSphere();

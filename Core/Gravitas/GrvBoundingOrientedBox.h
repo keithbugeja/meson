@@ -8,7 +8,6 @@
 //----------------------------------------------------------------------------------------------
 #pragma once
 
-#include "Point3.h"
 #include "Quaternion.h"
 #include "Vector3.h"
 #include "Interval.h"
@@ -32,7 +31,7 @@ public: // public variables
 	//----------------------------------------------------------------------------------------------
 	/// Centroid of the oriented bounding box.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Centre;
+	Meson::Common::Maths::TVector3<Real> Centre;
 
 	//----------------------------------------------------------------------------------------------
 	/// Box axes in world coordinates.
@@ -76,23 +75,23 @@ public: // public methods
 	//----------------------------------------------------------------------------------------------
 	/// Constructs an oriented bounding box using the given centre, orientation quoternion and
 	/// extents.
-	/// \param p_ptCentre Centroid for the box.
+	/// \param p_vecCentre Centroid for the box.
 	/// \param p_qtrOrientation A unit-quaternion representing the box orientation.
 	/// \param p_vecExtent A vector of half-extents along the local box coordinates.
 	//----------------------------------------------------------------------------------------------
 	BoundingOrientedBox(
-		const Meson::Common::Maths::TPoint3<Real> &p_ptCentre,
+		const Meson::Common::Maths::TVector3<Real> &p_vecCentre,
 		const Meson::Common::Maths::TQuaternion<Real> &p_qtrOrientation,
 		const Meson::Common::Maths::TVector3<Real> &p_vecExtent);
 
 	//----------------------------------------------------------------------------------------------
 	/// Constructs an oriented bounding box using the given centre and extents. The box is oriented
 	/// with the coordinate axes.
-	/// \param p_ptCentre Centroid for the box.
+	/// \param p_vecCentre Centroid for the box.
 	/// \param p_vecExtent A vector of half-extents along the local box coordinates.
 	//----------------------------------------------------------------------------------------------
 	BoundingOrientedBox(
-		const Meson::Common::Maths::TPoint3<Real> &p_ptCentre,
+		const Meson::Common::Maths::TVector3<Real> &p_vecCentre,
 		const Meson::Common::Maths::TVector3<Real> &p_vecExtent);
 
 	//----------------------------------------------------------------------------------------------
@@ -103,11 +102,11 @@ public: // public methods
 	// bounding volume methods
 	BoundingVolumeType::BoundingVolumeType GetType(void) const;
 
-	bool Contains(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	bool Contains(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	bool Intersects(const Ray& p_ray) const;
 	bool Intersects(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 
 	bool Intersects(const Triangle& p_triangle) const;
 
@@ -120,8 +119,8 @@ public: // public methods
 	void Transform(
 		const Meson::Gravitas::Geometry::Transform& p_transform);
 	void ClosestPointTo(
-		const Meson::Common::Maths::TPoint3<Real> &p_ptPoint,
-		Meson::Common::Maths::TPoint3<Real> &p_ptClosestPoint) const;
+		const Meson::Common::Maths::TVector3<Real> &p_vecPoint,
+		Meson::Common::Maths::TVector3<Real> &p_vecClosestPoint) const;
 	void ProjectToInterval(
 		const Meson::Common::Maths::TVector3<Real> &p_vecAxis,
 		Meson::Common::Maths::TInterval<Real> &p_interval) const;
@@ -184,7 +183,7 @@ public: // public methods
 	/// \param p_listVertices Vertex list to populate.
 	//----------------------------------------------------------------------------------------------
 	void EnumerateFeatures(
-		Meson::Gravitas::PointList& p_listVertices) const;
+		Meson::Gravitas::VectorList& p_listVertices) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Populates the given list with the edges of the oriented bounding box.
@@ -199,7 +198,7 @@ public: // public methods
 	/// \param p_listEdges List of line segments to populate with edges.
 	//----------------------------------------------------------------------------------------------
 	void EnumerateFeatures(
-		Meson::Gravitas::PointList& p_listVertices,
+		Meson::Gravitas::VectorList& p_listVertices,
 		Meson::Gravitas::Geometry::LineSegmentList& p_listEdges) const;
 
 	//----------------------------------------------------------------------------------------------
@@ -210,7 +209,7 @@ public: // public methods
 	//----------------------------------------------------------------------------------------------
 	void EnumerateMaximalVertices(
 		const Meson::Common::Maths::TVector3<Real>& p_vecDirection,
-		Meson::Gravitas::PointList& p_listVertices) const;
+		Meson::Gravitas::VectorList& p_listVertices) const;
 };
 
 Meson_Gravitas_Geometry_END

@@ -59,7 +59,7 @@ public:
 	/// \returns a force application point, in body coordinates, for the given mass, kinetic
 	///          and geometric properties, and the given simulation time.
 	//------------------------------------------------------------------------------------------
-	virtual Meson::Common::Maths::TPoint3<Real> GetApplicationPoint(
+	virtual Meson::Common::Maths::TVector3<Real> GetApplicationPoint(
 		Meson::Gravitas::Body::MassProperties* p_pMassProperties,
 		Meson::Gravitas::Kinetics::KineticProperties* p_pKineticProperties,
 		Meson::Gravitas::Geometry::GeometryPtr p_pGeometry,

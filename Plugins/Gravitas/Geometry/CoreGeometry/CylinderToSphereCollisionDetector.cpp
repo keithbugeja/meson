@@ -45,29 +45,29 @@ bool CylinderToSphereCollisionDetector::TestIntersection(
 	Real rHalfHeight = cylinder.Height * (Real) 0.5;
 
 	// compute relative sphere centre
-	TPoint3<Real> ptSphereCentre(TPoint3<Real>::Origin + p_trnRelativePlacement.Translation);
+	const TVector3<Real>& vecSphereCentre = p_trnRelativePlacement.Translation;
 
 	// early out (fast separation test along shaft)
-	if (TMaths<Real>::Abs(ptSphereCentre.Y) > TMaths<Real>::Abs(rHalfHeight + sphere.Radius))
+	if (TMaths<Real>::Abs(vecSphereCentre.Y) > TMaths<Real>::Abs(rHalfHeight + sphere.Radius))
 		return false;
 
 	// assume closest point on cylinder to sphere centre is centre itself
-	TPoint3<Real> ptClosest(ptSphereCentre);
+	TVector3<Real> vecClosest(vecSphereCentre);
 
 	// clamp within end disks
-	ptClosest.Y = TMaths<Real>::Min(rHalfHeight, ptClosest.Y);
-	ptClosest.Y = TMaths<Real>::Max(-rHalfHeight, ptClosest.Y);
+	vecClosest.Y = TMaths<Real>::Min(rHalfHeight, vecClosest.Y);
+	vecClosest.Y = TMaths<Real>::Max(-rHalfHeight, vecClosest.Y);
 
 	// clamp within sides
-	Real rPerpDistSquared = ptClosest.X * ptClosest.X + ptClosest.Z * ptClosest.Z;
+	Real rPerpDistSquared = vecClosest.X * vecClosest.X + vecClosest.Z * vecClosest.Z;
 	if (rPerpDistSquared > cylinder.RadiusSquared)
 	{
 		Real rPerpDistCorrection = cylinder.Radius / TMaths<Real>::Sqrt(rPerpDistSquared);
-		ptClosest.X *= rPerpDistCorrection;
-		ptClosest.Z *= rPerpDistCorrection;
+		vecClosest.X *= rPerpDistCorrection;
+		vecClosest.Z *= rPerpDistCorrection;
 	}
 
-	return (ptClosest - ptSphereCentre).LengthSquared() <= sphere.RadiusSquared;
+	return (vecClosest - vecSphereCentre).LengthSquared() <= sphere.RadiusSquared;
 }
 
 bool CylinderToSphereCollisionDetector::EstimateImpact(
@@ -99,31 +99,31 @@ void CylinderToSphereCollisionDetector::ComputeContactManifold(
 	Real rHalfHeight = cylinder.Height * (Real) 0.5;
 
 	// compute relative sphere centre
-	TPoint3<Real> ptSphereCentre(TPoint3<Real>::Origin + p_trnRelativePlacement.Translation);
+	const TVector3<Real>& vecSphereCentre = p_trnRelativePlacement.Translation;
 
 	p_contactManifold.ContactPoints.Clear();
 
 	// early out (fast separation test along shaft)
-	if (TMaths<Real>::Abs(ptSphereCentre.Y) > TMaths<Real>::Abs(rHalfHeight + sphere.Radius))
+	if (TMaths<Real>::Abs(vecSphereCentre.Y) > TMaths<Real>::Abs(rHalfHeight + sphere.Radius))
 		return;
 
 	// assume closest point on cylinder to sphere centre is centre itself
-	TPoint3<Real> ptClosest(ptSphereCentre);
+	TVector3<Real> vecClosest(vecSphereCentre);
 
 	// clamp within end disks
-	ptClosest.Y = TMaths<Real>::Min(rHalfHeight, ptClosest.Y);
-	ptClosest.Y = TMaths<Real>::Max(-rHalfHeight, ptClosest.Y);
+	vecClosest.Y = TMaths<Real>::Min(rHalfHeight, vecClosest.Y);
+	vecClosest.Y = TMaths<Real>::Max(-rHalfHeight, vecClosest.Y);
 
 	// clamp within sides
-	Real rPerpDistSquared = ptClosest.X * ptClosest.X + ptClosest.Z * ptClosest.Z;
+	Real rPerpDistSquared = vecClosest.X * vecClosest.X + vecClosest.Z * vecClosest.Z;
 	if (rPerpDistSquared > cylinder.RadiusSquared)
 	{
 		Real rPerpDistCorrection = cylinder.Radius / TMaths<Real>::Sqrt(rPerpDistSquared);
-		ptClosest.X *= rPerpDistCorrection;
-		ptClosest.Z *= rPerpDistCorrection;
+		vecClosest.X *= rPerpDistCorrection;
+		vecClosest.Z *= rPerpDistCorrection;
 	}
 
-	TVector3<Real> vecClosestOffset = ptSphereCentre - ptClosest;
+	TVector3<Real> vecClosestOffset = vecSphereCentre - vecClosest;
 	Real rDistanceClosest = vecClosestOffset.Length();
 	if (rDistanceClosest > sphere.Radius)
 		return;
@@ -131,9 +131,9 @@ void CylinderToSphereCollisionDetector::ComputeContactManifold(
 	// handle case where box overlaps sphere centre
 	TVector3<Real> vecNormal
 		= vecClosestOffset.IsZero()
-			? ptSphereCentre.ToVector().NormaliseCopy()
+			? vecSphereCentre.NormaliseCopy()
 			: vecClosestOffset.NormaliseCopy();
 
 	p_contactManifold.ContactPoints.Add(
-		ContactPoint(ptClosest, vecNormal, sphere.Radius - rDistanceClosest));
+		ContactPoint(vecClosest, vecNormal, sphere.Radius - rDistanceClosest));
 }

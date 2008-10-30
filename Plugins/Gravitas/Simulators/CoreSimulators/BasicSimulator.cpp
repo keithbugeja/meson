@@ -150,8 +150,8 @@ void BasicSimulator::DetectCollisions(void)
 			= pCollisionManager->GetCollisionDetector(pGeometry1, pGeometry2);
 
 		// compute relative placement and movement
-		Transform trnPlacement1(kineticProperties1.Orientation, kineticProperties1.Position.ToVector());
-		Transform trnPlacement2(kineticProperties2.Orientation, kineticProperties2.Position.ToVector());
+		Transform trnPlacement1(kineticProperties1.Orientation, kineticProperties1.Position);
+		Transform trnPlacement2(kineticProperties2.Orientation, kineticProperties2.Position);
 		Transform trnRelativePlacement = trnPlacement2.ChangeBasisCopy(trnPlacement1);
 
 		// test for collision

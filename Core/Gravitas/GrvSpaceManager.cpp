@@ -41,7 +41,7 @@ struct SpaceManagerState
 		lexer.ReadToken(LexerTokenType::OpeningBrace);
 
 		// position
-		p_kineticProperties.Position = lexer.ReadPropertyPoint("Position");
+		p_kineticProperties.Position = lexer.ReadPropertyVector("Position");
 
 		// orientation
 		lexer.ReadIdentifier("Orientation");

@@ -42,13 +42,9 @@ bool BoxToSphereCollisionDetector::TestIntersection(
 	const Box& box = (Box &) p_geometry1;
 	const Sphere& sphere = (Sphere &) p_geometry2;
 
-	BoundingAxisAlignedBox boundingAxisAlignedBox(
-		TPoint3<Real>::Origin - box.Extent,
-		TPoint3<Real>::Origin + box.Extent);
+	BoundingAxisAlignedBox boundingAxisAlignedBox(-box.Extent, box.Extent);
 
-	BoundingSphere boundingSphere(
-		TPoint3<Real>::Origin + p_trnRelativePlacement.Translation,
-		sphere.Radius);
+	BoundingSphere boundingSphere(p_trnRelativePlacement.Translation, sphere.Radius);
 
 	return boundingAxisAlignedBox.Intersects(boundingSphere);
 }
@@ -79,19 +75,16 @@ void BoxToSphereCollisionDetector::ComputeContactManifold(
 	const Box& box = (Box &) p_geometry1;
 	const Sphere& sphere = (Sphere &) p_geometry2;
 
-	BoundingAxisAlignedBox boundingAxisAlignedBox(
-		TPoint3<Real>::Origin - box.Extent,
-		TPoint3<Real>::Origin + box.Extent);
+	BoundingAxisAlignedBox boundingAxisAlignedBox(-box.Extent, box.Extent);
 
-	TPoint3<Real> ptSphereOrigin
-		= TPoint3<Real>::Origin + p_trnRelativePlacement.Translation;
-	TPoint3<Real> ptClosestPoint;
+	const TVector3<Real>& vecSphereOrigin = p_trnRelativePlacement.Translation;
+	TVector3<Real> vecClosestPoint;
 	
-	boundingAxisAlignedBox.ClosestPointTo(ptSphereOrigin, ptClosestPoint);
+	boundingAxisAlignedBox.ClosestPointTo(vecSphereOrigin, vecClosestPoint);
 
 	p_contactManifold.ContactPoints.Clear();
 
-	TVector3<Real> vecOffset = ptSphereOrigin - ptClosestPoint;
+	TVector3<Real> vecOffset = vecSphereOrigin - vecClosestPoint;
 	Real rOffset = vecOffset.Length();
 	if (rOffset > sphere.Radius)
 		return;
@@ -100,14 +93,14 @@ void BoxToSphereCollisionDetector::ComputeContactManifold(
 	TVector3<Real> vecNormal(vecOffset);
 	if (vecNormal.IsZero())
 	{
-		if (ptSphereOrigin.IsOrigin())
+		if (vecSphereOrigin.IsZero())
 			vecNormal = TVector3<Real>::Right;
 		else
-			vecNormal = ptSphereOrigin.ToVector().NormaliseCopy();
+			vecNormal = vecSphereOrigin.NormaliseCopy();
 	}
 	else
 		vecNormal.Normalise();
 
 	p_contactManifold.ContactPoints.Add(
-		ContactPoint(ptClosestPoint, vecNormal, sphere.Radius - rOffset));
+		ContactPoint(vecClosestPoint, vecNormal, sphere.Radius - rOffset));
 }

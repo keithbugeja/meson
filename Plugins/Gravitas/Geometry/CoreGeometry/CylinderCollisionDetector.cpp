@@ -50,12 +50,12 @@ bool CylinderCollisionDetector::TestIntersection(
 	static LineSegment lnsShaft1, lnsShaft2;
 
 	Real rHalfHeight1 = cylinder1.Height * (Real) 0.5;
-	lnsShaft1.Start = TPoint3<Real>((Real) 0.0, -rHalfHeight1, (Real) 0.0);
-	lnsShaft1.End = TPoint3<Real>((Real) 0.0, rHalfHeight1, (Real) 0.0);
+	lnsShaft1.Start = TVector3<Real>((Real) 0.0, -rHalfHeight1, (Real) 0.0);
+	lnsShaft1.End = TVector3<Real>((Real) 0.0, rHalfHeight1, (Real) 0.0);
 
 	Real rHalfHeight2 = cylinder2.Height * (Real) 0.5;
-	lnsShaft2.Start = TPoint3<Real>((Real) 0.0, -rHalfHeight2, (Real) 0.0);
-	lnsShaft2.End = TPoint3<Real>((Real) 0.0, rHalfHeight2, (Real) 0.0);
+	lnsShaft2.Start = TVector3<Real>((Real) 0.0, -rHalfHeight2, (Real) 0.0);
+	lnsShaft2.End = TVector3<Real>((Real) 0.0, rHalfHeight2, (Real) 0.0);
 	lnsShaft2.Transform(p_trnRelativePlacement);
 
 	// start seperating axis tests
@@ -79,9 +79,9 @@ bool CylinderCollisionDetector::TestIntersection(
 	if (!itvProjection1.Intersects(itvProjection2)) return false;
 
 	// compute test axis as direction along closest points on shafts
-	TPoint3<Real> ptClosestPoint1, ptClosestPoint2;
-	lnsShaft1.ClosestPointsToSegment(lnsShaft2, ptClosestPoint1, ptClosestPoint2);
-	vecAxis = ptClosestPoint2 - ptClosestPoint1;
+	TVector3<Real> vecClosestPoint1, vecClosestPoint2;
+	lnsShaft1.ClosestPointsToSegment(lnsShaft2, vecClosestPoint1, vecClosestPoint2);
+	vecAxis = vecClosestPoint2 - vecClosestPoint1;
 	if (vecAxis.IsZero())
 		vecAxis.X = (Real) 1.0;
 	else
@@ -128,12 +128,12 @@ void CylinderCollisionDetector::ComputeContactManifold(
 	static LineSegment lnsShaft1, lnsShaft2;
 
 	Real rHalfHeight1 = cylinder1.Height * (Real) 0.5;
-	lnsShaft1.Start = TPoint3<Real>((Real) 0.0, -rHalfHeight1, (Real) 0.0);
-	lnsShaft1.End = TPoint3<Real>((Real) 0.0, rHalfHeight1, (Real) 0.0);
+	lnsShaft1.Start = TVector3<Real>((Real) 0.0, -rHalfHeight1, (Real) 0.0);
+	lnsShaft1.End = TVector3<Real>((Real) 0.0, rHalfHeight1, (Real) 0.0);
 
 	Real rHalfHeight2 = cylinder2.Height * (Real) 0.5;
-	lnsShaft2.Start = TPoint3<Real>((Real) 0.0, -rHalfHeight2, (Real) 0.0);
-	lnsShaft2.End = TPoint3<Real>((Real) 0.0, rHalfHeight2, (Real) 0.0);
+	lnsShaft2.Start = TVector3<Real>((Real) 0.0, -rHalfHeight2, (Real) 0.0);
+	lnsShaft2.End = TVector3<Real>((Real) 0.0, rHalfHeight2, (Real) 0.0);
 	lnsShaft2.Transform(p_trnRelativePlacement);
 
 	// start seperating axis tests
@@ -175,9 +175,9 @@ void CylinderCollisionDetector::ComputeContactManifold(
 	}
 
 	// compute test axis as direction along closest points on shafts
-	static TPoint3<Real> ptClosestPoint1, ptClosestPoint2;
-	lnsShaft1.ClosestPointsToSegment(lnsShaft2, ptClosestPoint1, ptClosestPoint2);
-	vecAxis = ptClosestPoint2 - ptClosestPoint1;
+	static TVector3<Real> vecClosestPoint1, vecClosestPoint2;
+	lnsShaft1.ClosestPointsToSegment(lnsShaft2, vecClosestPoint1, vecClosestPoint2);
+	vecAxis = vecClosestPoint2 - vecClosestPoint1;
 	if (vecAxis.IsZero())
 		vecAxis.X = (Real) 1.0;
 	else
@@ -216,16 +216,16 @@ void CylinderCollisionDetector::ComputeContactManifold(
 	// single point - single point (end edge contact)
 	if (m_listVertices1.Size() == 1 && m_listVertices2.Size() == 1)
 	{
-		TPoint3<Real>& ptPoint1 = m_listVertices1[0];
-		TPoint3<Real>& ptPoint2 = m_listVertices2[0];
-		if (Cylinder::IntersectsPoint(lnsShaft2, cylinder2.Radius, ptPoint1))
+		TVector3<Real>& vecPoint1 = m_listVertices1[0];
+		TVector3<Real>& vecPoint2 = m_listVertices2[0];
+		if (Cylinder::IntersectsPoint(lnsShaft2, cylinder2.Radius, vecPoint1))
 		{
-			contactPoint.Position = ptPoint1;
+			contactPoint.Position = vecPoint1;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
-		if (Cylinder::IntersectsPoint(lnsShaft1, cylinder1.Radius, ptPoint2))
+		if (Cylinder::IntersectsPoint(lnsShaft1, cylinder1.Radius, vecPoint2))
 		{
-			contactPoint.Position = ptPoint2;
+			contactPoint.Position = vecPoint2;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
 		return;
@@ -236,10 +236,10 @@ void CylinderCollisionDetector::ComputeContactManifold(
 	{
 		LineSegment lnsEdge1(m_listVertices1[0], m_listVertices1[1]),
 			lnsEdge2(m_listVertices2[0], m_listVertices2[1]);
-		static TPoint3<Real> ptClosest1, ptClosest2;
-		lnsEdge1.ClosestPointsToSegment(lnsEdge2, ptClosest1, ptClosest2);
+		static TVector3<Real> vecClosest1, vecClosest2;
+		lnsEdge1.ClosestPointsToSegment(lnsEdge2, vecClosest1, vecClosest2);
 
-		contactPoint.Position = ptClosest1 + (ptClosest2 - ptClosest1) * (Real) 0.5;
+		contactPoint.Position = (vecClosest1 + vecClosest2) * (Real) 0.5;
 		p_contactManifold.ContactPoints.Add(contactPoint);
 		return;
 	}
@@ -264,10 +264,10 @@ void CylinderCollisionDetector::ComputeContactManifold(
 	size_t unCount = m_listVertices1.Size();
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = m_listVertices1[unIndex];
-		if (Cylinder::IntersectsPoint(lnsShaft2, cylinder2.Radius, ptVertex))
+		TVector3<Real>& vecVertex = m_listVertices1[unIndex];
+		if (Cylinder::IntersectsPoint(lnsShaft2, cylinder2.Radius, vecVertex))
 		{
-			contactPoint.Position = ptVertex;
+			contactPoint.Position = vecVertex;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
 	}
@@ -275,10 +275,10 @@ void CylinderCollisionDetector::ComputeContactManifold(
 	unCount = m_listVertices2.Size();
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = m_listVertices2[unIndex];
-		if (Cylinder::IntersectsPoint(lnsShaft1, cylinder1.Radius, ptVertex))
+		TVector3<Real>& vecVertex = m_listVertices2[unIndex];
+		if (Cylinder::IntersectsPoint(lnsShaft1, cylinder1.Radius, vecVertex))
 		{
-			contactPoint.Position = ptVertex;
+			contactPoint.Position = vecVertex;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
 	}

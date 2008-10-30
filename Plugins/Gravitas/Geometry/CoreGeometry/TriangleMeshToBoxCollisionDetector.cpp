@@ -153,26 +153,26 @@ void TriangleMeshToBoxCollisionDetector::ComputeContactManifold(
 		vecPenetrationNormal = -vecPenetrationNormal;
 
 	// add contact points from triangle
-	static PointArrayList listVertices;
+	static VectorArrayList listVertices;
 	p_triangle.EnumerateMaximalVertices(vecPenetrationNormal, listVertices);
 	for (size_t unIndex = 0; unIndex < listVertices.Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = listVertices[unIndex];
-		if (p_boundingOrientedBox.Contains(ptVertex))
+		TVector3<Real>& vecVertex = listVertices[unIndex];
+		if (p_boundingOrientedBox.Contains(vecVertex))
 			p_contactManifold.ContactPoints.Add(
-				ContactPoint(ptVertex, vecPenetrationNormal, rPenetration));
+				ContactPoint(vecVertex, vecPenetrationNormal, rPenetration));
 	}
 
 	// add contact points from box
 	p_boundingOrientedBox.EnumerateMaximalVertices(-vecPenetrationNormal, listVertices);
 	for (size_t unIndex = 0; unIndex < listVertices.Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = listVertices[unIndex];
-		if (p_triangle.ContainsPointProjection(ptVertex))
+		TVector3<Real>& vecVertex = listVertices[unIndex];
+		if (p_triangle.ContainsPointProjection(vecVertex))
 		{
-			rPenetration = TMaths<Real>::Abs(p_triangle.SignedDistanceFromPlane(ptVertex));
+			rPenetration = TMaths<Real>::Abs(p_triangle.SignedDistanceFromPlane(vecVertex));
 			p_contactManifold.ContactPoints.Add(
-				ContactPoint(ptVertex, vecPenetrationNormal, rPenetration));
+				ContactPoint(vecVertex, vecPenetrationNormal, rPenetration));
 		}
 	}
 
@@ -248,7 +248,7 @@ bool TriangleMeshToBoxCollisionDetector::TestIntersection(
 	else
 	{
 		const Box& box = (Box &) p_geometry2;
-		BoundingOrientedBox boundingOrientedBox(TPoint3<Real>::Origin, box.Extent);
+		BoundingOrientedBox boundingOrientedBox(TVector3<Real>::Zero, box.Extent);
 		boundingOrientedBox.Transform(p_trnRelativePlacement);
 		return TestIntersection(triangleMesh.Root, boundingOrientedBox);
 	}
@@ -286,7 +286,7 @@ void TriangleMeshToBoxCollisionDetector::ComputeContactManifold(
 	else
 	{
 		const Box& box = (Box &) p_geometry2;
-		BoundingOrientedBox boundingOrientedBox(TPoint3<Real>::Origin, box.Extent);
+		BoundingOrientedBox boundingOrientedBox(TVector3<Real>::Zero, box.Extent);
 		boundingOrientedBox.Transform(p_trnRelativePlacement);
 		ComputeContactManifold(triangleMesh.Root, boundingOrientedBox, p_contactManifold);
 	}

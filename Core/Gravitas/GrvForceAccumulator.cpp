@@ -67,7 +67,7 @@ struct ForceAccumulatorState
 			// transform offset to world coordinates
 			TVector3<Real> vecOffsetBody
 				= pForce->GetApplicationPoint(
-					m_pMassProperties, m_pKineticProperties, m_pGeometry, p_rTime).ToVector();
+					m_pMassProperties, m_pKineticProperties, m_pGeometry, p_rTime);
 			TVector3<Real> vecOffset
 				= (qtnOrientation * vecOffsetBody * qtnOrientationConjugate).Vector;
 

@@ -136,7 +136,7 @@ void SphereCollisionDetector::ComputeContactManifold(
 	Real rOffsetMean = (rOffset1 + rOffset2) * (Real) 0.5;
 
 	const TVector3<Real>& vecOffset = p_trnRelativePlacement.Translation;
-	TPoint3<Real> ptContact = TPoint3<Real>::Origin + vecOffset * rOffsetMean;
+	TVector3<Real> vecContact = vecOffset * rOffsetMean;
 
 	// handle degenerate case of coinciding sphers
 	TVector3<Real> vecNormal
@@ -147,5 +147,5 @@ void SphereCollisionDetector::ComputeContactManifold(
 	Real rPenetration = rRadiiSum - rDistance; 
 
 	p_contactManifold.ContactPoints.Add(
-		ContactPoint(ptContact, vecNormal, rPenetration));
+		ContactPoint(vecContact, vecNormal, rPenetration));
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Point3.h"
 #include "String8.h"
 #include "List.h"
 
@@ -34,7 +33,7 @@ public:
 
 	void LoadModel(
 		const String& p_strFilename,
-		PointList& p_listVertices,
+		VectorList& p_listVertices,
 		VectorList& p_listNormals,
 		TList< TVector2<Real> >& p_listTextureCoordinates,
 		WavefrontFaceList& p_listFaces);

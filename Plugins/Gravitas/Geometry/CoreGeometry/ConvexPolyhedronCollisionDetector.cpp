@@ -46,7 +46,7 @@ bool ConvexPolyhedronCollisionDetector::TestIntersection(
 	static ConvexPolyhedron convexPolyhedron2;
 	convexPolyhedron2Ref.TransformCopy(p_trnRelativePlacement, convexPolyhedron2);
 
-	TPoint3<Real> ptPosition2(TPoint3<Real>::Origin + p_trnRelativePlacement.Translation);
+	const TVector3<Real>& vecPosition2 = p_trnRelativePlacement.Translation;
 
 	// projection intervals for SATs
 	static TInterval<Real> itvProjection1, itvProjection2;
@@ -57,7 +57,7 @@ bool ConvexPolyhedronCollisionDetector::TestIntersection(
 	{
 		const ConvexPolyhedronFace& face = convexPolyhedron1.Faces[unIndex];
 
-		if (face.IsPointBelowPlane(ptPosition2))
+		if (face.IsPointBelowPlane(vecPosition2))
 			continue;
 
 		convexPolyhedron1.ProjectToInterval(face.Normal, itvProjection1);
@@ -72,7 +72,7 @@ bool ConvexPolyhedronCollisionDetector::TestIntersection(
 	{
 		const ConvexPolyhedronFace& face = convexPolyhedron2.Faces[unIndex];
 
-		if (face.IsPointBelowPlane(TPoint3<Real>::Origin))
+		if (face.IsPointBelowPlane(TVector3<Real>::Zero))
 			continue;
 
 		convexPolyhedron1.ProjectToInterval(face.Normal, itvProjection1);
@@ -138,7 +138,7 @@ void ConvexPolyhedronCollisionDetector::ComputeContactManifold(
 	static ConvexPolyhedron convexPolyhedron2;
 	convexPolyhedron2Ref.TransformCopy(p_trnRelativePlacement, convexPolyhedron2);
 
-	TPoint3<Real> ptPosition2(TPoint3<Real>::Origin + p_trnRelativePlacement.Translation);
+	const TVector3<Real>& vecPosition2 = p_trnRelativePlacement.Translation;
 
 	// clear contact manifold
 	p_contactManifold.ContactPoints.Clear();
@@ -157,7 +157,7 @@ void ConvexPolyhedronCollisionDetector::ComputeContactManifold(
 	{
 		const ConvexPolyhedronFace& face = convexPolyhedron1.Faces[unIndex];
 
-		if (face.IsPointBelowPlane(ptPosition2))
+		if (face.IsPointBelowPlane(vecPosition2))
 			continue;
 
 		convexPolyhedron1.ProjectToInterval(face.Normal, itvProjection1);
@@ -181,7 +181,7 @@ void ConvexPolyhedronCollisionDetector::ComputeContactManifold(
 	{
 		const ConvexPolyhedronFace& face = convexPolyhedron2.Faces[unIndex];
 
-		if (face.IsPointBelowPlane(TPoint3<Real>::Origin))
+		if (face.IsPointBelowPlane(TVector3<Real>::Zero))
 			continue;
 
 		convexPolyhedron1.ProjectToInterval(face.Normal, itvProjection1);
@@ -245,15 +245,15 @@ void ConvexPolyhedronCollisionDetector::ComputeContactManifold(
 		vecNormal12 = -vecLeastOverlapAxis;
 
 	// determine maximal vertices of poly 1
-	static PointArrayList listVertices1(8);
+	static VectorArrayList listVertices1(8);
 	convexPolyhedron1.EnumerateMaximalVertices(vecNormal12, listVertices1);
 
 	// determine minimal vertices of poly 2
-	static PointArrayList listVertices2(8);
+	static VectorArrayList listVertices2(8);
 	convexPolyhedron2.EnumerateMaximalVertices(-vecNormal12, listVertices2);
 
 	// ensure lists in increasing size order
-	PointList *pListVertices1, *pListVertices2;
+	VectorList *pListVertices1, *pListVertices2;
 	if (listVertices1.Size() <= listVertices2.Size())
 	{
 		pListVertices1 = &listVertices1;
@@ -275,9 +275,9 @@ void ConvexPolyhedronCollisionDetector::ComputeContactManifold(
 	// vertex - vertex contact
 	if ((pListVertices1->Size() == 1) && (pListVertices2->Size() == 1))
 	{
-		TPoint3<Real>& ptVertex1 = (*pListVertices1)[0];
-		TPoint3<Real>& ptVertex2 = (*pListVertices2)[0];
-		contactPoint.Position = ptVertex1 + (ptVertex2 - ptVertex1) * (Real) 0.5;
+		TVector3<Real>& vecVertex1 = (*pListVertices1)[0];
+		TVector3<Real>& vecVertex2 = (*pListVertices2)[0];
+		contactPoint.Position = (vecVertex1 + vecVertex2) * (Real) 0.5;
 		p_contactManifold.ContactPoints.Add(contactPoint);
 		return;
 	}
@@ -286,11 +286,11 @@ void ConvexPolyhedronCollisionDetector::ComputeContactManifold(
 	if ((pListVertices1->Size() == 1) && (pListVertices2->Size() == 2))
 	{
 		LineSegment lsgEdge((*pListVertices1)[0], (*pListVertices2)[0]);
-		static TPoint3<Real> ptClosesEdgePoint;
-		lsgEdge.DistanceFromPoint(TPoint3<Real>::Origin, ptClosesEdgePoint);
+		static TVector3<Real> vecClosesEdgePoint;
+		lsgEdge.DistanceFromPoint(TVector3<Real>::Zero, vecClosesEdgePoint);
 
 		contactPoint.Position = (*pListVertices1)[0];
-		contactPoint.Normal = ptClosesEdgePoint.ToVector();
+		contactPoint.Normal = vecClosesEdgePoint;
 		if (contactPoint.Normal.IsZero())
 			contactPoint.Normal = TVector3<Real>::Right;
 		else
@@ -312,10 +312,10 @@ void ConvexPolyhedronCollisionDetector::ComputeContactManifold(
 	{
 		LineSegment lsgEdge1((*pListVertices1)(0), (*pListVertices1)(1));
 		LineSegment lsgEdge2((*pListVertices2)(0), (*pListVertices2)(1));
-		static TPoint3<Real> ptClosest1, ptClosest2;
-		lsgEdge1.ClosestPointsToSegment(lsgEdge2, ptClosest1, ptClosest2);
+		static TVector3<Real> vecClosest1, vecClosest2;
+		lsgEdge1.ClosestPointsToSegment(lsgEdge2, vecClosest1, vecClosest2);
 
-		contactPoint.Position = ptClosest1 + (ptClosest2 - ptClosest1) * (Real) 0.5;
+		contactPoint.Position = (vecClosest1 + vecClosest2) * (Real) 0.5;
 		p_contactManifold.ContactPoints.Add(contactPoint);
 		return;
 	}
@@ -323,7 +323,7 @@ void ConvexPolyhedronCollisionDetector::ComputeContactManifold(
 	// edge/face - face contact
 	for (size_t unIndex = 0; unIndex < pListVertices1->Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = (*pListVertices1)(unIndex);
+		TVector3<Real>& ptVertex = (*pListVertices1)[unIndex];
 		if (convexPolyhedron1.ContainsPoint(ptVertex)
 			&& convexPolyhedron2.ContainsPoint(ptVertex))
 		{
@@ -333,11 +333,11 @@ void ConvexPolyhedronCollisionDetector::ComputeContactManifold(
 	}
 	for (size_t unIndex = 0; unIndex < pListVertices2->Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = (*pListVertices2)(unIndex);
-		if (convexPolyhedron1.ContainsPoint(ptVertex)
-			&& convexPolyhedron2.ContainsPoint(ptVertex))
+		TVector3<Real>& vecVertex = (*pListVertices2)[unIndex];
+		if (convexPolyhedron1.ContainsPoint(vecVertex)
+			&& convexPolyhedron2.ContainsPoint(vecVertex))
 		{
-			contactPoint.Position = ptVertex;
+			contactPoint.Position = vecVertex;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
 	}
@@ -348,10 +348,10 @@ void ConvexPolyhedronCollisionDetector::ComputeContactManifold(
 	// hack in case no contacts detected
 	TVector3<Real> vecAverageContact(TVector3<Real>::Zero);
 	for (size_t unIndex = 0; unIndex < pListVertices1->Size(); unIndex++)
-		vecAverageContact += (*pListVertices1)[unIndex].ToVector();
+		vecAverageContact += (*pListVertices1)[unIndex];
 	for (size_t unIndex = 0; unIndex < pListVertices2->Size(); unIndex++)
-		vecAverageContact += (*pListVertices2)[unIndex].ToVector();
+		vecAverageContact += (*pListVertices2)[unIndex];
 	vecAverageContact /= (pListVertices1->Size() + pListVertices2->Size());
-	contactPoint.Position = TPoint3<Real>::Origin + vecAverageContact;
+	contactPoint.Position = vecAverageContact;
 	p_contactManifold.ContactPoints.Add(contactPoint);
 }

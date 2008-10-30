@@ -73,7 +73,7 @@ bool BoxCollisionDetector::EstimateImpact(
 
 bool BoxCollisionDetector::Intersects(
 	const BoundingOrientedBox& p_boundingOrientedBox,
-	const TPoint3<Real>& p_ptTestPoint)
+	const TVector3<Real>& p_vecTestPoint)
 {
 	TInterval<Real> itvProjection;
 	for (size_t unIndex = 0; unIndex < 3; unIndex++)
@@ -85,7 +85,7 @@ bool BoxCollisionDetector::Intersects(
 		p_boundingOrientedBox.ProjectToInterval(vecAxis, itvProjection);
 
 		// project position vector on axis
-		Real rPointProjection = p_ptTestPoint.ToVector() * vecAxis;
+		Real rPointProjection = p_vecTestPoint * vecAxis;
 
 		// no intersection if separating axis found
 		if (!itvProjection.Contains(rPointProjection))
@@ -128,10 +128,8 @@ bool BoxCollisionDetector::TestIntersection(
 	const Box &box1 = (Box &) p_geometry1;
 	const Box &box2 = (Box &) p_geometry2;
 
-	BoundingAxisAlignedBox boundingAxisAlignedBox(
-		TPoint3<Real>::Origin - box1.Extent,
-		TPoint3<Real>::Origin + box1.Extent);
-	BoundingOrientedBox boundingOrientedBox(TPoint3<Real>::Origin, box2.Extent);
+	BoundingAxisAlignedBox boundingAxisAlignedBox(-box1.Extent, box1.Extent);
+	BoundingOrientedBox boundingOrientedBox(TVector3<Real>::Zero, box2.Extent);
 	boundingOrientedBox.Transform(p_trnRelativePlacement);
 
 	return boundingOrientedBox.Intersects(boundingAxisAlignedBox);
@@ -151,8 +149,8 @@ bool BoxCollisionDetector::EstimateImpact(
 	const Box &box1 = (Box &) p_geometry1;
 	const Box &box2 = (Box &) p_geometry2;
 
-	BoundingOrientedBox boundingOrientedBox1(TPoint3<Real>::Origin, box1.Extent);
-	BoundingOrientedBox boundingOrientedBox2(TPoint3<Real>::Origin, box2.Extent);
+	BoundingOrientedBox boundingOrientedBox1(TVector3<Real>::Zero, box1.Extent);
+	BoundingOrientedBox boundingOrientedBox2(TVector3<Real>::Zero, box2.Extent);
 	boundingOrientedBox2.Transform(p_trnRelativePlacement);
 
 	// do quick test for current intersection
@@ -247,8 +245,8 @@ void BoxCollisionDetector::ComputeContactManifold(
 	const Box &box1 = (Box &) p_geometry1;
 	const Box &box2 = (Box &) p_geometry2;
 
-	BoundingOrientedBox boundingOrientedBox1(TPoint3<Real>::Origin, box1.Extent);
-	BoundingOrientedBox boundingOrientedBox2(TPoint3<Real>::Origin, box2.Extent);
+	BoundingOrientedBox boundingOrientedBox1(TVector3<Real>::Zero, box1.Extent);
+	BoundingOrientedBox boundingOrientedBox2(TVector3<Real>::Zero, box2.Extent);
 	boundingOrientedBox2.Transform(p_trnRelativePlacement);
 
 	// determine axis of least overlap
@@ -339,7 +337,7 @@ void BoxCollisionDetector::ComputeContactManifold(
 	boundingOrientedBox2.EnumerateMaximalVertices(-vecDirection12, m_listVertices2);
 
 	// ensure lists in increasing size order
-	PointList *pListVertices1, *pListVertices2;
+	VectorList *pListVertices1, *pListVertices2;
 	if (m_listVertices1.Size() <= m_listVertices2.Size())
 	{
 		pListVertices1 = &m_listVertices1;
@@ -362,9 +360,9 @@ void BoxCollisionDetector::ComputeContactManifold(
 	if ((pListVertices1->Size() == 1) && (pListVertices2->Size() == 1))
 	{
 		ContactPoint contactPoint;
-		TPoint3<Real> ptVertex1 = (*pListVertices1)[0];
-		TPoint3<Real> ptVertex2 = (*pListVertices2)[0];
-		contactPoint.Position = ptVertex1 + (ptVertex2 - ptVertex1) * (Real) 0.5;
+		TVector3<Real> vecVertex1 = (*pListVertices1)[0];
+		TVector3<Real> vecVertex2 = (*pListVertices2)[0];
+		contactPoint.Position = (vecVertex1 + vecVertex2) * (Real) 0.5;
 		p_contactManifold.ContactPoints.Add(contactPoint);
 		return;
 	}
@@ -373,11 +371,11 @@ void BoxCollisionDetector::ComputeContactManifold(
 	if ((pListVertices1->Size() == 1) && (pListVertices2->Size() == 2))
 	{
 		LineSegment lsgEdge((*pListVertices1)[0], (*pListVertices2)[0]);
-		TPoint3<Real> ptClosesEdgePoint;
-		lsgEdge.DistanceFromPoint(boundingOrientedBox1.Centre, ptClosesEdgePoint);
+		TVector3<Real> vecClosesEdgePoint;
+		lsgEdge.DistanceFromPoint(boundingOrientedBox1.Centre, vecClosesEdgePoint);
 
-		contactPoint.Position = (*pListVertices1)(0);
-		contactPoint.Normal = ptClosesEdgePoint - boundingOrientedBox1.Centre;
+		contactPoint.Position = (*pListVertices1)[0];
+		contactPoint.Normal = vecClosesEdgePoint - boundingOrientedBox1.Centre;
 		if (contactPoint.Normal.IsZero())
 			contactPoint.Normal = TVector3<Real>::Right;
 		else
@@ -399,10 +397,10 @@ void BoxCollisionDetector::ComputeContactManifold(
 	{
 		LineSegment lsgEdge1((*pListVertices1)[0], (*pListVertices1)[1]);
 		LineSegment lsgEdge2((*pListVertices2)[0], (*pListVertices2)[1]);
-		TPoint3<Real> ptClosest1, ptClosest2;
-		lsgEdge1.ClosestPointsToSegment(lsgEdge2, ptClosest1, ptClosest2);
+		TVector3<Real> vecClosest1, vecClosest2;
+		lsgEdge1.ClosestPointsToSegment(lsgEdge2, vecClosest1, vecClosest2);
 
-		contactPoint.Position = ptClosest1 + (ptClosest2 - ptClosest1) * (Real) 0.5;
+		contactPoint.Position = (vecClosest1 + vecClosest2) * (Real) 0.5;
 		p_contactManifold.ContactPoints.Add(contactPoint);
 		return;
 	}
@@ -410,21 +408,21 @@ void BoxCollisionDetector::ComputeContactManifold(
 	// edge/face - face contact
 	for (size_t unIndex = 0; unIndex < pListVertices1->Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = (*pListVertices1)[unIndex];
-		if (Intersects(boundingOrientedBox1, ptVertex)
-			&& Intersects(boundingOrientedBox2, ptVertex))
+		TVector3<Real>& vecVertex = (*pListVertices1)[unIndex];
+		if (Intersects(boundingOrientedBox1, vecVertex)
+			&& Intersects(boundingOrientedBox2, vecVertex))
 		{
-			contactPoint.Position = ptVertex;
+			contactPoint.Position = vecVertex;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
 	}
 	for (size_t unIndex = 0; unIndex < pListVertices2->Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = (*pListVertices2)[unIndex];
-		if (Intersects(boundingOrientedBox1, ptVertex)
-			&& Intersects(boundingOrientedBox2, ptVertex))
+		TVector3<Real>& vecVertex = (*pListVertices2)[unIndex];
+		if (Intersects(boundingOrientedBox1, vecVertex)
+			&& Intersects(boundingOrientedBox2, vecVertex))
 		{
-			contactPoint.Position = ptVertex;
+			contactPoint.Position = vecVertex;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
 	}
@@ -434,10 +432,10 @@ void BoxCollisionDetector::ComputeContactManifold(
 	// hack in case no contacts detected
 	TVector3<Real> vecAverageContact = TVector3<Real>::Zero;
 	for (size_t unIndex = 0; unIndex < pListVertices1->Size(); unIndex++)
-		vecAverageContact += (*pListVertices1)(unIndex).ToVector();
+		vecAverageContact += (*pListVertices1)[unIndex];
 	for (size_t unIndex = 0; unIndex < pListVertices2->Size(); unIndex++)
-		vecAverageContact += (*pListVertices2)(unIndex).ToVector();
+		vecAverageContact += (*pListVertices2)[unIndex];
 	vecAverageContact /= (pListVertices1->Size() + pListVertices2->Size());
-	contactPoint.Position = TPoint3<Real>::Origin + vecAverageContact;
+	contactPoint.Position = vecAverageContact;
 	p_contactManifold.ContactPoints.Add(contactPoint);
 }

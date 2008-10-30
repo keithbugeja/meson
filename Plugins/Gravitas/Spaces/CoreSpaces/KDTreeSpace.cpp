@@ -173,7 +173,7 @@ void KDTreeSpace::RenderInstrumentation(
 {
 	Real rMin = (Real) -20.0;
 	Real rMax = (Real)  20.0;
-	BoundingAxisAlignedBox boundingAxisAlignedBoxRoot(TPoint3<Real>(rMin, rMin, rMin), TPoint3<Real>(rMax, rMax, rMax));
+	BoundingAxisAlignedBox boundingAxisAlignedBoxRoot(TVector3<Real>(rMin, rMin, rMin), TVector3<Real>(rMax, rMax, rMax));
 	m_pKDNodeRoot->RenderInstrumentation(p_pInstrumentationDevice, boundingAxisAlignedBoxRoot);
 }
 

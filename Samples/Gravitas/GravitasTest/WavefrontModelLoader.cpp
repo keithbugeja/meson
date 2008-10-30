@@ -27,7 +27,7 @@ WavefrontModelLoader::~WavefrontModelLoader(void)
 
 void WavefrontModelLoader::LoadModel(
 	const String& p_strFilename,
-	PointList& p_listVertices,
+	VectorList& p_listVertices,
 	VectorList& p_listNormals,
 	TList< TVector2<Real> >& p_listTextureCoordinates,
 	WavefrontFaceList& p_listFaces)
@@ -63,11 +63,11 @@ void WavefrontModelLoader::LoadModel(
 			// vertex
 			if (listTokens.Size() != 4)
 				continue;
-			TPoint3<Real> ptVertex;
-			ptVertex.X = Converter::ToDouble(listTokens[1]);
-			ptVertex.Y = Converter::ToDouble(listTokens[2]);
-			ptVertex.Z = Converter::ToDouble(listTokens[3]);
-			p_listVertices.Add(ptVertex);
+			TVector3<Real> vecVertex;
+			vecVertex.X = Converter::ToDouble(listTokens[1]);
+			vecVertex.Y = Converter::ToDouble(listTokens[2]);
+			vecVertex.Z = Converter::ToDouble(listTokens[3]);
+			p_listVertices.Add(vecVertex);
 		}
 		else if (listTokens[0] == "vn")
 		{

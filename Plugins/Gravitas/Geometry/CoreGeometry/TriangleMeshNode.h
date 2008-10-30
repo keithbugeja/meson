@@ -13,19 +13,19 @@ struct IndexedTriangle
 
 	bool operator==(const IndexedTriangle& p_indexedTriangle) const;
 
-	Real GetArea(const PointList* p_plistVertices) const;
-	Meson::Common::Maths::TPoint3<Real> GetCentroid(const PointList* p_plistVertices) const;
+	Real GetArea(const VectorList* p_plistVertices) const;
+	Meson::Common::Maths::TVector3<Real> GetCentroid(const VectorList* p_plistVertices) const;
 
 	bool Intersects(
-		const PointList* p_plistVertices,
+		const VectorList* p_plistVertices,
 		const BoundingAxisAlignedBox& boundingAxisAlignedBox) const;
 	bool IntersectsRay(
-		const PointList* p_plistVertices, const Ray& p_ray) const;
+		const VectorList* p_plistVertices, const Ray& p_ray) const;
 	bool IntersectsRay(
-		const PointList* p_plistVertices, const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		const VectorList* p_plistVertices, const Ray& p_ray,
+		Meson::Common::Maths::TVector3<Real>& p_ptIntersectionPoint) const;
 
-	void UpdateNormal(const PointList* p_plistVertices);
+	void UpdateNormal(const VectorList* p_plistVertices);
 };
 
 typedef Meson::Common::Collections::TList<IndexedTriangle> IndexedTriangleList;
@@ -33,7 +33,7 @@ typedef Meson::Common::Collections::TArrayList<IndexedTriangle> IndexedTriangleA
 
 struct TriangleMeshNode
 {
-	const PointList* Vertices;
+	const VectorList* Vertices;
 	BoundingAxisAlignedBox BoundingVolume;
 	IndexedTriangleArrayList Triangles;
 	TriangleMeshNode* Child[2];
@@ -47,11 +47,11 @@ struct TriangleMeshNode
 
 	Real GetVolume(void) const;
 	Real GetMomentOfInertia(const Meson::Common::Maths::TVector3<Real>& p_vecAxis) const;
-	Meson::Common::Maths::TPoint3<Real> GetCentroid(void) const;
+	Meson::Common::Maths::TVector3<Real> GetCentroid(void) const;
 
 	bool IntersectsRay(const Ray& p_ray) const;
 	bool IntersectsRay(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 
 	void RenderInstrumentation(
 		Meson::Gravitas::Instrumentation::IInstrumentationDevice* p_pInstrumentationDevice);

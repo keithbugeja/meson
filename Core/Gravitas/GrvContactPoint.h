@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Point3.h"
 #include "Vector3.h"
 
 #include "GrvNamespaces.h"
@@ -20,7 +19,7 @@ struct ContactPoint
 	//----------------------------------------------------------------------------------------------
 	/// Position of the contact point in world coordinates.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Position;
+	Meson::Common::Maths::TVector3<Real> Position;
 
 	//----------------------------------------------------------------------------------------------
 	/// Normal vector perpendicular to the plane containing the contact.
@@ -52,13 +51,13 @@ struct ContactPoint
 
 	//----------------------------------------------------------------------------------------------
 	/// Constructs a contact point from the given position, contact normal vector and penetration.
-	/// \param p_ptPosition Position of the contact point in world coordinates.
+	/// \param p_vecPosition Position of the contact point in world coordinates.
 	/// \param p_vecNormal Normal vector describing the plane of contact.
 	/// \param p_rPenetration Scalar value for the interpenetration between the bodies involved in
 	///        the contact.
 	//----------------------------------------------------------------------------------------------
 	ContactPoint(
-		const Meson::Common::Maths::TPoint3<Real> &p_ptPosition,
+		const Meson::Common::Maths::TVector3<Real> &p_vecPosition,
 		const Meson::Common::Maths::TVector3<Real> &p_vecNormal,
 		Real p_rPenetration);
 

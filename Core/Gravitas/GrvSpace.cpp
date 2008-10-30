@@ -3,8 +3,11 @@
 #include "GrvGravitasEngine.h"
 
 using namespace Meson::Common::Memory;
+using namespace Meson::Common::Maths;
 
 using namespace Meson::Gravitas;
+using namespace Meson::Gravitas::Body;
+using namespace Meson::Gravitas::Geometry;
 
 Meson_Gravitas_Space_BEGIN
 
@@ -31,9 +34,7 @@ BodyRayIntersection::BodyRayIntersection(const BodyRayIntersection& p_bodyRayInt
 }
 
 BodyRayIntersection::BodyRayIntersection(
-	const Meson::Gravitas::Geometry::Ray& p_ray,
-	Meson::Gravitas::Body::BodyPtr p_pBody,
-	const Meson::Common::Maths::TPoint3<Real>& p_ptPosition)
+	const Meson::Gravitas::Geometry::Ray& p_ray, BodyPtr p_pBody, const TVector3<Real>& p_ptPosition)
 	: Ray(&p_ray)
 	, Body(p_pBody)
 	, Position(p_ptPosition)

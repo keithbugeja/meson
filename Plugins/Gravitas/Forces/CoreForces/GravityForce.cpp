@@ -58,13 +58,13 @@ TVector3<Real> GravityForce::GetForceValue(
 	return m_vecAcceleration * p_pMassProperties->Mass;
 }
 
-TPoint3<Real> GravityForce::GetApplicationPoint(
+TVector3<Real> GravityForce::GetApplicationPoint(
 	MassProperties* p_pMassProperties,
 	KineticProperties* p_pKineticProperties,
 	GeometryPtr p_pGeometry,
 	Real p_rTime)
 {
-	return TPoint3<Real>::Origin;
+	return TVector3<Real>::Zero;
 }
 
 bool GravityForce::IsInstantaneous(void)

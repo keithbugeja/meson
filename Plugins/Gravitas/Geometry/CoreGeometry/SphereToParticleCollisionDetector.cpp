@@ -130,11 +130,11 @@ void SphereToParticleCollisionDetector::ComputeContactManifold(
 
 	TVector3<Real> vecNormal = p_trnRelativePlacement.Translation.NormaliseCopy();
 
-	TPoint3<Real> ptContact = TPoint3<Real>::Origin + vecNormal * pSphere->Radius;
+	TVector3<Real> vecContact = vecNormal * pSphere->Radius;
 
 	Real rPenetration = pSphere->Radius
 		- p_trnRelativePlacement.Translation.Length();
 
 	p_contactManifold.ContactPoints.Add(
-		ContactPoint(ptContact, vecNormal, rPenetration));
+		ContactPoint(vecContact, vecNormal, rPenetration));
 }

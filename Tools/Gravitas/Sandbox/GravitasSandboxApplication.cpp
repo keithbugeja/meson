@@ -382,10 +382,10 @@ void GravitasSandboxApplication::OnIdle(void)
 		if (m_pBodyPicking != NULL)
 		{
 			TVector3<Real> vecDirection = m_pCamera->GetPickingDirection(m_fLastMouseX, m_fLastMouseY);
-			TPoint3<Real>& ptBodyPosition = m_pBodyPicking->GetKineticProperties().Position;
-			TPoint3<Real> ptMousePosition = TPoint3<Real>::Origin + m_pCamera->GetPosition() + vecDirection * m_rBodyPickingDepth;
+			TVector3<Real>& vecBodyPosition = m_pBodyPicking->GetKineticProperties().Position;
+			TVector3<Real> vecMousePosition = m_pCamera->GetPosition() + vecDirection * m_rBodyPickingDepth;
 
-			TVector3<Real> vecForceValue = ptMousePosition - ptBodyPosition;
+			TVector3<Real> vecForceValue = vecMousePosition - vecBodyPosition;
 			vecForceValue *= m_rBodyPickingDepth;
 			vecForceValue *= m_pBodyPicking->GetMassProperties().Mass;
 
@@ -393,7 +393,7 @@ void GravitasSandboxApplication::OnIdle(void)
 			IForceFactory* pForceFactory = pForceManager->GetForceFactory("Basic");
 			ForcePtr pForce = pForceFactory->CreateForce();
 			pForce->SetProperty("Instantaneous", true);
-			pForce->SetProperty("ApplicationPoint", TPoint3<Real>::Origin);
+			pForce->SetProperty("ApplicationPoint", TVector3<Real>::Zero);
 			pForce->SetProperty("ForceValue", vecForceValue);
 			m_pBodyPicking->GetForceAccumulator().AddForce(pForce);
 		}
@@ -417,7 +417,7 @@ void GravitasSandboxApplication::OnFrameDraw(void)
 	{	
 		Vector3f vecPosition = m_pCamera->GetPosition();
 		m_pCamera->LookAt(vecPosition,
-			m_listSandboxEntities[m_nCameraLock].Body->GetKineticProperties().Position.ToVector(),
+			m_listSandboxEntities[m_nCameraLock].Body->GetKineticProperties().Position,
 			Vector3f::Up);
 	}
 	else
@@ -526,7 +526,7 @@ void GravitasSandboxApplication::OnMouseDown(IWindowMessageHandler::MouseKey p_e
 		TVector3<Real> vecDirection = m_pCamera->GetPickingDirection(
 			m_vec2CameraMouseTrack.X, m_vec2CameraMouseTrack.Y);
 		Meson::Gravitas::Geometry::Ray rayPicking(
-			TPoint3<Real>::Origin + m_pCamera->GetPosition(), vecDirection);
+			m_pCamera->GetPosition(), vecDirection);
 		Meson::Gravitas::Space::BodyRayIntersectionArrayList listIntersections;
 		this->m_pEnvironment->Space->IntersectRay(rayPicking, listIntersections);
 		
@@ -539,8 +539,9 @@ void GravitasSandboxApplication::OnMouseDown(IWindowMessageHandler::MouseKey p_e
 				m_pBodyPicking = pBody;
 				m_pBodyPicking->GetKineticProperties().Active = true;
 				m_pBodyPicking->GetKineticProperties().LastActive = m_dCurrentTime;
-				m_rBodyPickingDepth = (pBody->GetKineticProperties().Position.ToVector()
-					- m_pCamera->GetPosition()).Length();
+				m_rBodyPickingDepth
+					= (pBody->GetKineticProperties().Position
+						- m_pCamera->GetPosition()).Length();
 				break;
 			}
 		}

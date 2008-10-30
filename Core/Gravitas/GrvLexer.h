@@ -74,10 +74,8 @@ public:
 		Meson::Common::Collections::TList<LexerToken>& p_listTokens);
 	LexerToken ReadIdentifier(const Meson::Common::Text::String& p_strIdentifier);
 	Meson::Common::Maths::TVector3<Real> ReadVector(void);
-	Meson::Common::Maths::TPoint3<Real> ReadPoint(void);
 	Meson::Common::Maths::TQuaternion<Real> ReadQuaternion(void);
 	void ReadVectorList(Meson::Gravitas::VectorList& p_listVectors);
-	void ReadPointList(Meson::Gravitas::PointList& p_listPoints);
 	LexerToken ReadProperty(const Meson::Common::Text::String& p_strPropertyName,
 		LexerTokenType::LexerTokenType p_lexerTokenType);
 	bool ReadPropertyBoolean(const Meson::Common::Text::String& p_strPropertyName);
@@ -86,8 +84,6 @@ public:
 	Meson::Common::Text::String ReadPropertyString(
 		const Meson::Common::Text::String& p_strPropertyName);
 	Meson::Common::Maths::TVector3<Real> ReadPropertyVector(
-		const Meson::Common::Text::String& p_strPropertyName);
-	Meson::Common::Maths::TPoint3<Real> ReadPropertyPoint(
 		const Meson::Common::Text::String& p_strPropertyName);
 	void ReadCustomProperties(IGravitasEntity& p_gravitasEntity);
 };

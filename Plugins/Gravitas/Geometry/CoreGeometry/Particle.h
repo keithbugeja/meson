@@ -30,7 +30,7 @@ public:
 
 	bool IntersectsRay(const Ray& p_ray) const;
 	bool IntersectsRay(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 };
 
 Meson_Gravitas_Geometry_END

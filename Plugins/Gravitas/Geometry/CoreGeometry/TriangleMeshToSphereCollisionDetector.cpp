@@ -30,8 +30,8 @@ bool TriangleMeshToSphereCollisionDetector::TestIntersection(
 		triangle.Vertices[0] = (*pTriangleMeshNode->Vertices)[indexedTriangle.VertexIndices[0]];
 		triangle.Vertices[1] = (*pTriangleMeshNode->Vertices)[indexedTriangle.VertexIndices[1]];
 		triangle.Vertices[2] = (*pTriangleMeshNode->Vertices)[indexedTriangle.VertexIndices[2]];
-		TPoint3<Real> ptClosestPoint(triangle.ClosestPoint(p_boundingSphere.Centre));
-		if ((ptClosestPoint - p_boundingSphere.Centre).LengthSquared() <= p_boundingSphere.RadiusSquared)
+		TVector3<Real> vecClosestPoint(triangle.ClosestPoint(p_boundingSphere.Centre));
+		if ((vecClosestPoint - p_boundingSphere.Centre).LengthSquared() <= p_boundingSphere.RadiusSquared)
 			return true;
 	}
 
@@ -61,12 +61,12 @@ void TriangleMeshToSphereCollisionDetector::ComputeContactManifold(
 		triangle.Vertices[0] = (*pTriangleMeshNode->Vertices)[indexedTriangle.VertexIndices[0]];
 		triangle.Vertices[1] = (*pTriangleMeshNode->Vertices)[indexedTriangle.VertexIndices[1]];
 		triangle.Vertices[2] = (*pTriangleMeshNode->Vertices)[indexedTriangle.VertexIndices[2]];
-		TPoint3<Real> ptClosestPoint(triangle.ClosestPoint(p_boundingSphere.Centre));
-		TVector3<Real> vecOffset(ptClosestPoint - p_boundingSphere.Centre);
+		TVector3<Real> vecClosestPoint(triangle.ClosestPoint(p_boundingSphere.Centre));
+		TVector3<Real> vecOffset(vecClosestPoint - p_boundingSphere.Centre);
 		if (vecOffset.LengthSquared() <= p_boundingSphere.RadiusSquared)
 		{
 			p_contactManifold.ContactPoints.Add(
-				ContactPoint(ptClosestPoint, -vecOffset.NormaliseCopy(),
+				ContactPoint(vecClosestPoint, -vecOffset.NormaliseCopy(),
 					p_boundingSphere.Radius - vecOffset.Length()));
 		}
 	}
@@ -116,8 +116,8 @@ bool TriangleMeshToSphereCollisionDetector::TestIntersection(
 	{
 		// transform sphere centre to polyhedron space
 		const Sphere& sphere = (Sphere &) p_geometry2;
-		TPoint3<Real> ptSphereCentre(TPoint3<Real>::Origin + p_trnRelativePlacement.Translation);
-		BoundingSphere boundingSphere(ptSphereCentre, sphere.Radius);
+		const TVector3<Real>& vecSphereCentre = p_trnRelativePlacement.Translation;
+		BoundingSphere boundingSphere(vecSphereCentre, sphere.Radius);
 		return TestIntersection(triangleMesh.Root, boundingSphere);
 	}
 }
@@ -155,8 +155,8 @@ void TriangleMeshToSphereCollisionDetector::ComputeContactManifold(
 	{
 		// transform sphere centre to polyhedron space
 		const Sphere& sphere = (Sphere &) p_geometry2;
-		TPoint3<Real> ptSphereCentre(TPoint3<Real>::Origin + p_trnRelativePlacement.Translation);
-		BoundingSphere boundingSphere(ptSphereCentre, sphere.Radius);
+		const TVector3<Real>& vecSphereCentre = p_trnRelativePlacement.Translation;
+		BoundingSphere boundingSphere(vecSphereCentre, sphere.Radius);
 		ComputeContactManifold(triangleMesh.Root, boundingSphere, p_contactManifold);
 	}
 }

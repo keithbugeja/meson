@@ -1,21 +1,19 @@
 #pragma once
 
-#include "Point3.h"
-
 #include "GrvGeometry.h"
 
 Meson_Gravitas_Geometry_BEGIN
 
 struct ConvexPolyhedronEdge
 {
-	const PointList* Vertices;
+	const VectorList* Vertices;
 	ushort VertexIndices[2];
 	Meson::Common::Maths::TVector3<Real> Displacement;
 
 	ConvexPolyhedronEdge(void);
 	ConvexPolyhedronEdge(const ConvexPolyhedronEdge& p_convexPolyhedronEdge);
 	ConvexPolyhedronEdge(
-		PointList* p_pVertices,
+		VectorList* p_pVertices,
 		ushort p_nVertexIndex0, ushort p_nVertexIndex1);
 
 	ConvexPolyhedronEdge& operator=(const ConvexPolyhedronEdge& p_convexPolyhedronEdge);

@@ -10,8 +10,7 @@ class ConvexPolyhedronToBoxCollisionDetector
 private: // private variables;
 	Meson::Common::Text::String m_strGeometryType1;
 	Meson::Common::Text::String m_strGeometryType2;
-	PointArrayList m_listVertices1;
-	PointArrayList m_listVertices2;
+	VectorArrayList m_listVertices1, m_listVertices2;
 
 private: // private methods
 

@@ -172,7 +172,7 @@ void MainWindowMessageHandler::OnMouseDown(MouseKey p_eMouseKey)
 		static Real rAngle = 0.0;
 		if (p_eMouseKey == MK_LEFT)
 		{
-			pRigidBody->GetKineticProperties().Position = TPoint3<Real>(0.0, 7.0, 0.0);
+			pRigidBody->GetKineticProperties().Position = TVector3<Real>(0.0, 7.0, 0.0);
 			pRigidBody->GetKineticProperties().Orientation.MakeRotation(TVector3<Real>::Up, rAngle);
 			pRigidBody->GetKineticProperties().OrientationConjugate = pRigidBody->GetKineticProperties().Orientation.ConjugateCopy();
 			//pRigidBody->GetKineticProperties().LinearVelocity = TVector3<Real>::Out;
@@ -180,7 +180,7 @@ void MainWindowMessageHandler::OnMouseDown(MouseKey p_eMouseKey)
 		}
 		else
 		{
-			pRigidBody->GetKineticProperties().Position = TPoint3<Real>(-3.0, 2.0, 0.0);
+			pRigidBody->GetKineticProperties().Position = TVector3<Real>(-3.0, 2.0, 0.0);
 			pRigidBody->GetKineticProperties().LinearVelocity = TVector3<Real>::Right;
 		}
 
@@ -226,18 +226,18 @@ void MainWindowMessageHandler::OnMouseDown(MouseKey p_eMouseKey)
 			pConstraint->SetBody2(pBodyLast);
 
 			TVector3<Real> vecOffset = pBodyLast->GetKineticProperties().Position - pBodyPrev->GetKineticProperties().Position;
-			TPoint3<Real> ptJointPosition = pBodyPrev->GetKineticProperties().Position 
+			TVector3<Real> vecJointPosition = pBodyPrev->GetKineticProperties().Position 
 				+ vecOffset * (Real) 0.5;
 
 			if (s_jointType == Spherical)
 			{
-				pConstraint->SetProperty("BindPoint", ptJointPosition);
+				pConstraint->SetProperty("BindPoint", vecJointPosition);
 				pConstraint->SetProperty("AngleLimit", TMaths<Real>::Pi * 0.33);
 			}
 			else if (s_jointType == Revolute)
 			{
-				pConstraint->SetProperty("BindAxisPoint1", ptJointPosition + TVector3<Real>::In * 0.5);
-				pConstraint->SetProperty("BindAxisPoint2", ptJointPosition + TVector3<Real>::Out * 0.5);
+				pConstraint->SetProperty("BindAxisPoint1", vecJointPosition + TVector3<Real>::In * 0.5);
+				pConstraint->SetProperty("BindAxisPoint2", vecJointPosition + TVector3<Real>::Out * 0.5);
 				pConstraint->SetProperty("AngleLimit", TMaths<Real>::Pi * 0.33);
 			}
 			else if (s_jointType == AngularMotor)

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Point3.h"
 #include "String8.h"
 #include "List.h"
 
@@ -37,7 +36,7 @@ public:
 	void LoadWavefrontGeometry(
 		const String& p_strFilename,
 		bool p_bTriangulateFaces,
-		PointList& p_listVertices,
+		VectorList& p_listVertices,
 		GeometryFaceList& p_listGeometryFaces);
 };
 

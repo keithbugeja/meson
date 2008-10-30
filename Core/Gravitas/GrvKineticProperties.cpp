@@ -10,7 +10,7 @@ KineticProperties::KineticProperties(void)
 	: Active(true)
 	, CanSleep(true)
 	, LastActive((Real) 0.0)
-	, Position(TPoint3<Real>::Origin)
+	, Position(TVector3<Real>::Zero)
 	, Orientation(TQuaternion<Real>::Identity)
 	, OrientationConjugate(TQuaternion<Real>::Identity)
 	, LinearVelocity(TVector3<Real>::Zero)
@@ -53,8 +53,7 @@ KineticProperties& KineticProperties::operator=(const KineticProperties &p_kinet
 KineticProperties KineticProperties::operator-(const KineticProperties &p_kineticProperties)
 {
 	KineticProperties kineticStateRelative;
-	kineticStateRelative.Position = TPoint3<Real>::Origin
-		+ p_kineticProperties.OrientationConjugate.TransformCopy(
+	kineticStateRelative.Position = p_kineticProperties.OrientationConjugate.TransformCopy(
 			Position - p_kineticProperties.Position);
 	kineticStateRelative.Orientation = p_kineticProperties.OrientationConjugate * Orientation;
 	kineticStateRelative.OrientationConjugate = kineticStateRelative.Orientation.ConjugateCopy();
@@ -74,35 +73,34 @@ Real KineticProperties::GetActivity(void)
 }
 
 void KineticProperties::TransformPointToLocal(
-	const TPoint3<Real>& p_ptWorldPosition, 
-	TPoint3<Real>& p_ptLocalPosition) const
+	const TVector3<Real>& p_vecWorldPosition, 
+	TVector3<Real>& p_vecLocalPosition) const
 {
 	// if   X' = Q X Q* + V
 	// then X = Q* X' Q - (Q* V Q)
 
-	p_ptLocalPosition
-		= TPoint3<Real>::Origin
-			+ (OrientationConjugate * p_ptWorldPosition.ToVector() * Orientation).Vector
-			- (OrientationConjugate * Position.ToVector() * Orientation).Vector;
+	p_vecLocalPosition
+		= (OrientationConjugate * p_vecWorldPosition * Orientation).Vector
+			- (OrientationConjugate * Position * Orientation).Vector;
 }
 
 void KineticProperties::TransformPointToWorld(
-	const TPoint3<Real>& p_ptLocalPosition, 
-	TPoint3<Real>& p_ptWorldPosition) const
+	const TVector3<Real>& p_vecLocalPosition, 
+	TVector3<Real>& p_vecWorldPosition) const
 {
-	p_ptWorldPosition = Position + (Orientation * p_ptLocalPosition.ToVector() * OrientationConjugate).Vector;
+	p_vecWorldPosition = Position + (Orientation * p_vecLocalPosition * OrientationConjugate).Vector;
 }
 
 void KineticProperties::ComputeLocalPointVelocity(
-	const Meson::Common::Maths::TPoint3<Real>& p_ptLocalPosition,
-	Meson::Common::Maths::TVector3<Real>& p_vecVelocity) const
+	const TVector3<Real>& p_vecLocalPosition,
+	TVector3<Real>& p_vecVelocity) const
 {
-	p_vecVelocity = LinearVelocity + (AngularVelocity ^ (p_ptLocalPosition.ToVector()));
+	p_vecVelocity = LinearVelocity + (AngularVelocity ^ p_vecLocalPosition);
 }
 
 void KineticProperties::ComputeWorldPointVelocity(
-	const Meson::Common::Maths::TPoint3<Real>& p_ptWorldPosition,
+	const Meson::Common::Maths::TVector3<Real>& p_vecWorldPosition,
 	Meson::Common::Maths::TVector3<Real>& p_vecVelocity) const
 {
-	p_vecVelocity = LinearVelocity + (AngularVelocity ^ (p_ptWorldPosition - Position));
+	p_vecVelocity = LinearVelocity + (AngularVelocity ^ (p_vecWorldPosition - Position));
 }

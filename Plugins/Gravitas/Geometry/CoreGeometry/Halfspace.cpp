@@ -97,13 +97,13 @@ bool Halfspace::IntersectsRay(const Ray& p_ray) const
 }
 
 bool Halfspace::IntersectsRay(const Ray& p_ray,
-	TPoint3<Real>& p_ptIntersectionPoint) const
+	TVector3<Real>& p_vecIntersectionPoint) const
 {
 	// if ray source already in halfspace, trivially true
-	// and intersection is source itself
+	// and intersection point is source itself
 	if (p_ray.Source.Y <= (Real) 0.0)
 	{
-		p_ptIntersectionPoint = p_ray.Source;
+		p_vecIntersectionPoint = p_ray.Source;
 		return true;
 	}
 
@@ -114,7 +114,7 @@ bool Halfspace::IntersectsRay(const Ray& p_ray,
 		return false;
 
 	// otherwise, compute intersection point at Ry = 0
-	Real rDistance = - p_ray.Source.Y / p_ray.Direction.Y;
-	p_ptIntersectionPoint =  p_ray.Source +  p_ray.Direction * rDistance;
+	Real rDistance = -p_ray.Source.Y / p_ray.Direction.Y;
+	p_vecIntersectionPoint =  p_ray.Source +  p_ray.Direction * rDistance;
 	return true;
 }
