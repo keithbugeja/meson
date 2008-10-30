@@ -41,7 +41,7 @@ void SandboxEntity::Update(void)
 
 	KineticProperties& kineticProperties = Body->GetKineticProperties();
 	Meson::Vistas::Transformation transformation(
-		kineticProperties.Orientation, kineticProperties.Position.ToVector());
+		kineticProperties.Orientation, kineticProperties.Position);
 	GeometryNode->SetLocalTransform(transformation);
 }
 

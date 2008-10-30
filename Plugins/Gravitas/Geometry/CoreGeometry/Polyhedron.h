@@ -18,7 +18,7 @@ private: // private variables
 	short m_nId;
 
 public: // public variables
-	Meson::Common::Collections::TArrayList<Meson::Common::Maths::TPoint3<Real>> m_listVertices;
+	VectorArrayList m_listVertices;
 	Meson::Common::Collections::TArrayList<PolyhedronFace> m_listFaces;
 	Meson::Common::Collections::TArrayList<PolyhedronEdge> m_listEdges;
 
@@ -43,20 +43,20 @@ public: // public methods
 	void GetProperty(const Meson::Common::Text::String& p_strName, size_t p_unIndex,
 		int &p_nValue);
 	void GetProperty(const Meson::Common::Text::String& p_strName, size_t p_unIndex,
-		Meson::Common::Maths::TPoint3<Real>& p_ptValue) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecValue) const;
 	void GetProperty(const Meson::Common::Text::String& p_strName,
 		Meson::Common::Collections::TList<int>& p_listValues) const;
 	void GetProperty(const Meson::Common::Text::String& p_strName,
-		Meson::Common::Collections::TList< Meson::Common::Maths::TPoint3<Real> > &p_listValues) const;
+		VectorList& p_listValues) const;
 	void SetProperty(const Meson::Common::Text::String& p_strName,
 		size_t p_unIndex, int p_nValue);
 	void SetProperty(const Meson::Common::Text::String& p_strName,
 		size_t p_unIndex,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptValue);
+		const Meson::Common::Maths::TVector3<Real>& p_vecValue);
 	void SetProperty(const Meson::Common::Text::String& p_strName,
 		const Meson::Common::Collections::TList<int>& p_listValues);
 	void SetProperty(const Meson::Common::Text::String& p_strName,
-		const Meson::Common::Collections::TList< Meson::Common::Maths::TPoint3<Real> >& p_listValues);
+		const VectorList& p_listValues);
 
 	// IGeoemtry interface
 	const Meson::Common::Text::String& GetTypeName(void) const;
@@ -72,16 +72,16 @@ public: // public methods
 
 	bool IntersectsRay(const Ray& p_ray) const;
 	bool IntersectsRay(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 
 	// custom interface
-	Meson::Common::Maths::TPoint3<Real> GetCentroid(void) const;
+	Meson::Common::Maths::TVector3<Real> GetCentroid(void) const;
 
 	void AddFace(size_t p_unVertexIndex0, size_t p_unVertexIndex1, size_t p_unVertexIndex2);
 	void AddFace(const size_t *p_unVertexIndices);
 
 	void MakeCube(Real p_rWidth, Real p_rHeight, Real p_rDepth);
-	void MakeConvexHull(const Meson::Common::Collections::TList<Meson::Common::Maths::TPoint3<Real>> &p_listPoints, bool p_bCleanup = true);
+	void MakeConvexHull(const VectorList& p_listPoints, bool p_bCleanup = true);
 	void MakeMinkowskiDifference(const Polyhedron &p_polyhedron1, const Polyhedron &p_polyhedron2, bool p_bCleanup = true);
 
 	void EliminateUnusedVertices(void);
@@ -100,19 +100,19 @@ public: // public methods
 		const Meson::Common::Maths::TVector3<Real> &p_vecAxis,
 		Meson::Common::Maths::TInterval<Real> &p_interval) const;
 
-	bool Intersects(const Meson::Common::Maths::TPoint3<Real> &p_ptPoint) const;
+	bool Intersects(const Meson::Common::Maths::TVector3<Real> &p_vecPoint) const;
 	bool Intersects(const LineSegment &p_lineSegment) const;
 	bool IntersectsBoundary(const LineSegment &p_lineSegment) const;
 	bool IntersectsBoundary(const LineSegment &p_lineSegment,
 		size_t &p_unOccurences,
-		Meson::Common::Maths::TPoint3<Real> &p_ptIntersectionPointNear,
-		Meson::Common::Maths::TPoint3<Real> &p_ptIntersectionPointFar) const;
+		Meson::Common::Maths::TVector3<Real> &p_vecIntersectionPointNear,
+		Meson::Common::Maths::TVector3<Real> &p_vecIntersectionPointFar) const;
 
-	Meson::Common::Maths::TPoint3<Real> ClosestPointTo(
-		const Meson::Common::Maths::TPoint3<Real> &p_ptPoint) const;
-	Meson::Common::Maths::TPoint3<Real> ClosestPointTo(
-		const Meson::Common::Maths::TPoint3<Real> &p_ptPoint,
-		size_t &p_unClosestFaceIndex) const;
+	Meson::Common::Maths::TVector3<Real> ClosestPointTo(
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
+	Meson::Common::Maths::TVector3<Real> ClosestPointTo(
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint,
+		size_t& p_unClosestFaceIndex) const;
 
 };
 

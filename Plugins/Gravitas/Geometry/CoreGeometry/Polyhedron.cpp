@@ -256,8 +256,8 @@ void Polyhedron::EnumerateProperties(
 	TMap<String, PropertyDescriptor>& p_mapProperties) const
 {
 	p_mapProperties.Clear();
-	p_mapProperties["Vertices"] = PropertyDescriptor("Vertices", PropertyType::PointList, false);
-	p_mapProperties["Vertex"] = PropertyDescriptor("Vertex", PropertyType::IndexedPoint, false);
+	p_mapProperties["Vertices"] = PropertyDescriptor("Vertices", PropertyType::VectorList, false);
+	p_mapProperties["Vertex"] = PropertyDescriptor("Vertex", PropertyType::IndexedVector, false);
 	p_mapProperties["FaceVertexIndices"] = PropertyDescriptor("FaceVertexIndices", PropertyType::IntegerList, false);
 	p_mapProperties["FaceVertexIndex"] = PropertyDescriptor("FaceVertexIndex", PropertyType::IndexedInteger, false);
 	p_mapProperties["EdgeVertexIndices"] = PropertyDescriptor("EdgeVertexIndices", PropertyType::IntegerList, true);
@@ -275,10 +275,10 @@ void Polyhedron::GetProperty(const String& p_strName, size_t p_unIndex, int& p_n
 }
 
 void Polyhedron::GetProperty(const String& p_strName, size_t p_unIndex,
-	TPoint3<Real>& p_ptValue) const
+	TVector3<Real>& p_vecValue) const
 {
 	if (p_strName == "Vertex")
-		p_ptValue = m_listVertices[p_unIndex];
+		p_vecValue = m_listVertices[p_unIndex];
 	else
 		MESON_ASSERT("false", "Polyhedron geometry: Unsupported property.");
 }
@@ -316,7 +316,7 @@ void Polyhedron::GetProperty(const String& p_strName,
 }
 
 void Polyhedron::GetProperty(const String& p_strName,
-	PointList& p_listValues) const
+	VectorList& p_listValues) const
 {
 	if (p_strName == "Vertices")
 		p_listValues = m_listVertices;
@@ -340,13 +340,13 @@ void Polyhedron::SetProperty(const String& p_strName, size_t p_unIndex, int p_nV
 		MESON_ASSERT("false", "Polyhedron geometry: Unsupported property.");
 }
 
-void Polyhedron::SetProperty(const String& p_strName, size_t p_unIndex, const TPoint3<Real>& p_ptValue)
+void Polyhedron::SetProperty(const String& p_strName, size_t p_unIndex, const TVector3<Real>& p_vecValue)
 {
 	if (p_strName == "Vertex")
 	{
 		while (m_listVertices.Size() <= p_unIndex)
-			m_listVertices.Add(TPoint3<Real>((Real) 0.0, (Real) 0.0, (Real) 0.0));
-		m_listVertices[p_unIndex] = p_ptValue;
+			m_listVertices.Add(TVector3<Real>::Zero);
+		m_listVertices[p_unIndex] = p_vecValue;
 
 		AlignCentroid();
 	}
@@ -376,7 +376,7 @@ void Polyhedron::SetProperty(const String& p_strName, const TList<int>& p_listVa
 		MESON_ASSERT("false", "Polyhedron volume: Unsupported property.");
 }
 
-void Polyhedron::SetProperty(const String& p_strName, const PointList& p_listValues)
+void Polyhedron::SetProperty(const String& p_strName, const VectorList& p_listValues)
 {
 	if (p_strName == "Vertices")
 	{
@@ -387,7 +387,7 @@ void Polyhedron::SetProperty(const String& p_strName, const PointList& p_listVal
 		MESON_ASSERT("false", "Polyhedron geometry: Unsupported property.");
 }
 
-TPoint3<Real> Polyhedron::GetCentroid(void) const
+TVector3<Real> Polyhedron::GetCentroid(void) const
 {
 	// initialise centroid integrals
 	Real rVolumeIntegral = (Real) 0.0;
@@ -431,12 +431,12 @@ TPoint3<Real> Polyhedron::GetCentroid(void) const
 
 	// centroid
 	Real rMultiplier = (Real) 0.25 / rVolumeIntegral;
-	TPoint3<Real> ptCentroid;
-	ptCentroid.X = rCentroidIntegralX * rMultiplier;
-	ptCentroid.Y = rCentroidIntegralY * rMultiplier;
-	ptCentroid.Z = rCentroidIntegralZ * rMultiplier;
+	TVector3<Real> vecCentroid;
+	vecCentroid.X = rCentroidIntegralX * rMultiplier;
+	vecCentroid.Y = rCentroidIntegralY * rMultiplier;
+	vecCentroid.Z = rCentroidIntegralZ * rMultiplier;
 
-	return ptCentroid;
+	return vecCentroid;
 }
 
 void Polyhedron::AddFace(size_t p_unVertexIndex0, size_t p_unVertexIndex1, size_t p_unVertexIndex2)
@@ -457,14 +457,14 @@ void Polyhedron::MakeCube(Real p_rWidth, Real p_rHeight, Real p_rDepth)
 	Real rHalfWidth = p_rWidth * (Real) 0.5;
 	Real rHalfHeight = p_rHeight * (Real) 0.5;
 	Real rHalfDepth = p_rDepth * (Real) 0.5;
-	m_listVertices.Add(TPoint3<Real>(-rHalfWidth, -rHalfHeight, +rHalfDepth));
-	m_listVertices.Add(TPoint3<Real>(+rHalfWidth, -rHalfHeight, +rHalfDepth));
-	m_listVertices.Add(TPoint3<Real>(+rHalfWidth, +rHalfHeight, +rHalfDepth));
-	m_listVertices.Add(TPoint3<Real>(-rHalfWidth, +rHalfHeight, +rHalfDepth));
-	m_listVertices.Add(TPoint3<Real>(-rHalfWidth, -rHalfHeight, -rHalfDepth));
-	m_listVertices.Add(TPoint3<Real>(+rHalfWidth, -rHalfHeight, -rHalfDepth));
-	m_listVertices.Add(TPoint3<Real>(+rHalfWidth, +rHalfHeight, -rHalfDepth));
-	m_listVertices.Add(TPoint3<Real>(-rHalfWidth, +rHalfHeight, -rHalfDepth));
+	m_listVertices.Add(TVector3<Real>(-rHalfWidth, -rHalfHeight, +rHalfDepth));
+	m_listVertices.Add(TVector3<Real>(+rHalfWidth, -rHalfHeight, +rHalfDepth));
+	m_listVertices.Add(TVector3<Real>(+rHalfWidth, +rHalfHeight, +rHalfDepth));
+	m_listVertices.Add(TVector3<Real>(-rHalfWidth, +rHalfHeight, +rHalfDepth));
+	m_listVertices.Add(TVector3<Real>(-rHalfWidth, -rHalfHeight, -rHalfDepth));
+	m_listVertices.Add(TVector3<Real>(+rHalfWidth, -rHalfHeight, -rHalfDepth));
+	m_listVertices.Add(TVector3<Real>(+rHalfWidth, +rHalfHeight, -rHalfDepth));
+	m_listVertices.Add(TVector3<Real>(-rHalfWidth, +rHalfHeight, -rHalfDepth));
 
 	// front
 	AddFace(0, 1, 2);
@@ -494,7 +494,7 @@ void Polyhedron::MakeCube(Real p_rWidth, Real p_rHeight, Real p_rDepth)
 }
 
 void Polyhedron::MakeConvexHull(
-	const TList<TPoint3<Real>> &p_listPoints, bool p_bCleanUp)
+	const VectorList& p_listPoints, bool p_bCleanUp)
 {
 	// minimum points required for 3D simplex
 	if (p_listPoints.Size() < 4) return;
@@ -504,7 +504,7 @@ void Polyhedron::MakeConvexHull(
 	m_listFaces.Clear();
 
 	// prepare list of pending points to process
-	TArrayList<TPoint3<Real>> listPendingPoints = p_listPoints;
+	VectorArrayList listPendingPoints = p_listPoints;
 
 	// select 4 extremal points for initial simplex
 
@@ -539,14 +539,14 @@ void Polyhedron::MakeConvexHull(
 	// select 4th point for simplex
 	for (size_t unIndex = 0; unIndex < listPendingPoints.Size(); unIndex++)
 	{
-		TPoint3<Real> &ptPoint = listPendingPoints(unIndex);
-		Real rDistance = polyhedronFaceFirst.SignedDistanceFromPlane(ptPoint);
+		TVector3<Real>& vecPoint = listPendingPoints[unIndex];
+		Real rDistance = polyhedronFaceFirst.SignedDistanceFromPlane(vecPoint);
 
 		// skip coplanar points
 		if (TMaths<Real>::Equals(rDistance, (Real) 0.0)) continue;
 
 		// add point
-		m_listVertices.Add(ptPoint);
+		m_listVertices.Add(vecPoint);
 		listPendingPoints.RemoveAt(unIndex);
 
 		// add 3 more faces
@@ -632,13 +632,13 @@ void Polyhedron::MakeConvexHull(
 		if (nFurthestIndex == -1) return;
 
 		// get furthest point
-		TPoint3<Real> ptFurthestPoint = listPendingPoints(nFurthestIndex);
+		TVector3<Real> vecFurthestPoint = listPendingPoints[nFurthestIndex];
 
 		// eliminate furthest point from pending list
 		listPendingPoints.RemoveAt(nFurthestIndex);
 
 		// add new point
-		m_listVertices.Add(ptFurthestPoint);
+		m_listVertices.Add(vecFurthestPoint);
 		size_t unFurthestPointIndex = m_listVertices.Size() - 1;
 
 		// determine all faces visible to this point
@@ -679,7 +679,7 @@ void Polyhedron::MakeConvexHull(
 						continue;
 
 					// check if face beyond horizon
-					if (!polyhedronFaceNeighbour.IsOutside(ptFurthestPoint))
+					if (!polyhedronFaceNeighbour.IsOutside(vecFurthestPoint))
 						// face is beyond horizon, keep corresponding horizon edge
 						listHorizonEdges.Add(
 							PolyhedronEdge(
@@ -735,12 +735,12 @@ void Polyhedron::MakeConvexHull(
 
 void Polyhedron::MakeMinkowskiDifference(const Polyhedron &p_polyhedron1, const Polyhedron &p_polyhedron2, bool p_bCleanUp)
 {
-	TArrayList<TPoint3<Real>> listPoints;
+	VectorArrayList listPoints;
 	for (size_t unIndex1 = 0; unIndex1 < p_polyhedron1.m_listVertices.Size(); unIndex1++)
 	{
-		TPoint3<Real> &ptPoint1 = p_polyhedron1.m_listVertices(unIndex1);
+		TVector3<Real>& vecPoint1 = p_polyhedron1.m_listVertices[unIndex1];
 		for (size_t unIndex2 = 0; unIndex2 < p_polyhedron2.m_listVertices.Size(); unIndex2++)
-			listPoints.Add(ptPoint1 - p_polyhedron2.m_listVertices(unIndex2).ToVector());
+			listPoints.Add(vecPoint1 - p_polyhedron2.m_listVertices[unIndex2]);
 	}
 
 	MakeConvexHull(listPoints, p_bCleanUp);
@@ -749,7 +749,7 @@ void Polyhedron::MakeMinkowskiDifference(const Polyhedron &p_polyhedron1, const 
 void Polyhedron::EliminateUnusedVertices(void)
 {
 	TTreeMap<size_t, size_t> mapVertices;
-	TArrayList<TPoint3<Real>> listNewVertices;
+	VectorArrayList listNewVertices;
 
 	size_t unNextVertexIndex = 0;
 	for (size_t unFaceIndex = 0; unFaceIndex < m_listFaces.Size(); unFaceIndex++)
@@ -782,20 +782,16 @@ void Polyhedron::EliminateUnusedVertices(void)
 
 void Polyhedron::AlignCentroid(void)
 {
-	TPoint3<Real> ptCentroid = GetCentroid();
-	Transform(-ptCentroid.ToVector());
+	Transform(-GetCentroid());
 }
 
 void Polyhedron::Transform(const TMatrix4<Real>& p_matTransform)
 {
 	for (size_t unIndex = 0; unIndex < m_listVertices.Size(); unIndex++)
 	{
-		TVector3<Real> vecVertex = m_listVertices(unIndex).ToVector();
-		TVector4<Real> vecVertexNew = p_matTransform * vecVertex;
+		TVector3<Real> vecVertex = m_listVertices[unIndex];
 
-		m_listVertices(unIndex).X = vecVertexNew.X;
-		m_listVertices(unIndex).Y = vecVertexNew.Y;
-		m_listVertices(unIndex).Z = vecVertexNew.Z;
+		m_listVertices[unIndex] = p_matTransform * vecVertex;
 	}
 
 	UpdateNormals();
@@ -806,11 +802,8 @@ Polyhedron Polyhedron::TransformCopy(const TMatrix4<Real>& p_matTransform) const
 	Polyhedron polyhedron;
 	for (size_t unIndex = 0; unIndex < m_listVertices.Size(); unIndex++)
 	{
-		TVector3<Real> vecVertex = m_listVertices(unIndex).ToVector();
-		TVector4<Real> vecVertexNew = p_matTransform * vecVertex;
-
-		polyhedron.m_listVertices.Add(
-			TPoint3<Real>(vecVertexNew.X, vecVertexNew.Y, vecVertexNew.Z));
+		TVector3<Real> vecVertex = m_listVertices[unIndex];
+		polyhedron.m_listVertices.Add(p_matTransform * vecVertex);
 	}
 
 	polyhedron.m_listFaces = m_listFaces;
@@ -833,16 +826,13 @@ Polyhedron Polyhedron::TransformCopy(const Meson::Common::Maths::TVector3<Real>&
 	Polyhedron polyhedron;
 	for (size_t unIndex = 0; unIndex < m_listVertices.Size(); unIndex++)
 	{
-		TVector3<Real> vecVertex = m_listVertices(unIndex).ToVector();
-		TVector4<Real> vecVertexNew = vecVertex + p_vecOffset;
-
 		polyhedron.m_listVertices.Add(
-			TPoint3<Real>(vecVertexNew.X, vecVertexNew.Y, vecVertexNew.Z));
+			m_listVertices[unIndex] + p_vecOffset);
 	}
 
 	polyhedron.m_listFaces = m_listFaces;
 	for (size_t unFaceIndex = 0; unFaceIndex < polyhedron.m_listFaces.Size(); unFaceIndex++)
-		polyhedron.m_listFaces(unFaceIndex).VertexList = &polyhedron.m_listVertices;
+		polyhedron.m_listFaces[unFaceIndex].VertexList = &polyhedron.m_listVertices;
 
 	return polyhedron;
 }
@@ -852,12 +842,10 @@ void Polyhedron::Transform(const TQuaternion<Real>& p_qtnRotation)
 	TQuaternion<Real> qtnConjugate = p_qtnRotation.ConjugateCopy();
 	for (size_t unIndex = 0; unIndex < m_listVertices.Size(); unIndex++)
 	{
-		TQuaternion<Real> qtnVertex = TQuaternion<Real>(m_listVertices(unIndex).ToVector());
+		TQuaternion<Real> qtnVertex = TQuaternion<Real>(m_listVertices[unIndex]);
 		TVector3<Real> vecVertexNew = (p_qtnRotation * qtnVertex * qtnConjugate).Vector;
 
-		m_listVertices(unIndex).X = vecVertexNew.X;
-		m_listVertices(unIndex).Y = vecVertexNew.Y;
-		m_listVertices(unIndex).Z = vecVertexNew.Z;
+		m_listVertices[unIndex] = (p_qtnRotation * qtnVertex * qtnConjugate).Vector;
 	}
 
 	UpdateNormals();
@@ -869,11 +857,10 @@ Polyhedron Polyhedron::TransformCopy(const TQuaternion<Real>& p_qtnRotation) con
 	TQuaternion<Real> qtnConjugate = p_qtnRotation.ConjugateCopy();
 	for (size_t unIndex = 0; unIndex < m_listVertices.Size(); unIndex++)
 	{
-		TQuaternion<Real> qtnVertex = TQuaternion<Real>(m_listVertices(unIndex).ToVector());
-		TVector3<Real> vecVertexNew = (p_qtnRotation * qtnVertex * qtnConjugate).Vector;
+		TQuaternion<Real> qtnVertex = TQuaternion<Real>(m_listVertices[unIndex]);
 
 		polyhedron.m_listVertices.Add(
-			TPoint3<Real>(vecVertexNew.X, vecVertexNew.Y, vecVertexNew.Z));
+			(p_qtnRotation * qtnVertex * qtnConjugate).Vector);
 	}
 
 	polyhedron.m_listFaces = m_listFaces;
@@ -914,13 +901,13 @@ void Polyhedron::ProjectToInterval(
 {
 	p_interval.MakeEmpty();
 	for (size_t unVertexIndex = 0; unVertexIndex < m_listVertices.Size(); unVertexIndex++)
-		p_interval.Extend(m_listVertices(unVertexIndex).ToVector() * p_vecAxis);
+		p_interval.Extend(m_listVertices[unVertexIndex] * p_vecAxis);
 }
 
-bool Polyhedron::Intersects(const TPoint3<Real>& p_ptPoint) const
+bool Polyhedron::Intersects(const TVector3<Real>& p_vecPoint) const
 {
 	for (size_t unFaceIndex = 0; unFaceIndex < m_listFaces.Size(); unFaceIndex++)
-		if (m_listFaces(unFaceIndex).IsOutside(p_ptPoint))
+		if (m_listFaces[unFaceIndex].IsOutside(p_vecPoint))
 			return false;
 	return true;
 }
@@ -942,7 +929,7 @@ bool Polyhedron::IntersectsBoundary(const LineSegment& p_lineSegment) const
 {
 	// do line segment test with faces and report first positive test
 	for (size_t unFaceIndex = 0; unFaceIndex < m_listFaces.Size(); unFaceIndex++)
-		if (m_listFaces(unFaceIndex).Intersects(p_lineSegment)) return true;
+		if (m_listFaces[unFaceIndex].Intersects(p_lineSegment)) return true;
 
 	// no intersection if none of the faces tested positive
 	return false;
@@ -951,18 +938,18 @@ bool Polyhedron::IntersectsBoundary(const LineSegment& p_lineSegment) const
 bool Polyhedron::IntersectsBoundary(
 	const LineSegment &p_lineSegment,
 	size_t& p_unOccurences,
-	TPoint3<Real>& p_ptIntersectionPointNear,
-	TPoint3<Real>& p_ptIntersectionPointFar) const
+	TVector3<Real>& p_vecIntersectionPointNear,
+	TVector3<Real>& p_vecIntersectionPointFar) const
 {
 	// initialise occurences
 	p_unOccurences = 0;
 
 	// process all faces
-	TPoint3<Real> ptIntersectionPoint;
+	TVector3<Real> vecIntersectionPoint;
 	for (size_t unFaceIndex = 0; unFaceIndex < m_listFaces.Size(); unFaceIndex++)
 	{
 		// skip faces that do not intersect with the segment
-		if (!m_listFaces(unFaceIndex).Intersects(p_lineSegment, ptIntersectionPoint))
+		if (!m_listFaces[unFaceIndex].Intersects(p_lineSegment, vecIntersectionPoint))
 			continue;
 
 		// intersection occured - increment count
@@ -970,20 +957,20 @@ bool Polyhedron::IntersectsBoundary(
 
 		if (p_unOccurences == 1)
 			// first occurence - assume near point
-			p_ptIntersectionPointNear = ptIntersectionPoint;
+			p_vecIntersectionPointNear = vecIntersectionPoint;
 		else
 		{
 			// second occurence - check if nearer than first or otherwise
-			if ((ptIntersectionPoint - p_lineSegment.Start).LengthSquared()
-				< (p_ptIntersectionPointNear - p_lineSegment.Start).LengthSquared())
+			if ((vecIntersectionPoint - p_lineSegment.Start).LengthSquared()
+				< (p_vecIntersectionPointNear - p_lineSegment.Start).LengthSquared())
 			{
 				// second occurence is closer
-				p_ptIntersectionPointFar = p_ptIntersectionPointNear;
-				p_ptIntersectionPointNear = ptIntersectionPoint;
+				p_vecIntersectionPointFar = p_vecIntersectionPointNear;
+				p_vecIntersectionPointNear = vecIntersectionPoint;
 			}
 			else
 				// first occurence is closer
-				p_ptIntersectionPointFar = ptIntersectionPoint;
+				p_vecIntersectionPointFar = vecIntersectionPoint;
 
 			return true;
 		}
@@ -993,24 +980,24 @@ bool Polyhedron::IntersectsBoundary(
 	return p_unOccurences > 0;
 }
 
-TPoint3<Real> Polyhedron::ClosestPointTo(const TPoint3<Real>& p_ptPoint) const
+TVector3<Real> Polyhedron::ClosestPointTo(const TVector3<Real>& p_vecPoint) const
 {
-	size_t unClosestFaceIndex = 0;
+	static size_t s_unClosestFaceIndex = 0;
 	// ignore use closest face index variant but ignore index
-	return ClosestPointTo(p_ptPoint, unClosestFaceIndex);
+	return ClosestPointTo(p_vecPoint, s_unClosestFaceIndex);
 }
 
-TPoint3<Real> Polyhedron::ClosestPointTo(const TPoint3<Real>& p_ptPoint,
+TVector3<Real> Polyhedron::ClosestPointTo(const TVector3<Real>& p_vecPoint,
 	size_t& p_unClosestFaceIndex) const
 {
 	// if point intersects polyhedron, point itself is closest
-	if (Intersects(p_ptPoint))
-		return p_ptPoint;
+	if (Intersects(p_vecPoint))
+		return p_vecPoint;
 
 	// otherwise, process all faces
 	Real rMinDistanceSquared = TMaths<Real>::Maximum,
 		rCurrentDistanceSquared = (Real) 0.0;
-	TPoint3<Real> ptPointClosest, ptPointCurrent;
+	TVector3<Real> vecPointClosest, vecPointCurrent;
 	size_t unClosestFaceIndex = 0;
 	for (size_t unFaceIndex = 0; unFaceIndex < m_listFaces.Size(); unFaceIndex++)
 	{
@@ -1018,23 +1005,23 @@ TPoint3<Real> Polyhedron::ClosestPointTo(const TPoint3<Real>& p_ptPoint,
 		PolyhedronFace &polyhedronFace = m_listFaces(unFaceIndex);
 
 		// ignore back faces
-		if (polyhedronFace.IsInside(p_ptPoint))
+		if (polyhedronFace.IsInside(p_vecPoint))
 			continue;
 
 		// get closest point on face
-		ptPointCurrent = polyhedronFace.ClosestPointTo(p_ptPoint);
+		vecPointCurrent = polyhedronFace.ClosestPointTo(p_vecPoint);
 
 		// keep track of ovarall closest point 
-		rCurrentDistanceSquared = (ptPointCurrent - p_ptPoint).LengthSquared();
+		rCurrentDistanceSquared = (vecPointCurrent - p_vecPoint).LengthSquared();
 		if (rMinDistanceSquared > rCurrentDistanceSquared)
 		{
 			rMinDistanceSquared = rCurrentDistanceSquared;
-			ptPointClosest = ptPointCurrent;
+			vecPointClosest = vecPointCurrent;
 			p_unClosestFaceIndex = unFaceIndex;
 		}
 	}
 
-	return ptPointClosest;
+	return vecPointClosest;
 }
 
 const String& Polyhedron::GetTypeName(void) const
@@ -1161,38 +1148,38 @@ void Polyhedron::ComputeBoundingVolume(BoundingSphere& p_boundingSphere) const
 {
 	if (m_listVertices.Size() == 0)
 	{
-		p_boundingSphere.Centre = TPoint3<Real>::Origin;
+		p_boundingSphere.Centre = TVector3<Real>::Zero;
 		p_boundingSphere.Radius = TMaths<Real>::Epsilon;
 		p_boundingSphere.RadiusSquared = TMaths<Real>::Epsilon;
 		return;
 	}
 
 	// compute vertex median
-	TPoint3<Real> ptMin, ptMax, ptMedian;
-	ptMin = ptMax = m_listVertices(0);
+	TVector3<Real> vecMin, vecMax, vecMedian;
+	vecMin = vecMax = m_listVertices[0];
 	for (size_t unIndex = 1; unIndex < m_listVertices.Size(); unIndex++)
 	{
-		TPoint3<Real> &ptVertex = m_listVertices(unIndex);
-		ptMin.X = TMaths<Real>::Min(ptMin.X, ptVertex.X); 
-		ptMin.Y = TMaths<Real>::Min(ptMin.Y, ptVertex.Y); 
-		ptMin.Z = TMaths<Real>::Min(ptMin.Z, ptVertex.Z); 
-		ptMax.X = TMaths<Real>::Max(ptMax.X, ptVertex.X); 
-		ptMax.Y = TMaths<Real>::Max(ptMax.Y, ptVertex.Y); 
-		ptMax.Z = TMaths<Real>::Max(ptMax.Z, ptVertex.Z); 
+		TVector3<Real>& vecVertex = m_listVertices[unIndex];
+		vecMin.X = TMaths<Real>::Min(vecMin.X, vecVertex.X); 
+		vecMin.Y = TMaths<Real>::Min(vecMin.Y, vecVertex.Y); 
+		vecMin.Z = TMaths<Real>::Min(vecMin.Z, vecVertex.Z); 
+		vecMax.X = TMaths<Real>::Max(vecMax.X, vecVertex.X); 
+		vecMax.Y = TMaths<Real>::Max(vecMax.Y, vecVertex.Y); 
+		vecMax.Z = TMaths<Real>::Max(vecMax.Z, vecVertex.Z); 
 	}
-	ptMedian = ptMin + (ptMax - ptMin) * (Real) 0.5;
+	vecMedian = (vecMin + vecMax) * (Real) 0.5;
 
 	// compute greatest radius
 	Real rRadiusSquaredMax = 0;
 	for (size_t unIndex = 0; unIndex < m_listVertices.Size(); unIndex++)
 	{
 		Real rRadiusSquaredCurrent
-			= (m_listVertices(unIndex) - ptMedian).LengthSquared();
+			= (m_listVertices[unIndex] - vecMedian).LengthSquared();
 		if (rRadiusSquaredMax < rRadiusSquaredCurrent)
 			rRadiusSquaredMax = rRadiusSquaredCurrent;
 	}
 
-	p_boundingSphere.Centre = ptMedian;
+	p_boundingSphere.Centre = vecMedian;
 	p_boundingSphere.RadiusSquared = rRadiusSquaredMax;
 	p_boundingSphere.Radius = TMaths<Real>::Sqrt(rRadiusSquaredMax);
 }
@@ -1203,17 +1190,17 @@ void Polyhedron::ComputeBoundingVolume(BoundingAxisAlignedBox& p_boundingAxisAli
 	if (m_listVertices.Size() == 0)
 	{
 		p_boundingAxisAlignedBox.Min = p_boundingAxisAlignedBox.Max
-			= TPoint3<Real>::Origin;
+			= TVector3<Real>::Zero;
 		return;
 	}
 
 	// initialise bounds to first vertex
 	p_boundingAxisAlignedBox.Min = p_boundingAxisAlignedBox.Max
-		= m_listVertices(0);
+		= m_listVertices[0];
 
 	// extend box to other vertices
 	for (size_t unIndex = 1; unIndex < m_listVertices.Size(); unIndex++)
-		p_boundingAxisAlignedBox.ExtendToPoint(m_listVertices(unIndex));
+		p_boundingAxisAlignedBox.ExtendToPoint(m_listVertices[unIndex]);
 }
 
 void Polyhedron::ComputeBoundingVolume(BoundingOrientedBox& p_boundingOrientedBox) const
@@ -1277,8 +1264,8 @@ void Polyhedron::ComputeBoundingVolume(BoundingOrientedBox& p_boundingOrientedBo
 			p_boundingOrientedBox.Extent.Y = rSpan2 * (Real) 0.5;
 			p_boundingOrientedBox.Extent.Z = rSpan3 * (Real) 0.5;
 			// centre
-			p_boundingOrientedBox.Centre = TPoint3<Real>::Origin
-				+ vecAxis1 * interval1.Median()
+			p_boundingOrientedBox.Centre
+				= vecAxis1 * interval1.Median()
 				+ vecAxis2 * interval2.Median()
 				+ vecAxis3 * interval3.Median();
 
@@ -1293,7 +1280,7 @@ bool Polyhedron::IntersectsRay(const Ray& p_ray) const
 	return false;
 }
 
-bool Polyhedron::IntersectsRay(const Ray& p_ray, TPoint3<Real>& p_ptIntersectionPoint) const
+bool Polyhedron::IntersectsRay(const Ray& p_ray, TVector3<Real>& p_vecIntersectionPoint) const
 {
 	return false;
 }
