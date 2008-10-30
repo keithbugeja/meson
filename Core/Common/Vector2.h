@@ -14,7 +14,8 @@
 
 Meson_Common_Maths_BEGIN
 
-template <typename TReal> class TVector2
+template <typename TReal> 
+class TVector2
 {
 public:
 	//----------------------------------------------------------------------------------------------
