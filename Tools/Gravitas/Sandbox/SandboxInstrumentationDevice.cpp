@@ -9,13 +9,13 @@ using namespace Meson::Vistas;
 
 struct DeviceVertex
 {
-	Point3f Position;
+	Vector3f Position;
 	ColourRGBA Colour;
 
 	DeviceVertex(void);
 	DeviceVertex(const DeviceVertex& p_deviceVertex);
-	DeviceVertex(const Point3f& p_ptPosition);
-	DeviceVertex(const Point3f& p_ptPosition, const ColourRGBA& p_colourRGBA);
+	DeviceVertex(const Vector3f& p_vecPosition);
+	DeviceVertex(const Vector3f& p_vecPosition, const ColourRGBA& p_colourRGBA);
 	bool operator==(const DeviceVertex& p_deviceVertex) const;
 };
 
@@ -38,14 +38,14 @@ DeviceVertex::DeviceVertex(const DeviceVertex& p_deviceVertex)
 {
 }
 
-DeviceVertex::DeviceVertex(const Point3f& p_ptPosition)
-	: Position(p_ptPosition)
+DeviceVertex::DeviceVertex(const Vector3f& p_vecPosition)
+	: Position(p_vecPosition)
 	, Colour(ColourRGBA::White)
 {
 }
 
-DeviceVertex::DeviceVertex(const Point3f& p_ptPosition, const ColourRGBA& p_colourRGBA)
-	: Position(p_ptPosition)
+DeviceVertex::DeviceVertex(const Vector3f& p_vecPosition, const ColourRGBA& p_colourRGBA)
+	: Position(p_vecPosition)
 	, Colour(p_colourRGBA)
 {
 }
@@ -56,7 +56,8 @@ bool DeviceVertex::operator==(const DeviceVertex& p_deviceVertex) const
 		&& Colour.ToRGBA() == p_deviceVertex.Colour.ToRGBA();
 }
 
-SandboxInstrumentationDevice::SandboxInstrumentationDevice(Meson::Vistas::IRenderDevice* p_pRenderDevice)
+SandboxInstrumentationDevice::SandboxInstrumentationDevice(
+	Meson::Vistas::IRenderDevice* p_pRenderDevice)
 	: m_matTransform(TMatrix4<Real>::Identity)
 	, m_pRenderDevice(p_pRenderDevice)
 	, m_drawMode(Meson::Gravitas::Instrumentation::DrawMode::Outline)
@@ -93,8 +94,8 @@ SandboxInstrumentationDevice::SandboxInstrumentationDevice(Meson::Vistas::IRende
 
 	// prepare vertex buffer for line
 	TArrayList<DeviceVertex> listVerticesLine;
-	listVerticesLine.Add(DeviceVertex(Point3f(-1.0f,  0.0f,  0.0f)));
-	listVerticesLine.Add(DeviceVertex(Point3f( 1.0f,  0.0f,  0.0f)));
+	listVerticesLine.Add(DeviceVertex(Vector3f(-1.0f,  0.0f,  0.0f)));
+	listVerticesLine.Add(DeviceVertex(Vector3f( 1.0f,  0.0f,  0.0f)));
 
 	m_pVertexBufferLine = pHardwareResourceManager->CreateVertexBuffer(
 		sizeof(DeviceVertex), (uint) listVerticesLine.Size(),
@@ -188,14 +189,14 @@ SandboxInstrumentationDevice::SandboxInstrumentationDevice(Meson::Vistas::IRende
 
 	// prepare vertex buffer for box
 	TArrayList<DeviceVertex> listVerticesBox;
-	listVerticesBox.Add(DeviceVertex(Point3f(-1.0f, -1.0f, -1.0f)));
-	listVerticesBox.Add(DeviceVertex(Point3f(-1.0f, -1.0f,  1.0f)));
-	listVerticesBox.Add(DeviceVertex(Point3f(-1.0f,  1.0f, -1.0f)));
-	listVerticesBox.Add(DeviceVertex(Point3f(-1.0f,  1.0f,  1.0f)));
-	listVerticesBox.Add(DeviceVertex(Point3f( 1.0f, -1.0f, -1.0f)));
-	listVerticesBox.Add(DeviceVertex(Point3f( 1.0f, -1.0f,  1.0f)));
-	listVerticesBox.Add(DeviceVertex(Point3f( 1.0f,  1.0f, -1.0f)));
-	listVerticesBox.Add(DeviceVertex(Point3f( 1.0f,  1.0f,  1.0f)));
+	listVerticesBox.Add(DeviceVertex(Vector3f(-1.0f, -1.0f, -1.0f)));
+	listVerticesBox.Add(DeviceVertex(Vector3f(-1.0f, -1.0f,  1.0f)));
+	listVerticesBox.Add(DeviceVertex(Vector3f(-1.0f,  1.0f, -1.0f)));
+	listVerticesBox.Add(DeviceVertex(Vector3f(-1.0f,  1.0f,  1.0f)));
+	listVerticesBox.Add(DeviceVertex(Vector3f( 1.0f, -1.0f, -1.0f)));
+	listVerticesBox.Add(DeviceVertex(Vector3f( 1.0f, -1.0f,  1.0f)));
+	listVerticesBox.Add(DeviceVertex(Vector3f( 1.0f,  1.0f, -1.0f)));
+	listVerticesBox.Add(DeviceVertex(Vector3f( 1.0f,  1.0f,  1.0f)));
 
 	m_pVertexBufferBox = pHardwareResourceManager->CreateVertexBuffer(
 		sizeof(DeviceVertex), (uint) listVerticesBox.Size(),
@@ -364,23 +365,23 @@ void SandboxInstrumentationDevice::PopDeviceState(void)
 
 #undef DrawText
 
-void SandboxInstrumentationDevice::DrawText(const TPoint3<Real>& p_ptPosition,
+void SandboxInstrumentationDevice::DrawText(const TVector3<Real>& p_vecPosition,
 	const String& p_strText)
 {
 }
 
-void SandboxInstrumentationDevice::DrawPoint(const TPoint3<Real>& p_ptPosition)
+void SandboxInstrumentationDevice::DrawPoint(const TVector3<Real>& p_vecPosition)
 {
 }
 
 void SandboxInstrumentationDevice::DrawLine(
-	const TPoint3<Real>& p_ptStart,
-	const TPoint3<Real>& p_ptEnd)
+	const TVector3<Real>& p_vecStart,
+	const TVector3<Real>& p_vecEnd)
 {
 	TMatrix4<Real> matTransformOld = m_matTransform;
 
-	TPoint3<Real> ptCentre = p_ptStart + (p_ptEnd - p_ptStart) * (Real) 0.5;
-	TVector3<Real> vecExtent = p_ptEnd - ptCentre;
+	TVector3<Real> vecCentre = (p_vecStart + p_vecEnd) * (Real) 0.5;
+	TVector3<Real> vecExtent = p_vecEnd - vecCentre;
 
 	Matrix4f matScale = Matrix4f::Identity;
 	matScale._11 = (float) vecExtent.Length();
@@ -400,9 +401,9 @@ void SandboxInstrumentationDevice::DrawLine(
 	}
 
 	Matrix4f matLine = matRotate * matScale;
-	matLine._14 = (float) ptCentre.X;
-	matLine._24 = (float) ptCentre.Y;
-	matLine._34 = (float) ptCentre.Z;
+	matLine._14 = (float) vecCentre.X;
+	matLine._24 = (float) vecCentre.Y;
+	matLine._34 = (float) vecCentre.Z;
 
 	m_pRenderDevice->SetWorldMatrix(m_matTransform * matLine);
 
@@ -421,31 +422,31 @@ void SandboxInstrumentationDevice::DrawLine(
 }
 
 void SandboxInstrumentationDevice::DrawArrow(
-	const TPoint3<Real>& p_ptHead,
-	const TPoint3<Real>& p_ptTail)
+	const TVector3<Real>& p_vecHead,
+	const TVector3<Real>& p_vecTail)
 {
-	DrawLine(p_ptTail, p_ptHead);
-	TVector3<Real> vecOffset(p_ptHead - p_ptTail);
+	DrawLine(p_vecTail, p_vecHead);
+	TVector3<Real> vecOffset(p_vecHead - p_vecTail);
 	TVector3<Real> vecNormal1, vecNormal2;
 	vecOffset.ComputeOrthonormals(vecNormal1, vecNormal2);
 	TVector3<Real> vecOffsetTenth = vecOffset * (Real) 0.1;
 	Real rTenth = vecOffset.Length() * (Real) 0.1;
-	DrawLine(p_ptHead, p_ptHead - vecOffsetTenth + vecNormal1 * rTenth);
-	DrawLine(p_ptHead, p_ptHead - vecOffsetTenth - vecNormal1 * rTenth);
-	DrawLine(p_ptHead, p_ptHead - vecOffsetTenth + vecNormal2 * rTenth);
-	DrawLine(p_ptHead, p_ptHead - vecOffsetTenth - vecNormal2 * rTenth);
+	DrawLine(p_vecHead, p_vecHead - vecOffsetTenth + vecNormal1 * rTenth);
+	DrawLine(p_vecHead, p_vecHead - vecOffsetTenth - vecNormal1 * rTenth);
+	DrawLine(p_vecHead, p_vecHead - vecOffsetTenth + vecNormal2 * rTenth);
+	DrawLine(p_vecHead, p_vecHead - vecOffsetTenth - vecNormal2 * rTenth);
 }
 
 void SandboxInstrumentationDevice::DrawSphere(
-	const TPoint3<Real>& p_ptCentre,
+	const TVector3<Real>& p_vecCentre,
 	Real p_rRadius)
 {
 	TMatrix4<Real> matTransformOld = m_matTransform;
 
 	m_matSphere._11 = m_matSphere._22 = m_matSphere._33 = (float) p_rRadius;
-	m_matSphere._14 = (float) (p_ptCentre.X);
-	m_matSphere._24 = (float) (p_ptCentre.Y);
-	m_matSphere._34 = (float) (p_ptCentre.Z);
+	m_matSphere._14 = (float) (p_vecCentre.X);
+	m_matSphere._24 = (float) (p_vecCentre.Y);
+	m_matSphere._34 = (float) (p_vecCentre.Z);
 
 	m_pRenderDevice->SetWorldMatrix(m_matTransform * m_matSphere);
 
@@ -466,7 +467,7 @@ void SandboxInstrumentationDevice::DrawSphere(
 }
 
 void SandboxInstrumentationDevice::DrawBox(
-	const TPoint3<Real>& p_ptCentre,
+	const TVector3<Real>& p_vecCentre,
 	const TVector3<Real>& p_vecExtents)
 {
 	TMatrix4<Real> matTransformOld = m_matTransform;
@@ -474,9 +475,9 @@ void SandboxInstrumentationDevice::DrawBox(
 	m_matAABB._11 = (float) p_vecExtents.X;
 	m_matAABB._22 = (float) p_vecExtents.Y;
 	m_matAABB._33 = (float) p_vecExtents.Z;
-	m_matAABB._14 = (float) (p_ptCentre.X);
-	m_matAABB._24 = (float) (p_ptCentre.Y);
-	m_matAABB._34 = (float) (p_ptCentre.Z);
+	m_matAABB._14 = (float) (p_vecCentre.X);
+	m_matAABB._24 = (float) (p_vecCentre.Y);
+	m_matAABB._34 = (float) (p_vecCentre.Z);
 
 	m_pRenderDevice->SetWorldMatrix(m_matTransform * m_matAABB);
 
@@ -496,7 +497,7 @@ void SandboxInstrumentationDevice::DrawBox(
 
 void SandboxInstrumentationDevice::DrawBox(
 	const TMatrix3<Real>& p_matOrientation,
-	const TPoint3<Real>& p_ptCentre,
+	const TVector3<Real>& p_vecCentre,
 	const TVector3<Real>& p_vecExtents)
 {
 	TMatrix4<Real> matTransformOld = m_matTransform;
@@ -511,7 +512,7 @@ void SandboxInstrumentationDevice::DrawBox(
 	matOBB = TMatrix4<Real>(p_matOrientation) * matOBB;
 
 	TMatrix4<Real> matTranslation;
-	matTranslation.MakeTranslation(p_ptCentre.ToVector());
+	matTranslation.MakeTranslation(p_vecCentre);
 	matOBB = matTranslation * matOBB;
 
 	m_pRenderDevice->SetWorldMatrix(m_matTransform * matOBB);

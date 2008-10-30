@@ -18,25 +18,25 @@ bool IndexedTriangle::operator==(const IndexedTriangle& p_indexedTriangle) const
 		&& VertexIndices[2] == p_indexedTriangle.VertexIndices[2];
 }
 
-Real IndexedTriangle::GetArea(const PointList* p_plistVertices) const
+Real IndexedTriangle::GetArea(const VectorList* p_plistVertices) const
 {
 	TVector3<Real> vecEdge0 = (*p_plistVertices)[VertexIndices[1]] - (*p_plistVertices)[VertexIndices[0]];
 	TVector3<Real> vecEdge1 = (*p_plistVertices)[VertexIndices[2]] - (*p_plistVertices)[VertexIndices[0]];
 	return (vecEdge0 ^ vecEdge1).Length() * (Real) 0.5;
 }
 
-TPoint3<Real> IndexedTriangle::GetCentroid(const PointList* p_plistVertices) const
+TVector3<Real> IndexedTriangle::GetCentroid(const VectorList* p_plistVertices) const
 {
-	TPoint3<Real> ptCentroid = TPoint3<Real>::Origin;
-	ptCentroid += (*p_plistVertices)[VertexIndices[0]].ToVector();
-	ptCentroid += (*p_plistVertices)[VertexIndices[1]].ToVector();
-	ptCentroid += (*p_plistVertices)[VertexIndices[2]].ToVector();
-	ptCentroid.ToVector() *= (Real) 1.0 / (Real) 3.0;
-	return ptCentroid;
+	TVector3<Real> vecCentroid = TVector3<Real>::Zero;
+	vecCentroid += (*p_plistVertices)[VertexIndices[0]];
+	vecCentroid += (*p_plistVertices)[VertexIndices[1]];
+	vecCentroid += (*p_plistVertices)[VertexIndices[2]];
+	vecCentroid *= ((Real) 1.0 / (Real) 3.0);
+	return vecCentroid;
 }
 
 bool IndexedTriangle::Intersects(
-	const PointList* p_plistVertices,
+	const VectorList* p_plistVertices,
 	const BoundingAxisAlignedBox& boundingAxisAlignedBox) const
 {
 	return boundingAxisAlignedBox.Contains((*p_plistVertices)[VertexIndices[0]])
@@ -45,22 +45,22 @@ bool IndexedTriangle::Intersects(
 }
 
 bool IndexedTriangle::IntersectsRay(
-	const PointList* p_plistVertices, const Ray& p_ray) const
+	const VectorList* p_plistVertices, const Ray& p_ray) const
 {
-	static TPoint3<Real> s_ptIntersectionPoint;
-	return IntersectsRay(p_plistVertices, p_ray, s_ptIntersectionPoint);
+	static TVector3<Real> s_vecIntersectionPoint;
+	return IntersectsRay(p_plistVertices, p_ray, s_vecIntersectionPoint);
 }
 
 bool IndexedTriangle::IntersectsRay(
-	const PointList* p_plistVertices,
-	const Ray& p_ray, TPoint3<Real>& p_ptIntersectionPoint) const
+	const VectorList* p_plistVertices,
+	const Ray& p_ray, TVector3<Real>& p_vecIntersectionPoint) const
 {
-	TPoint3<Real> ptVertices[3];
-	ptVertices[0] = (*p_plistVertices)[VertexIndices[0]];
-	ptVertices[1] = (*p_plistVertices)[VertexIndices[1]];
-	ptVertices[2] = (*p_plistVertices)[VertexIndices[2]];
+	TVector3<Real> vecVertices[3];
+	vecVertices[0] = (*p_plistVertices)[VertexIndices[0]];
+	vecVertices[1] = (*p_plistVertices)[VertexIndices[1]];
+	vecVertices[2] = (*p_plistVertices)[VertexIndices[2]];
 
-	Real rSourceSignedPlaneDistance((p_ray.Source - ptVertices[0]) * Normal);
+	Real rSourceSignedPlaneDistance((p_ray.Source - vecVertices[0]) * Normal);
 	Real rDirectionProjection = Normal * p_ray.Direction;
 
 	bool bRayParallelToFace(TMaths<Real>::Equals(rDirectionProjection, (Real) 0.0));
@@ -76,26 +76,26 @@ bool IndexedTriangle::IntersectsRay(
 		return false;
 
 	// compute ray intersection with plane
-	TPoint3<Real> ptPlaneIntersection(p_ray.Source + p_ray.Direction * rRayDistance);
+	TVector3<Real> vecPlaneIntersection(p_ray.Source + p_ray.Direction * rRayDistance);
 
 	// if ray intersection point with plane is not on face, no intersection
 	TVector3<Real> vecPerp;
-	vecPerp = (ptVertices[0] - ptPlaneIntersection) ^ (ptVertices[1] - ptPlaneIntersection);
+	vecPerp = (vecVertices[0] - vecPlaneIntersection) ^ (vecVertices[1] - vecPlaneIntersection);
 	if (vecPerp * Normal > (Real) 0.0)
 		return false;
-	vecPerp = (ptVertices[1] - ptPlaneIntersection) ^ (ptVertices[2] - ptPlaneIntersection);
+	vecPerp = (vecVertices[1] - vecPlaneIntersection) ^ (vecVertices[2] - vecPlaneIntersection);
 	if (vecPerp * Normal > (Real) 0.0)
 		return false;
-	vecPerp = (ptVertices[2] - ptPlaneIntersection) ^ (ptVertices[0] - ptPlaneIntersection);
+	vecPerp = (vecVertices[2] - vecPlaneIntersection) ^ (vecVertices[0] - vecPlaneIntersection);
 	if (vecPerp * Normal > (Real) 0.0)
 		return false;
 
 	// otherwise ray intersects face
-	p_ptIntersectionPoint = ptPlaneIntersection;
+	p_vecIntersectionPoint = vecPlaneIntersection;
 	return true;
 }
 
-void IndexedTriangle::UpdateNormal(const PointList* p_plistVertices)
+void IndexedTriangle::UpdateNormal(const VectorList* p_plistVertices)
 {
 	TVector3<Real> vecEdge0 = (*p_plistVertices)[VertexIndices[2]] - (*p_plistVertices)[VertexIndices[0]];
 	TVector3<Real> vecEdge1 = (*p_plistVertices)[VertexIndices[1]] - (*p_plistVertices)[VertexIndices[0]];
@@ -171,7 +171,7 @@ Real TriangleMeshNode::GetMomentOfInertia(const TVector3<Real>& p_vecAxis) const
 
 	for (size_t unIndex = 0; unIndex < Triangles.Size(); unIndex++)
 	{
-		Real rOffset = Triangles[unIndex].GetCentroid(Vertices).ToVector() * p_vecAxis;
+		Real rOffset = Triangles[unIndex].GetCentroid(Vertices) * p_vecAxis;
 		rMomentOfInertia += Triangles[unIndex].GetArea(Vertices) * rOffset * rOffset;
 	}
 
@@ -184,36 +184,36 @@ Real TriangleMeshNode::GetMomentOfInertia(const TVector3<Real>& p_vecAxis) const
 	return rMomentOfInertia;
 }
 
-TPoint3<Real> TriangleMeshNode::GetCentroid(void) const
+TVector3<Real> TriangleMeshNode::GetCentroid(void) const
 {
-	TPoint3<Real> ptCentroid = TPoint3<Real>::Origin;
+	TVector3<Real> vecCentroid = TVector3<Real>::Zero;
 	Real rVolume = (Real) 0.0;
 
 	for (size_t unIndex = 0; unIndex < Triangles.Size(); unIndex++)
 	{
 		IndexedTriangle& indexedTriangle =  Triangles[unIndex];
 		rVolume += indexedTriangle.GetArea(Vertices);
-		ptCentroid += indexedTriangle.GetCentroid(Vertices).ToVector() * indexedTriangle.GetArea(Vertices);
+		vecCentroid += indexedTriangle.GetCentroid(Vertices) * indexedTriangle.GetArea(Vertices);
 	}
 
 	if (Child[0] != NULL)
 	{
 		rVolume += Child[0]->GetVolume();
-		ptCentroid += Child[0]->GetCentroid().ToVector() * Child[0]->GetVolume();
+		vecCentroid += Child[0]->GetCentroid() * Child[0]->GetVolume();
 	}
 
 	if (Child[1] != NULL)
 	{
 		rVolume += Child[1]->GetVolume();
-		ptCentroid += Child[1]->GetCentroid().ToVector() * Child[1]->GetVolume();
+		vecCentroid += Child[1]->GetCentroid() * Child[1]->GetVolume();
 	}
 
 	if (TMaths<Real>::Equals(rVolume, (Real) 0.0))
-		return ptCentroid;
+		return vecCentroid;
 
-	ptCentroid.ToVector() *= (Real) 1.0 / rVolume;
+	vecCentroid *= ((Real) 1.0 / rVolume);
 
-	return ptCentroid;
+	return vecCentroid;
 }
 
 bool TriangleMeshNode::IntersectsRay(const Ray& p_ray) const
@@ -243,7 +243,7 @@ bool TriangleMeshNode::IntersectsRay(const Ray& p_ray) const
 }
 
 bool TriangleMeshNode::IntersectsRay(const Ray& p_ray,
-	TPoint3<Real>& p_ptIntersectionPoint) const
+	TVector3<Real>& p_vecIntersectionPoint) const
 {
 	// test with bounding volume first
 	if (!BoundingVolume.Intersects(p_ray))
@@ -252,46 +252,46 @@ bool TriangleMeshNode::IntersectsRay(const Ray& p_ray,
 	// prepare variables for closest intersection point
 	// due to potentially concave nature of geometry
 	Real rClosestSquared = TMaths<Real>::Maximum;
-	TPoint3<Real> ptClosestIntersectionPoint;
+	TVector3<Real> vecClosestIntersectionPoint;
 
 	// test contained triangles
 	for (size_t unIndex = 0; unIndex < Triangles.Size(); unIndex++)
 	{
 		IndexedTriangle& indexedTriangle = Triangles[unIndex];
-		if (!indexedTriangle.IntersectsRay(Vertices, p_ray, p_ptIntersectionPoint))
+		if (!indexedTriangle.IntersectsRay(Vertices, p_ray, p_vecIntersectionPoint))
 			continue;
 
 		// keep closest intersection
-		Real rDistanceSquared = (p_ptIntersectionPoint - p_ray.Source).LengthSquared();
+		Real rDistanceSquared = (p_vecIntersectionPoint - p_ray.Source).LengthSquared();
 		if (rClosestSquared > rDistanceSquared)
 		{
-			ptClosestIntersectionPoint = p_ptIntersectionPoint;
+			vecClosestIntersectionPoint = p_vecIntersectionPoint;
 			rClosestSquared = rDistanceSquared;
 		}
 	}
 
 	// test negative child if available
 	if (Child[0] != NULL
-		&& Child[0]->IntersectsRay(p_ray, p_ptIntersectionPoint))
+		&& Child[0]->IntersectsRay(p_ray, p_vecIntersectionPoint))
 	{
 		// keep closest intersection
-		Real rDistanceSquared = (p_ptIntersectionPoint - p_ray.Source).LengthSquared();
+		Real rDistanceSquared = (p_vecIntersectionPoint - p_ray.Source).LengthSquared();
 		if (rClosestSquared > rDistanceSquared)
 		{
-			ptClosestIntersectionPoint = p_ptIntersectionPoint;
+			vecClosestIntersectionPoint = p_vecIntersectionPoint;
 			rClosestSquared = rDistanceSquared;
 		}
 	}
 
 	// test positive child if available
 	if (Child[1] != NULL
-		&& Child[1]->IntersectsRay(p_ray, p_ptIntersectionPoint))
+		&& Child[1]->IntersectsRay(p_ray, p_vecIntersectionPoint))
 	{
 		// keep closest intersection
-		Real rDistanceSquared = (p_ptIntersectionPoint - p_ray.Source).LengthSquared();
+		Real rDistanceSquared = (p_vecIntersectionPoint - p_ray.Source).LengthSquared();
 		if (rClosestSquared > rDistanceSquared)
 		{
-			ptClosestIntersectionPoint = p_ptIntersectionPoint;
+			vecClosestIntersectionPoint = p_vecIntersectionPoint;
 			rClosestSquared = rDistanceSquared;
 		}
 	}
@@ -299,7 +299,7 @@ bool TriangleMeshNode::IntersectsRay(const Ray& p_ray,
 	// intersection if at least one point found
 	if (rClosestSquared < TMaths<Real>::Maximum)
 	{
-		p_ptIntersectionPoint = ptClosestIntersectionPoint;
+		p_vecIntersectionPoint = vecClosestIntersectionPoint;
 		return true;
 	}
 	else

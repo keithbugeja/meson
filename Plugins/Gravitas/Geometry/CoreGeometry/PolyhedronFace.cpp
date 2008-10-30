@@ -32,9 +32,9 @@ Meson_Gravitas_Geometry_BEGIN
 	}
 
 	PolyhedronFace::PolyhedronFace(
-		const TList<TPoint3<Real>>* p_listVertices,
+		const VectorList* p_listVertices,
 		size_t p_unVertexIndex0, size_t p_unVertexIndex1, size_t p_unVertexIndex2)
-		: VertexList((TList<TPoint3<Real>> *) p_listVertices)
+		: VertexList((VectorList*) p_listVertices)
 		, Normal()
 	{
 		VertexIndex[0] = p_unVertexIndex0;
@@ -45,9 +45,9 @@ Meson_Gravitas_Geometry_BEGIN
 	}
 
 	PolyhedronFace::PolyhedronFace(
-		const TList<TPoint3<Real>>* p_listVertices,
+		const VectorList* p_listVertices,
 		const size_t* p_punIndices)
-		: VertexList((TList<TPoint3<Real>> *) p_listVertices)
+		: VertexList((VectorList *) p_listVertices)
 		, Normal()
 	{
 		VertexIndex[0] = *p_punIndices;
@@ -112,36 +112,34 @@ Meson_Gravitas_Geometry_BEGIN
 			|| (VertexIndex[2] == p_unIndex);
 	}
 
-	Real PolyhedronFace::SignedDistanceFromPlane(const TPoint3<Real>& p_ptPoint) const
+	Real PolyhedronFace::SignedDistanceFromPlane(const TVector3<Real>& p_vecPoint) const
 	{
 		TVector3<Real>& vecVertex0 = (*VertexList)[VertexIndex[0]];
-		return (Real) ((p_ptPoint.ToVector() - vecVertex0) * Normal);
+		return (Real) ((p_vecPoint - vecVertex0) * Normal);
 	}
 
-	bool PolyhedronFace::IsOutside(const TPoint3<Real>& p_ptPoint) const
+	bool PolyhedronFace::IsOutside(const TVector3<Real>& p_vecPoint) const
 	{
-		return SignedDistanceFromPlane(p_ptPoint) >= Meson::Common::Maths::TMaths<Real>::Epsilon;
+		return SignedDistanceFromPlane(p_vecPoint) >= TMaths<Real>::Epsilon;
 	}
 
-	bool PolyhedronFace::IsInside(const TPoint3<Real>& p_ptPoint) const
+	bool PolyhedronFace::IsInside(const TVector3<Real>& p_vecPoint) const
 	{
-		return SignedDistanceFromPlane(p_ptPoint) <= -Meson::Common::Maths::TMaths<Real>::Epsilon;
+		return SignedDistanceFromPlane(p_vecPoint) <= -TMaths<Real>::Epsilon;
 	}
 
-	bool PolyhedronFace::IsInPlane(const TPoint3<Real>& p_ptPoint) const
+	bool PolyhedronFace::IsInPlane(const TVector3<Real>& p_vecPoint) const
 	{
-		return Meson::Common::Maths::TMaths<Real>::Equals(
-			SignedDistanceFromPlane(p_ptPoint),
-			(Real) 0.0 );
+		return TMaths<Real>::Equals(SignedDistanceFromPlane(p_vecPoint),	(Real) 0.0 );
 	}
 
 	// does quick point in face test, ignoring distance from tangent plane
-	bool PolyhedronFace::IntersectsQuick(const TPoint3<Real>& p_ptPoint) const
+	bool PolyhedronFace::IntersectsQuick(const TVector3<Real>& p_vecPoint) const
 	{
 		// get face vertices and align to point as origin
-		TVector3<Real> vecVertex0 = (*VertexList)(VertexIndex[0]) - p_ptPoint;
-		TVector3<Real> vecVertex1 = (*VertexList)(VertexIndex[1]) - p_ptPoint;
-		TVector3<Real> vecVertex2 = (*VertexList)(VertexIndex[2]) - p_ptPoint;
+		TVector3<Real> vecVertex0 = (*VertexList)(VertexIndex[0]) - p_vecPoint;
+		TVector3<Real> vecVertex1 = (*VertexList)(VertexIndex[1]) - p_vecPoint;
+		TVector3<Real> vecVertex2 = (*VertexList)(VertexIndex[2]) - p_vecPoint;
 		
 		// compute dot product terms (Lagrange identity) to avoid cross products
 		Real rDot01 = vecVertex0 * vecVertex1;
@@ -161,17 +159,17 @@ Meson_Gravitas_Geometry_BEGIN
 		return rDot01 * rDot12 - rDot02 * rDot11 >= 0.0f;
 	}
 
-	bool PolyhedronFace::Intersects(const TPoint3<Real>& p_ptPoint) const
+	bool PolyhedronFace::Intersects(const TVector3<Real>& p_vecPoint) const
 	{
 		// get distance from tangent plane
-		Real rDistance = SignedDistanceFromPlane(p_ptPoint);
+		Real rDistance = SignedDistanceFromPlane(p_vecPoint);
 
 		// if not on plane, no intersection
-		if (!Meson::Common::Maths::TMaths<Real>::Equals(rDistance, (Real) 0.0))
+		if (!TMaths<Real>::Equals(rDistance, (Real) 0.0))
 			return false;
 
 		// otherwise, do quick point test
-		return IntersectsQuick(p_ptPoint);
+		return IntersectsQuick(p_vecPoint);
 	}
 
 	bool PolyhedronFace::Intersects(const LineSegment& p_lineSegment) const
@@ -197,15 +195,15 @@ Meson_Gravitas_Geometry_BEGIN
 		if (rDistanceStart * rDistanceEnd > (Real) 0.0) return false;
 
 		// otherwise, segment intersects plane, so find point on plane
-		TPoint3<Real> ptPointOnPlane
+		TVector3<Real> vecPointOnPlane
 			= p_lineSegment.Start - Normal * rDistanceStart;
 
 		// do quick test using point on plane
-		return IntersectsQuick(ptPointOnPlane);
+		return IntersectsQuick(vecPointOnPlane);
 	}
 
 	bool PolyhedronFace::Intersects(const LineSegment& p_lineSegment,
-		TPoint3<Real>& p_ptIntersectionPoint) const
+		TVector3<Real>& p_vecIntersectionPoint) const
 	{
 		// get distance of starting point from tangent plane
 		Real rDistanceStart = SignedDistanceFromPlane(p_lineSegment.Start);
@@ -214,7 +212,7 @@ Meson_Gravitas_Geometry_BEGIN
 		if (Meson::Common::Maths::TMaths<Real>::Equals(rDistanceStart, (Real) 0.0)
 			&& IntersectsQuick(p_lineSegment.Start))
 		{
-			p_ptIntersectionPoint = p_lineSegment.Start;
+			p_vecIntersectionPoint = p_lineSegment.Start;
 			return true;
 		}
 
@@ -225,7 +223,7 @@ Meson_Gravitas_Geometry_BEGIN
 		if (Meson::Common::Maths::TMaths<Real>::Equals(rDistanceEnd, (Real) 0.0)
 			&& IntersectsQuick(p_lineSegment.End))
 		{
-			p_ptIntersectionPoint = p_lineSegment.End;
+			p_vecIntersectionPoint = p_lineSegment.End;
 			return true;
 		}
 
@@ -234,47 +232,47 @@ Meson_Gravitas_Geometry_BEGIN
 		if (rDistanceStart * rDistanceEnd > (Real) 0.0) return false;
 
 		// otherwise, segment intersects plane, so find point on plane
-		TPoint3<Real> ptPointOnPlane
+		TVector3<Real> vecPointOnPlane
 			= p_lineSegment.Start - Normal * rDistanceStart;
 
 		// do quick test using point on plane
-		if (!IntersectsQuick(ptPointOnPlane)) return false;
+		if (!IntersectsQuick(vecPointOnPlane)) return false;
 
 		// if point in plane test ok, intersection is projected point
-		p_ptIntersectionPoint = ptPointOnPlane;
+		p_vecIntersectionPoint = vecPointOnPlane;
 		return true;
 	}
 
-	TPoint3<Real> PolyhedronFace::ClosestPointTo(const TPoint3<Real>& p_ptPoint) const
+	TVector3<Real> PolyhedronFace::ClosestPointTo(const TVector3<Real>& p_vecPoint) const
 	{
 		// check if projected point in voronoi region of first vertex
 
 		// get face vertices and align to point as origin
-		TPoint3<Real> &ptVertex0 = (*VertexList)(VertexIndex[0]);
-		TPoint3<Real> &ptVertex1 = (*VertexList)(VertexIndex[1]);
-		TPoint3<Real> &ptVertex2 = (*VertexList)(VertexIndex[2]);
+		TVector3<Real>& vecVertex0 = (*VertexList)(VertexIndex[0]);
+		TVector3<Real>& vecVertex1 = (*VertexList)(VertexIndex[1]);
+		TVector3<Real>& vecVertex2 = (*VertexList)(VertexIndex[2]);
 
 		// compute edge vectors and offset from first vertex
-		TVector3<Real> vecEdge01 = ptVertex1 - ptVertex0;
-		TVector3<Real> vecEdge02 = ptVertex2 - ptVertex0;
-		TVector3<Real> vecOffsetToVertex0 = p_ptPoint - ptVertex0;
+		TVector3<Real> vecEdge01 = vecVertex1 - vecVertex0;
+		TVector3<Real> vecEdge02 = vecVertex2 - vecVertex0;
+		TVector3<Real> vecOffsetToVertex0 = p_vecPoint - vecVertex0;
 
 		Real rDot1 = vecEdge01 * vecOffsetToVertex0;
 		Real rDot2 = vecEdge02 * vecOffsetToVertex0;
 
 		// closest point is first vertex
 		if (rDot1 <= (Real) 0.0 && rDot2 <= (Real) 0.0)
-			return ptVertex0;
+			return vecVertex0;
 
 		// check if projected point in voronoi region of second vertex
 		
-		TVector3<Real> vecOffsetToVertex1 = p_ptPoint - ptVertex1;
+		TVector3<Real> vecOffsetToVertex1 = p_vecPoint - vecVertex1;
 		Real rDot3 = vecEdge01 * vecOffsetToVertex1;
 		Real rDot4 = vecEdge02 * vecOffsetToVertex1;
 
 		// closest point is second vertex
 		if (rDot3 >= (Real) 0.0 && rDot4 <= rDot3)
-			return ptVertex1;
+			return vecVertex1;
 
 		// check if projected point in voronoi region of first edge
 
@@ -283,17 +281,17 @@ Meson_Gravitas_Geometry_BEGIN
 		// check if on bary co-ords (1-v, v, 0)
 		if (rBary2 <= (Real) 0.0 && rDot1 >= (Real) 0.0 && rDot3 <= (Real) 0.0)
 			// closest point on first edge
-			return ptVertex0 + vecEdge01 * (rDot1 / (rDot1 - rDot3));
+			return vecVertex0 + vecEdge01 * (rDot1 / (rDot1 - rDot3));
 
 		// check if projected point in voronoi region of third vertex
 
-		TVector3<Real> vecOffsetToVertex2 = p_ptPoint - ptVertex2;
+		TVector3<Real> vecOffsetToVertex2 = p_vecPoint - vecVertex2;
 		Real rDot5 = vecEdge01 * vecOffsetToVertex2;
 		Real rDot6 = vecEdge02 * vecOffsetToVertex2;
 
 		// closest point is third vertex
 		if (rDot6 >= (Real) 0.0 && rDot5 <= rDot6)
-			return ptVertex2;
+			return vecVertex2;
 
 		// check if projected point in voronoi region of second edge
 
@@ -302,7 +300,7 @@ Meson_Gravitas_Geometry_BEGIN
 		// check if on bary co-ords (1-w, 0, w)
 		if (rBary1 <= (Real) 0.0 && rDot2 >= (Real) 0.0 && rDot6 <= (Real) 0.0)
 			// closest point on first edge
-			return ptVertex0 + vecEdge02 * (rDot2 / (rDot2 - rDot6));
+			return vecVertex0 + vecEdge02 * (rDot2 / (rDot2 - rDot6));
 
 		// check if projected point in voronoi region of third edge
 
@@ -313,7 +311,7 @@ Meson_Gravitas_Geometry_BEGIN
 		Real rDot56 = rDot5 - rDot6;
 		if (rBary0 <= (Real) 0.0 && rDot43 >= (Real) 0.0 && rDot56 >= (Real) 0.0)
 			// closest point on third edge
-			return ptVertex1 + (ptVertex2 - ptVertex1) * (rDot43 / (rDot43 + rDot56));
+			return vecVertex1 + (vecVertex2 - vecVertex1) * (rDot43 / (rDot43 + rDot56));
 
 		// otherwise, point is inside face region
 
@@ -322,7 +320,7 @@ Meson_Gravitas_Geometry_BEGIN
 		Real rBaryW = rBary2 * rDenominator;
 
 		// compute point from barycentric co-ords
-		return ptVertex0 + vecEdge01 * rBaryV + vecEdge02 * rBaryW;
+		return vecVertex0 + vecEdge01 * rBaryV + vecEdge02 * rBaryW;
 	}
 
 Meson_Gravitas_Geometry_END

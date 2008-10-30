@@ -22,7 +22,7 @@ const String g_strGeometryTypeTriangleMesh = "TriangleMesh";
 
 TriangleMeshNode* TriangleMesh::PartitionTriangles(
 	uint p_unLevel,
-	const PointList* p_pListVertices, 
+	const VectorList* p_pListVertices, 
 	const IndexedTriangleList& p_listTriangles) const
 {
 	if (p_listTriangles.Size() == 0)
@@ -32,7 +32,7 @@ TriangleMeshNode* TriangleMesh::PartitionTriangles(
 	pTriangleMeshNode->Vertices = p_pListVertices;
 
 	// determine list of used vertices
-	PointArrayList listVertices;
+	VectorArrayList listVertices;
 	for (size_t unIndexTriangles = 0; unIndexTriangles < p_listTriangles.Size(); unIndexTriangles++)
 	{
 		const IndexedTriangle& indexedTriangle = p_listTriangles[unIndexTriangles];
@@ -64,23 +64,23 @@ TriangleMeshNode* TriangleMesh::PartitionTriangles(
 	BoundingAxisAlignedBox boundingAxisAlignedBoxNegative(boundingAxisAlignedBox);
 	BoundingAxisAlignedBox boundingAxisAlignedBoxPositive(boundingAxisAlignedBox);
 
-	TPoint3<Real> ptCentre = boundingAxisAlignedBox.Centre();
+	TVector3<Real> vecCentre = boundingAxisAlignedBox.Centre();
 
 	TVector3<Real> vecExtent = boundingAxisAlignedBox.Extent();
 	if (vecExtent.X >= vecExtent.Y && vecExtent.X >= vecExtent.Z)
 	{
-		boundingAxisAlignedBoxNegative.Max.X = ptCentre.X;
-		boundingAxisAlignedBoxPositive.Min.X = ptCentre.X;
+		boundingAxisAlignedBoxNegative.Max.X = vecCentre.X;
+		boundingAxisAlignedBoxPositive.Min.X = vecCentre.X;
 	}
 	else if (vecExtent.Y >= vecExtent.X && vecExtent.Y >= vecExtent.Z)
 	{
-		boundingAxisAlignedBoxNegative.Max.Y = ptCentre.Y;
-		boundingAxisAlignedBoxPositive.Min.Y = ptCentre.Y;
+		boundingAxisAlignedBoxNegative.Max.Y = vecCentre.Y;
+		boundingAxisAlignedBoxPositive.Min.Y = vecCentre.Y;
 	}
 	else
 	{
-		boundingAxisAlignedBoxNegative.Max.Z = ptCentre.Z;
-		boundingAxisAlignedBoxPositive.Min.Z = ptCentre.Z;
+		boundingAxisAlignedBoxNegative.Max.Z = vecCentre.Z;
+		boundingAxisAlignedBoxPositive.Min.Z = vecCentre.Z;
 	}
 
 	// prepare triangle lists for child bounds
@@ -151,7 +151,7 @@ void TriangleMesh::EnumerateProperties(
 	p_mapProperties.Insert("WavefrontModelFilename",
 		PropertyDescriptor("WavefrontModelFilename", PropertyType::String, false));
 	p_mapProperties.Insert("Vertices",
-		PropertyDescriptor("Vertices", PropertyType::PointList, false));
+		PropertyDescriptor("Vertices", PropertyType::VectorList, false));
 	p_mapProperties.Insert("FaceVertexIndices",
 		PropertyDescriptor("FaceVertexIndices", PropertyType::IntegerList, false));
 }
@@ -192,7 +192,7 @@ void TriangleMesh::GetProperty(const String& p_strName,
 }
 
 void TriangleMesh::GetProperty(const String& p_strName,
-	PointList& p_listValues) const
+	VectorList& p_listValues) const
 {
 	if (p_strName == "Vertices")
 		p_listValues = Vertices;
@@ -303,7 +303,7 @@ void TriangleMesh::SetProperty(const String& p_strName, const TList<int>& p_list
 		MESON_ASSERT(false, "TriangleMesh volume: Unsupported property.");
 }
 
-void TriangleMesh::SetProperty(const String& p_strName, const PointList& p_listValues)
+void TriangleMesh::SetProperty(const String& p_strName, const VectorList& p_listValues)
 {
 	if (p_strName == "Vertices")
 	{
@@ -383,7 +383,7 @@ bool TriangleMesh::IsBounded(void) const
 
 void TriangleMesh::ComputeBoundingVolume(BoundingSphere &p_boundingSphere) const
 {
-	p_boundingSphere.Centre = TPoint3<Real>::Origin;
+	p_boundingSphere.Centre = TVector3<Real>::Zero;
 	p_boundingSphere.Radius =  p_boundingSphere.RadiusSquared =(Real) 0.0;
 
 	if (Vertices.Size() == 0)
@@ -394,7 +394,7 @@ void TriangleMesh::ComputeBoundingVolume(BoundingSphere &p_boundingSphere) const
 	for (size_t unIndex = 0; unIndex < Vertices.Size(); unIndex++)
 	{
 		Real rRadiusSquaredCurrent
-			= Vertices[unIndex].ToVector().LengthSquared();
+			= Vertices[unIndex].LengthSquared();
 		if (rRadiusSquaredMax < rRadiusSquaredCurrent)
 			rRadiusSquaredMax = rRadiusSquaredCurrent;
 	}
@@ -409,7 +409,7 @@ void TriangleMesh::ComputeBoundingVolume(BoundingAxisAlignedBox& p_boundingAxisA
 	if (Vertices.Size() == 0)
 	{
 		p_boundingAxisAlignedBox.Min = p_boundingAxisAlignedBox.Max
-			= TPoint3<Real>::Origin;
+			= TVector3<Real>::Zero;
 		return;
 	}
 
@@ -438,16 +438,16 @@ bool TriangleMesh::IntersectsRay(const Ray& p_ray) const
 	return Root->IntersectsRay(p_ray);
 }
 
-bool TriangleMesh::IntersectsRay(const Ray& p_ray, TPoint3<Real>& p_ptIntersectionPoint) const
+bool TriangleMesh::IntersectsRay(const Ray& p_ray, TVector3<Real>& p_vecIntersectionPoint) const
 {
 	if (Root == NULL)
 		return false;
 
-	return Root->IntersectsRay(p_ray, p_ptIntersectionPoint);
+	return Root->IntersectsRay(p_ray, p_vecIntersectionPoint);
 }
 		
-TPoint3<Real> TriangleMesh::GetCentroid(void) const
+TVector3<Real> TriangleMesh::GetCentroid(void) const
 {
-	return TPoint3<Real>::Origin;
+	return TVector3<Real>::Zero;
 }
 
