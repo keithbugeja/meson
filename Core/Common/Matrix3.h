@@ -24,7 +24,8 @@
 Meson_Common_Maths_BEGIN
 
 // TMatrix3 template
-template <typename TReal> class TMatrix3
+template <typename TReal> 
+class TMatrix3
 {
 public:
 	//----------------------------------------------------------------------------------------------
