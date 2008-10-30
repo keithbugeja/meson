@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Point3.h"
 #include "Vector3.h"
 #include "List.h"
 #include "ArrayList.h"
@@ -22,12 +21,12 @@ struct LineSegment
 	//----------------------------------------------------------------------------------------------
 	/// Starting point of the line segment.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Start;
+	Meson::Common::Maths::TVector3<Real> Start;
 
 	//----------------------------------------------------------------------------------------------
 	/// Ending point of the line segment.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> End;
+	Meson::Common::Maths::TVector3<Real> End;
 
 	//----------------------------------------------------------------------------------------------
 	/// Constructs a zero-length line segment positioned at the origin.
@@ -42,12 +41,12 @@ struct LineSegment
 
 	//----------------------------------------------------------------------------------------------
 	/// Constructs a line segment using the given start and end points.
-	/// \param p_ptStart Starting point for the line segment.
-	/// \param p_ptEnd Ending point for the line segment.
+	/// \param p_vecStart Starting point for the line segment.
+	/// \param p_vecEnd Ending point for the line segment.
 	//----------------------------------------------------------------------------------------------
 	LineSegment(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptStart,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptEnd);
+		const Meson::Common::Maths::TVector3<Real>& p_vecStart,
+		const Meson::Common::Maths::TVector3<Real>& p_vecEnd);
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the length of the line segment.
@@ -77,46 +76,46 @@ struct LineSegment
 	/// Returns the midpoint of the line segment.
 	/// \returns the midpoint of the line segment.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Midpoint(void) const;
+	Meson::Common::Maths::TVector3<Real> Midpoint(void) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the distance of the given point to the line segment.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns the distance of the given point to the line segment.
 	//----------------------------------------------------------------------------------------------
 	Real DistanceFromPoint(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the distance of the given point to the line segment and computes the closest point
 	/// on the segment.
-	/// \param p_ptPoint Point to test.
-	/// \param p_ptClosestPoint Computed point on the line segment, closest to the test point.
+	/// \param p_vecPoint Point to test.
+	/// \param p_vecClosestPoint Computed point on the line segment, closest to the test point.
 	/// \returns the distance of the given point to the line segment.
 	//----------------------------------------------------------------------------------------------
 	Real DistanceFromPoint(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint,
-		Meson::Common::Maths::TPoint3<Real>& p_ptClosestPoint) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint,
+		Meson::Common::Maths::TVector3<Real>& p_vecClosestPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the closest point on the line segment to the given point.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns the closest point on the line segment to the given point.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> ClosestPoint(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	Meson::Common::Maths::TVector3<Real> ClosestPoint(
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Computes the closest point on this line segment to the given segment, and conversely, the
 	/// closest point on the given segment to this segment.
 	/// \param p_lineSegment Line segment to 
-	/// \param p_ptPoint1 Computed point on this segment, closest to the given segment.
-	/// \param p_ptPoint2 Computed point on the given segment, closest to this segment.
+	/// \param p_vecPoint1 Computed point on this segment, closest to the given segment.
+	/// \param p_vecPoint2 Computed point on the given segment, closest to this segment.
 	//----------------------------------------------------------------------------------------------
 	void ClosestPointsToSegment(
 		const LineSegment& p_lineSegment,
-		Meson::Common::Maths::TPoint3<Real>& p_ptPoint1, 
-		Meson::Common::Maths::TPoint3<Real>& p_ptPoint2);
+		Meson::Common::Maths::TVector3<Real>& p_vecPoint1, 
+		Meson::Common::Maths::TVector3<Real>& p_vecPoint2);
 
 	//----------------------------------------------------------------------------------------------
 	/// Swaps the values of the starting and ending point.

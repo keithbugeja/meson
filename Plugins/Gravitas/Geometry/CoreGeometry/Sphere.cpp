@@ -97,7 +97,7 @@ bool Sphere::IsBounded(void) const
 
 void Sphere::ComputeBoundingVolume(BoundingSphere &p_boundingSphere) const
 {
-	p_boundingSphere.Centre = TPoint3<Real>::Origin;
+	p_boundingSphere.Centre = TVector3<Real>::Zero;
 	p_boundingSphere.Radius = Radius;
 	p_boundingSphere.RadiusSquared = RadiusSquared;
 }
@@ -111,7 +111,7 @@ void Sphere::ComputeBoundingVolume(BoundingAxisAlignedBox &p_boundingAxisAligned
 
 void Sphere::ComputeBoundingVolume(BoundingOrientedBox &p_boundingOrientedBox) const
 {
-	p_boundingOrientedBox.Centre = TPoint3<Real>::Origin;
+	p_boundingOrientedBox.Centre = TVector3<Real>::Zero;
 	p_boundingOrientedBox.Axis[0] = TVector3<Real>::Right;
 	p_boundingOrientedBox.Axis[1] = TVector3<Real>::Up;
 	p_boundingOrientedBox.Axis[2] = TVector3<Real>::Out;
@@ -121,19 +121,19 @@ void Sphere::ComputeBoundingVolume(BoundingOrientedBox &p_boundingOrientedBox) c
 
 bool Sphere::IntersectsRay(const Ray& p_ray) const
 {
-	return p_ray.DistanceSquaredTo(TPoint3<Real>::Origin) <= RadiusSquared;
+	return p_ray.DistanceSquaredTo(TVector3<Real>::Zero) <= RadiusSquared;
 }
 
-bool Sphere::IntersectsRay(const Ray& p_ray, TPoint3<Real>& p_ptIntersectionPoint) const
+bool Sphere::IntersectsRay(const Ray& p_ray, TVector3<Real>& p_vecIntersectionPoint) const
 {
-	TPoint3<Real> ptClosestPoint(p_ray.ClosestPointTo(TPoint3<Real>::Origin));
-	Real rDistanceSquared = ptClosestPoint.ToVector().LengthSquared();
+	TVector3<Real> vecClosestPoint(p_ray.ClosestPointTo(TVector3<Real>::Zero));
+	Real rDistanceSquared = vecClosestPoint.LengthSquared();
 	if (rDistanceSquared > RadiusSquared)
 		return false;
 
 	Real rClosestToSurface(TMaths<Real>::Sqrt(RadiusSquared - rDistanceSquared));
 
-	p_ptIntersectionPoint = ptClosestPoint - p_ray.Direction * rClosestToSurface;
+	p_vecIntersectionPoint = vecClosestPoint - p_ray.Direction * rClosestToSurface;
 
 	return true;
 }

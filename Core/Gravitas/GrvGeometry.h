@@ -2,7 +2,6 @@
 
 #include "String8.h"
 #include "Matrix3.h"
-#include "Point3.h"
 
 #include "GrvNamespaces.h"
 #include "GrvTypes.h"
@@ -110,11 +109,11 @@ public:
 	/// Returns true if the given ray intersects the geometry. If the intersection test is positive,
 	/// the given intersection point is updated.
 	/// \param p_ray Ray to test.
-	/// \param p_ptIntersectionPoint Computed intersection point.
+	/// \param p_vecIntersectionPoint Computed intersection point.
 	/// \returns true if the given ray intersects the geometry.
 	//----------------------------------------------------------------------------------------------
 	virtual bool IntersectsRay(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const = 0;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const = 0;
 };
 
 //----------------------------------------------------------------------------------------------

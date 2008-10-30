@@ -60,7 +60,7 @@ ContactPoint ContactManifold::GetDeepestContact(void) const
 		if (TMaths<Real>::Equals(contactPointDeepest.Penetration, pContactPoint->Penetration))
 		{
 			Real rDenominator = (Real) 1.0 / (nSameDepth + 1);
-			contactPointDeepest.Position = TPoint3<Real>::Origin + (contactPointDeepest.Position.ToVector() * (Real) nSameDepth + pContactPoint->Position.ToVector()) * rDenominator;
+			contactPointDeepest.Position = (contactPointDeepest.Position * (Real) nSameDepth + pContactPoint->Position) * rDenominator;
 			contactPointDeepest.Normal = (contactPointDeepest.Normal * nSameDepth + pContactPoint->Normal) * rDenominator;
 			++nSameDepth;
 		}

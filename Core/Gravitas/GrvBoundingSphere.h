@@ -8,8 +8,6 @@
 //----------------------------------------------------------------------------------------------
 #pragma once
 
-#include "Point3.h"
-
 #include "GrvBoundingVolume.h"
 
 Meson_Gravitas_Geometry_BEGIN
@@ -26,7 +24,7 @@ public: // public variables
 	//----------------------------------------------------------------------------------------------
 	/// Bounding sphere centre.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Centre;
+	Meson::Common::Maths::TVector3<Real> Centre;
 
 	//----------------------------------------------------------------------------------------------
 	/// Radius of the bounding sphere.
@@ -54,10 +52,10 @@ public:
 	//----------------------------------------------------------------------------------------------
 	/// Constructs a bounding sphere from the given centre and radius. The squared radius is
 	/// automatically computed from the given radius.
-	/// \param p_ptCentre Bounding sphere centre.
+	/// \param p_vecCentre Bounding sphere centre.
 	/// \param p_rRadius Bounding sphere radius.
 	//----------------------------------------------------------------------------------------------
-	BoundingSphere(const Meson::Common::Maths::TPoint3<Real>& p_ptCentre, Real p_rRadius);
+	BoundingSphere(const Meson::Common::Maths::TVector3<Real>& p_vecCentre, Real p_rRadius);
 
 	//----------------------------------------------------------------------------------------------
 	/// Destroys the bounding sphere.
@@ -67,11 +65,11 @@ public:
 	// bounding volume methods
 	BoundingVolumeType::BoundingVolumeType GetType(void) const;
 
-	bool Contains(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	bool Contains(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	bool Intersects(const Ray& p_ray) const;
 	bool Intersects(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 
 	bool Intersects(const Triangle& p_triangle) const;
 
@@ -84,8 +82,8 @@ public:
 	void Transform(
 		const Meson::Gravitas::Geometry::Transform& p_transform);
 	void ClosestPointTo(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint,
-		Meson::Common::Maths::TPoint3<Real>& p_ptClosestPoint) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint,
+		Meson::Common::Maths::TVector3<Real>& p_vecClosestPoint) const;
 	void ProjectToInterval(
 		const Meson::Common::Maths::TVector3<Real>& p_vecAxis,
 		Meson::Common::Maths::TInterval<Real>& p_interval) const;

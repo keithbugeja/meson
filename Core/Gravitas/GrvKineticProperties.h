@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Point3.h"
 #include "Quaternion.h"
 #include "Vector3.h"
 
@@ -39,7 +38,7 @@ struct KineticProperties
 	///----------------------------------------------------------------------------------------------
 	/// A point representing the position of body's centre of mass in world coordinates.
 	///----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Position;
+	Meson::Common::Maths::TVector3<Real> Position;
 
 	///----------------------------------------------------------------------------------------------
 	/// A unit quaternion representing the orientation of the body in world coordinates.
@@ -119,43 +118,43 @@ struct KineticProperties
 	///----------------------------------------------------------------------------------------------
 	/// Transforms the given world position into a poisition expressed in the body's frame of
 	/// reference. The value is stored in the given local position.
-	/// \param p_ptWorldPosition A point in world coordinates to transform.
-	/// \param p_ptLocalPosition A reference to point in which to store the position in local body
+	/// \param p_vecWorldPosition A point in world coordinates to transform.
+	/// \param p_vecLocalPosition A reference to point in which to store the position in local body
 	///        coordinates.
 	///----------------------------------------------------------------------------------------------
 	void TransformPointToLocal(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptWorldPosition, 
-		Meson::Common::Maths::TPoint3<Real>& p_ptLocalPosition) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecWorldPosition, 
+		Meson::Common::Maths::TVector3<Real>& p_vecLocalPosition) const;
 
 	///----------------------------------------------------------------------------------------------
 	/// Transforms the given point expressed in the body's frame of reference into an absolute world
 	/// position.
-	/// \param p_ptLocalPosition A point expressed in body coordinates to the transformed.
-	/// \param p_ptWorldPosition A reference to a point in which to store the position in world
+	/// \param p_vecLocalPosition A point expressed in body coordinates to the transformed.
+	/// \param p_vecWorldPosition A reference to a point in which to store the position in world
 	///        coordinates.
 	///----------------------------------------------------------------------------------------------
 	void TransformPointToWorld(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptLocalPosition, 
-		Meson::Common::Maths::TPoint3<Real>& p_ptWorldPosition) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecLocalPosition, 
+		Meson::Common::Maths::TVector3<Real>& p_vecWorldPosition) const;
 
 	///----------------------------------------------------------------------------------------------
 	/// Computes the absolute velocity, in the body's frame of reference, of the given point, also
 	/// expressed in body coordinates.
-	/// \param p_ptLocalPosition Point in body coordinates for which to compute the velocity.
+	/// \param p_vecLocalPosition Point in body coordinates for which to compute the velocity.
 	/// \param p_vecVelocity Vector in which to store the computed velocity.
 	///----------------------------------------------------------------------------------------------
 	void ComputeLocalPointVelocity(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptLocalPosition,
+		const Meson::Common::Maths::TVector3<Real>& p_vecLocalPosition,
 		Meson::Common::Maths::TVector3<Real>& p_vecVelocity) const;
 
 	///----------------------------------------------------------------------------------------------
 	/// Computes the absolute velocity, in the body's frame of reference, of the given point
 	/// expressed in world coordinates. The given point is assumed to be fixed with the body.
-	/// \param p_ptWorldPosition Point in world coordinates for which to compute the velocity.
+	/// \param p_vecWorldPosition Point in world coordinates for which to compute the velocity.
 	/// \param p_vecVelocity Vector in which to store the computed velocity.
 	///----------------------------------------------------------------------------------------------
 	void ComputeWorldPointVelocity(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptWorldPosition,
+		const Meson::Common::Maths::TVector3<Real>& p_vecWorldPosition,
 		Meson::Common::Maths::TVector3<Real>& p_vecVelocity) const;
 };
 

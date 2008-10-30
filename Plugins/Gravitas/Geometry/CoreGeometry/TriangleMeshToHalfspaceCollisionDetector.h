@@ -16,11 +16,11 @@ private: // private variables;
 private: // private methods
 	bool TestIntersection(
 		const Meson::Gravitas::Geometry::TriangleMeshNode* pTriangleMeshNode,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPlanePoint,
+		const Meson::Common::Maths::TVector3<Real>& p_vecPlanePoint,
 		const Meson::Common::Maths::TVector3<Real>& p_vecPlaneNormal) const;
 	void ComputeContactManifold(
 		const Meson::Gravitas::Geometry::TriangleMeshNode* pTriangleMeshNode,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPlanePoint,
+		const Meson::Common::Maths::TVector3<Real>& p_vecPlanePoint,
 		const Meson::Common::Maths::TVector3<Real>& p_vecPlaneNormal,
 		ContactManifold& p_contactManifold) const;
 

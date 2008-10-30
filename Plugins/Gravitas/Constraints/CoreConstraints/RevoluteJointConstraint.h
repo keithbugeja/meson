@@ -13,12 +13,12 @@ private: // private variables
 	Meson::Gravitas::Body::BodyPtr m_pBody2;
 	bool m_bBroken;
 	Real m_rBreakingThreshold;
-	Meson::Common::Maths::TPoint3<Real> m_ptBindAxisPoint1;
-	Meson::Common::Maths::TPoint3<Real> m_ptBindAxisPoint2;
-	Meson::Common::Maths::TPoint3<Real> m_ptBody1Anchor1;
-	Meson::Common::Maths::TPoint3<Real> m_ptBody1Anchor2;
-	Meson::Common::Maths::TPoint3<Real> m_ptBody2Anchor1;
-	Meson::Common::Maths::TPoint3<Real> m_ptBody2Anchor2;
+	Meson::Common::Maths::TVector3<Real> m_vecBindAxisPoint1;
+	Meson::Common::Maths::TVector3<Real> m_vecBindAxisPoint2;
+	Meson::Common::Maths::TVector3<Real> m_vecBody1Anchor1;
+	Meson::Common::Maths::TVector3<Real> m_vecBody1Anchor2;
+	Meson::Common::Maths::TVector3<Real> m_vecBody2Anchor1;
+	Meson::Common::Maths::TVector3<Real> m_vecBody2Anchor2;
 	Real m_rAngleLimit;
 	Real m_rJointRestitution;
 	Real m_rAngleLimitCosine;
@@ -27,8 +27,8 @@ private: // private variables
 
 private: // private methods
 	void UpdateAngleLimitDerivatives(void);
-	Meson::Common::Maths::TPoint3<Real> GetCurrentAxisPosition1(void) const;
-	Meson::Common::Maths::TPoint3<Real> GetCurrentAxisPosition2(void) const;
+	Meson::Common::Maths::TVector3<Real> GetCurrentAxisPosition1(void) const;
+	Meson::Common::Maths::TVector3<Real> GetCurrentAxisPosition2(void) const;
 
 public: // public methods
 	RevoluteJointConstraint(void);
@@ -41,8 +41,8 @@ public: // public methods
 		&p_mapProperties) const;
 	void GetProperty(const Meson::Common::Text::String &p_strName, Real &p_rValue) const;
 	void SetProperty(const Meson::Common::Text::String &p_strName, Real p_rValue);
-	void GetProperty(const Meson::Common::Text::String &p_strName, Meson::Common::Maths::TPoint3<Real> &p_ptValue) const;
-	void SetProperty(const Meson::Common::Text::String &p_strName, const Meson::Common::Maths::TPoint3<Real> &p_ptValue);
+	void GetProperty(const Meson::Common::Text::String &p_strName, Meson::Common::Maths::TVector3<Real> &p_vecValue) const;
+	void SetProperty(const Meson::Common::Text::String &p_strName, const Meson::Common::Maths::TVector3<Real> &p_vecValue);
 
 	void RenderInstrumentation(
 		Meson::Gravitas::Instrumentation::IInstrumentationDevice* p_pInstrumentationDevice);

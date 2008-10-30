@@ -12,7 +12,7 @@ using namespace Meson::Gravitas::Geometry;
 using namespace Meson::Gravitas::Kinetics;
 
 VortexForce::VortexForce(void)
-	: m_ptEyePosition(TPoint3<Real>::Origin)
+	: m_vecEyePosition(TVector3<Real>::Zero)
 	, m_rAxialAttraction((Real) 10.0)
 	, m_rVerticalAttraction((Real) 40.0)
 {
@@ -20,7 +20,7 @@ VortexForce::VortexForce(void)
 
 VortexForce::VortexForce(const String& p_strId)
 	: IForce(p_strId)
-	, m_ptEyePosition(TPoint3<Real>::Origin)
+	, m_vecEyePosition(TVector3<Real>::Zero)
 	, m_rAxialAttraction((Real) 10.0)
 	, m_rVerticalAttraction((Real) 40.0)
 {
@@ -34,7 +34,7 @@ void VortexForce::EnumerateProperties(
 	TMap<String, PropertyDescriptor>& p_mapProperties) const
 {
 	p_mapProperties.Clear();
-	p_mapProperties.Insert("EyePosition", PropertyDescriptor("EyePosition", PropertyType::Point, false));
+	p_mapProperties.Insert("EyePosition", PropertyDescriptor("EyePosition", PropertyType::Vector, false));
 	p_mapProperties.Insert("AxialAttraction", PropertyDescriptor("AxialAttraction", PropertyType::Real, false));
 	p_mapProperties.Insert("VerticalAttraction", PropertyDescriptor("VerticalAttraction", PropertyType::Real, false));
 }
@@ -49,10 +49,10 @@ void VortexForce::GetProperty(const String& p_strName, Real& p_rValue) const
 		throw new MesonException("VortexForce: Invalid property specified.", __FILE__, __LINE__);
 }
 
-void VortexForce::GetProperty(const String& p_strName, TPoint3<Real>& p_ptValue) const
+void VortexForce::GetProperty(const String& p_strName, TVector3<Real>& p_vecValue) const
 {
 	if (p_strName == "EyePosition")
-		p_ptValue = m_ptEyePosition;
+		p_vecValue = m_vecEyePosition;
 	else
 		throw new MesonException("VortexForce: Invalid property specified.", __FILE__, __LINE__);
 }
@@ -67,10 +67,10 @@ void VortexForce::SetProperty(const String& p_strName, Real p_rValue)
 		throw new MesonException("VortexForce: Invalid property specified.", __FILE__, __LINE__);
 }
 
-void VortexForce::SetProperty(const String& p_strName, const TPoint3<Real>& p_ptValue)
+void VortexForce::SetProperty(const String& p_strName, const TVector3<Real>& p_vecValue)
 {
 	if (p_strName == "EyePosition")
-		m_ptEyePosition = p_ptValue;
+		m_vecEyePosition = p_vecValue;
 	else
 		throw new MesonException("VortexForce: Invalid property specified.", __FILE__, __LINE__);
 }
@@ -81,7 +81,7 @@ TVector3<Real> VortexForce::GetForceValue(
 	GeometryPtr p_pGeometry,
 	Real p_rTime)
 {
-	TVector3<Real> vecForceValue(m_ptEyePosition - p_pKineticProperties->Position);
+	TVector3<Real> vecForceValue(m_vecEyePosition - p_pKineticProperties->Position);
 
 	Real rAxialDistanceSqr = vecForceValue.X * vecForceValue.X + vecForceValue.Z * vecForceValue.Z;
 
@@ -104,13 +104,13 @@ TVector3<Real> VortexForce::GetForceValue(
 	return vecForceValue * p_pMassProperties->Mass;
 }
 
-TPoint3<Real> VortexForce::GetApplicationPoint(
+TVector3<Real> VortexForce::GetApplicationPoint(
 	MassProperties* p_pMassProperties,
 	KineticProperties* p_pKineticProperties,
 	GeometryPtr p_pGeometry,
 	Real p_rTime)
 {
-	return TPoint3<Real>::Origin;
+	return TVector3<Real>::Zero;
 }
 
 bool VortexForce::IsInstantaneous(void)

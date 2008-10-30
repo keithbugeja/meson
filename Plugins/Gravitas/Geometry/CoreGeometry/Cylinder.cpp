@@ -22,8 +22,8 @@ void Cylinder::ProjectToInterval(
 	TInterval<Real>& p_interval)
 {
 	p_interval.MakeEmpty();
-	p_interval.Extend(p_lnsShaft.Start.ToVector() * p_vecAxis);
-	p_interval.Extend(p_lnsShaft.End.ToVector() * p_vecAxis);
+	p_interval.Extend(p_lnsShaft.Start * p_vecAxis);
+	p_interval.Extend(p_lnsShaft.End * p_vecAxis);
 
 	Real rCosine = p_lnsShaft.Direction() * p_vecAxis;
 	// rCosine may be slightly > 1 due to rounding errors!
@@ -38,7 +38,7 @@ void Cylinder::ProjectToInterval(
 void Cylinder::EnumerateMaximalVertices(
 	const Meson::Gravitas::Geometry::LineSegment &p_lnsShaft, Real p_rRadius,
 	const Meson::Common::Maths::TVector3<Real>& p_vecAxis,
-	Meson::Gravitas::PointList& p_listVertices)
+	Meson::Gravitas::VectorList& p_listVertices)
 {
 	p_listVertices.Clear();
 
@@ -56,11 +56,11 @@ void Cylinder::EnumerateMaximalVertices(
 	}
 
 	// first approximation is one of shaft endpoints
-	TPoint3<Real> ptVertex;
+	TVector3<Real> vecVertex;
 	if (rCosine > TMaths<Real>::Epsilon)
-		ptVertex = p_lnsShaft.End;
+		vecVertex = p_lnsShaft.End;
 	else
-		ptVertex = p_lnsShaft.Start;
+		vecVertex = p_lnsShaft.Start;
 
 	// axis parallel to shaft
 	if (TMaths<Real>::Equals(TMaths<Real>::Abs(rCosine), (Real) 1.0))
@@ -71,14 +71,14 @@ void Cylinder::EnumerateMaximalVertices(
 		TVector3<Real> vecNormal3 = (vecNormal1 + vecNormal2).NormaliseCopy();
 		TVector3<Real> vecNormal4 = (vecNormal1 - vecNormal2).NormaliseCopy();
 
-		p_listVertices.Add(ptVertex + vecNormal1 * p_rRadius);
-		p_listVertices.Add(ptVertex - vecNormal1 * p_rRadius);
-		p_listVertices.Add(ptVertex + vecNormal2 * p_rRadius);
-		p_listVertices.Add(ptVertex - vecNormal2 * p_rRadius);
-		p_listVertices.Add(ptVertex + vecNormal3 * p_rRadius);
-		p_listVertices.Add(ptVertex - vecNormal3 * p_rRadius);
-		p_listVertices.Add(ptVertex + vecNormal4 * p_rRadius);
-		p_listVertices.Add(ptVertex - vecNormal4 * p_rRadius);
+		p_listVertices.Add(vecVertex + vecNormal1 * p_rRadius);
+		p_listVertices.Add(vecVertex - vecNormal1 * p_rRadius);
+		p_listVertices.Add(vecVertex + vecNormal2 * p_rRadius);
+		p_listVertices.Add(vecVertex - vecNormal2 * p_rRadius);
+		p_listVertices.Add(vecVertex + vecNormal3 * p_rRadius);
+		p_listVertices.Add(vecVertex - vecNormal3 * p_rRadius);
+		p_listVertices.Add(vecVertex + vecNormal4 * p_rRadius);
+		p_listVertices.Add(vecVertex - vecNormal4 * p_rRadius);
 		return;		
 	}
 
@@ -89,16 +89,16 @@ void Cylinder::EnumerateMaximalVertices(
 	vecPerp.Normalise();
 
 	// add radius component
-	ptVertex += vecPerp * p_rRadius;
-	p_listVertices.Add(ptVertex);
+	vecVertex += vecPerp * p_rRadius;
+	p_listVertices.Add(vecVertex);
 }
 
 bool Cylinder::IntersectsPoint(
 	const Meson::Gravitas::Geometry::LineSegment &p_lnsShaft, Real p_rRadius,
-	const Meson::Common::Maths::TPoint3<Real>& p_ptPoint)
+	const Meson::Common::Maths::TVector3<Real>& p_vecPoint)
 {
 	TVector3<Real> vecDirection = p_lnsShaft.Direction();
-	TVector3<Real> vecPointStartOffset = p_ptPoint - p_lnsShaft.Start;
+	TVector3<Real> vecPointStartOffset = p_vecPoint - p_lnsShaft.Start;
 	Real rProjection = vecPointStartOffset * vecDirection;
 
 	if (rProjection < (Real) 0.0) return false;
@@ -216,7 +216,7 @@ bool Cylinder::IsBounded(void) const
 
 void Cylinder::ComputeBoundingVolume(BoundingSphere &p_boundingSphere) const
 {
-	p_boundingSphere.Centre = TPoint3<Real>::Origin;
+	p_boundingSphere.Centre = TVector3<Real>::Zero;
 	p_boundingSphere.RadiusSquared = HeightSquared * (Real) 0.25 + RadiusSquared;
 	p_boundingSphere.Radius = TMaths<Real>::Sqrt(p_boundingSphere.RadiusSquared);
 }
@@ -227,8 +227,8 @@ void Cylinder::ComputeBoundingVolume(BoundingAxisAlignedBox &p_boundingAxisAlign
 	MESON_ASSERT(Radius >= (Real) 0.0, "Cylinder radius must be positive.");
 
 	TVector3<Real> vecExtent(Radius, Height * (Real) 0.5, Radius);
-	p_boundingAxisAlignedBox.Min = TPoint3<Real>::Origin - vecExtent;
-	p_boundingAxisAlignedBox.Max = TPoint3<Real>::Origin + vecExtent;
+	p_boundingAxisAlignedBox.Min = -vecExtent;
+	p_boundingAxisAlignedBox.Max = vecExtent;
 }
 
 void Cylinder::ComputeBoundingVolume(BoundingOrientedBox &p_boundingOrientedBox) const
@@ -237,7 +237,7 @@ void Cylinder::ComputeBoundingVolume(BoundingOrientedBox &p_boundingOrientedBox)
 	MESON_ASSERT(Radius >= (Real) 0.0, "Cylinder radius must be positive.");
 
 	TVector3<Real> vecExtent(Radius, Height * (Real) 0.5, Radius);
-	p_boundingOrientedBox.Centre = TPoint3<Real>::Origin;
+	p_boundingOrientedBox.Centre = TVector3<Real>::Zero;
 	p_boundingOrientedBox.Extent = vecExtent;
 	p_boundingOrientedBox.Axis[0] = TVector3<Real>::Right;
 	p_boundingOrientedBox.Axis[1] = TVector3<Real>::Up;
@@ -246,11 +246,11 @@ void Cylinder::ComputeBoundingVolume(BoundingOrientedBox &p_boundingOrientedBox)
 
 bool Cylinder::IntersectsRay(const Ray& p_ray) const
 {
-	static TPoint3<Real> s_ptIntersction;
-	return IntersectsRay(p_ray, s_ptIntersction);
+	static TVector3<Real> s_vecIntersctionPoint;
+	return IntersectsRay(p_ray, s_vecIntersctionPoint);
 }
 
-bool Cylinder::IntersectsRay(const Ray& p_ray, TPoint3<Real>& p_ptIntersectionPoint) const
+bool Cylinder::IntersectsRay(const Ray& p_ray, TVector3<Real>& p_vecIntersectionPoint) const
 {
 	Real rTMin((Real) 0.0);
 	Real rTMax(TMaths<Real>::Maximum);
@@ -317,7 +317,7 @@ bool Cylinder::IntersectsRay(const Ray& p_ray, TPoint3<Real>& p_ptIntersectionPo
 	}
 
 	// compute intersection point
-	p_ptIntersectionPoint = p_ray.Source + p_ray.Direction * rTMin;
+	p_vecIntersectionPoint = p_ray.Source + p_ray.Direction * rTMin;
 
 	// if this point reached - intersection occured
 	return true;

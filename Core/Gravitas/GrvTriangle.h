@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Point3.h"
 #include "Vector3.h"
 #include "Interval.h"
 #include "ArrayList.h"
@@ -21,7 +20,7 @@ Meson_Gravitas_Geometry_BEGIN
 struct Triangle
 {
 	// variables
-	Meson::Common::Maths::TPoint3<Real> Vertices[3];
+	Meson::Common::Maths::TVector3<Real> Vertices[3];
 
 	// methods
 
@@ -38,14 +37,14 @@ struct Triangle
 
 	//----------------------------------------------------------------------------------------------
 	/// Constructs a triangle using the given vertices.
-	/// \param p_ptVertex0 First vertex for the triangle.
-	/// \param p_ptVertex1 Second vertex for the triangle.
-	/// \param p_ptVertex2 Third vertex for the triangle.
+	/// \param p_vecVertex0 First vertex for the triangle.
+	/// \param p_vecVertex1 Second vertex for the triangle.
+	/// \param p_vecVertex2 Third vertex for the triangle.
 	//----------------------------------------------------------------------------------------------
 	Triangle(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptVertex0,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptVertex1,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptVertex2);
+		const Meson::Common::Maths::TVector3<Real>& p_vecVertex0,
+		const Meson::Common::Maths::TVector3<Real>& p_vecVertex1,
+		const Meson::Common::Maths::TVector3<Real>& p_vecVertex2);
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the area of the triangle.
@@ -64,7 +63,7 @@ struct Triangle
 	/// Returns the centroid of the triangle.
 	/// \returns the centroid of the triangle.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Centroid(void) const;
+	Meson::Common::Maths::TVector3<Real> Centroid(void) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns a vector offset representing an edge with the given index. The edge offset is
@@ -77,47 +76,47 @@ struct Triangle
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the distance between the closest point on the triangle and the given point.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns the distance between the closest point on the triangle and the given point.
 	//----------------------------------------------------------------------------------------------
 	Real DistanceFromPoint(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the distance between the closest point on the triangle and the given point. The
 	/// closest point is stored in the given parameter.
-	/// \param p_ptPoint Point to test.
-	/// \param p_ptClosestPoint Computed closest point on the triangle.
+	/// \param p_vecPoint Point to test.
+	/// \param p_vecClosestPoint Computed closest point on the triangle.
 	/// \returns the distance between the closest point on the triangle and the given point.
 	//----------------------------------------------------------------------------------------------
 	Real DistanceFromPoint(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint,
-		Meson::Common::Maths::TPoint3<Real>& p_ptClosestPoint) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint,
+		Meson::Common::Maths::TVector3<Real>& p_vecClosestPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the signed distance between the plane occupied by the triangle and the given point.
 	/// The computed distance is positive if the test point is above the plane as given by the
 	/// triangle normal, zero if coplanar, or negative if the point is below the plane.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns the signed distance between the plane occupied by the triangle and the given point.
 	//----------------------------------------------------------------------------------------------
 	Real SignedDistanceFromPlane(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the closest point on the triangle to the given test point.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns the closest point on the triangle to the given test point.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> ClosestPoint(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	Meson::Common::Maths::TVector3<Real> ClosestPoint(
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given point is contained in the triangle.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns true if the given point is contained in the triangle.
 	//----------------------------------------------------------------------------------------------
-	bool Contains(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	bool Contains(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given ray intersects the triangle.
@@ -129,11 +128,11 @@ struct Triangle
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given ray intersects the triangle.
 	/// \param p_ray Ray to test for intersection.
-	/// \param p_ptIntersectionPoint Computed point of intersection on the triangle.
+	/// \param p_vecIntersectionPoint Computed point of intersection on the triangle.
 	/// \returns true if the given ray intersects the triangle.
 	//----------------------------------------------------------------------------------------------
 	bool Intersects(const Ray& p_ray,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given triangle intersects this triangle.
@@ -145,33 +144,33 @@ struct Triangle
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given point lies on the plane containing the triangle. This is
 	/// equivalent to testing if the signed plane distance is zero.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns true if the given point lies on the plane containing the triangle.
 	//----------------------------------------------------------------------------------------------
-	bool PointOnPlane(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	bool PointOnPlane(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given point lies above the plane containing the triangle. This is
 	/// equivalent to testing if the signed plane distance is positive.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns true if the given point lies above the plane containing the triangle.
 	//----------------------------------------------------------------------------------------------
-	bool PointAbovePlane(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	bool PointAbovePlane(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given point lies below the plane containing the triangle. This is
 	/// equivalent to testing if the signed plane distance is negative.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns true if the given point lies below the plane containing the triangle.
 	//----------------------------------------------------------------------------------------------
-	bool PointBelowPlane(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	bool PointBelowPlane(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true of the plane projection of the given point lies within the triangle.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns true of the plane projection of the given point lies within the triangle.
 	//----------------------------------------------------------------------------------------------
-	bool ContainsPointProjection(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	bool ContainsPointProjection(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Projects the triangle on to the given interval using the given axis.
@@ -190,7 +189,7 @@ struct Triangle
 	//----------------------------------------------------------------------------------------------
 	void EnumerateMaximalVertices(
 		const Meson::Common::Maths::TVector3<Real>& p_vecDirection,
-		Meson::Gravitas::PointList& p_listVertices) const;
+		Meson::Gravitas::VectorList& p_vectorList) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Inverts the vertex winding of the triangle.

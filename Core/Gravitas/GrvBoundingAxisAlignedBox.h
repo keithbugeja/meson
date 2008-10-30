@@ -8,7 +8,6 @@
 //----------------------------------------------------------------------------------------------
 #pragma once
 
-#include "Point3.h"
 #include "Interval.h"
 
 #include "GrvBoundingVolume.h"
@@ -29,12 +28,12 @@ public: // public variables
 	//----------------------------------------------------------------------------------------------
 	/// Lowerbound coordinates for the axis-aligned bounding box.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Min;
+	Meson::Common::Maths::TVector3<Real> Min;
 
 	//----------------------------------------------------------------------------------------------
 	/// Upperbound coordinates for the axis-aligned bounding box.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Max;
+	Meson::Common::Maths::TVector3<Real> Max;
 
 private: // private methods
 	void QuickSweep(
@@ -55,12 +54,12 @@ public: // public methods
 
 	//----------------------------------------------------------------------------------------------
 	/// Constructs an axis-aligned bounding box from the given lowerbound and upperbound points.
-	/// \param p_ptMin Lowerbound coordinates for the box.
-	/// \param p_ptMax Upperbound coordinates for the box.
+	/// \param p_vecMin Lowerbound coordinates for the box.
+	/// \param p_vecMax Upperbound coordinates for the box.
 	//----------------------------------------------------------------------------------------------
 	BoundingAxisAlignedBox(
-		const Meson::Common::Maths::TPoint3<Real> &p_ptMin,
-		const Meson::Common::Maths::TPoint3<Real> &p_ptMax);
+		const Meson::Common::Maths::TVector3<Real> &p_vecMin,
+		const Meson::Common::Maths::TVector3<Real> &p_vecMax);
 
 	//----------------------------------------------------------------------------------------------
 	/// Destorys the axis-aligned bounding box.
@@ -70,28 +69,28 @@ public: // public methods
 	// bounding volume methods
 	BoundingVolumeType::BoundingVolumeType GetType(void) const;
 
-	bool Contains(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	bool Contains(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	bool Intersects(const Ray& p_ray) const;
 	bool Intersects(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 
 	bool Intersects(const Triangle& p_triangle) const;
 
-	bool Intersects(const IBoundingVolume &p_boundingVolume) const;
-	bool IntersectsDynamic(const IBoundingVolume &p_boundingVolume,
-		const Meson::Common::Maths::TVector3<Real> &p_vecSweep) const;
+	bool Intersects(const IBoundingVolume& p_boundingVolume) const;
+	bool IntersectsDynamic(const IBoundingVolume& p_boundingVolume,
+		const Meson::Common::Maths::TVector3<Real>& p_vecSweep) const;
 
 	BoundingVolumePtr Duplicate(void);
 	void AssignFrom(BoundingVolumePtr p_pBoundingVolume);
 	void Transform(
 		const Meson::Gravitas::Geometry::Transform& p_transform);
 	void ClosestPointTo(
-		const Meson::Common::Maths::TPoint3<Real> &p_ptPoint,
-		Meson::Common::Maths::TPoint3<Real> &p_ptClosestPoint) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint,
+		Meson::Common::Maths::TVector3<Real>& p_vecClosestPoint) const;
 	void ProjectToInterval(
 		const Meson::Common::Maths::TVector3<Real> &p_vecAxis,
-		Meson::Common::Maths::TInterval<Real> &p_interval) const;
+		Meson::Common::Maths::TInterval<Real>& p_interval) const;
 
 	// custom methods
 
@@ -99,7 +98,7 @@ public: // public methods
 	/// Returns the centroid of the axis-aligned bounding box.
 	/// \returns the centroid of the axis-aligned bounding box.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Centre(void) const;
+	Meson::Common::Maths::TVector3<Real> Centre(void) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the extents (half-width, half-height and half-depth) of the axis-aligned bounding
@@ -118,9 +117,9 @@ public: // public methods
 
 	//----------------------------------------------------------------------------------------------
 	/// Extends the axis-aligned bounding box to contain the given point.
-	/// \param p_ptPoint A point to be contained in the axis-aligned bounding box.
+	/// \param p_vecPoint A point to be contained in the axis-aligned bounding box.
 	//----------------------------------------------------------------------------------------------
-	void ExtendToPoint(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint);
+	void ExtendToPoint(const Meson::Common::Maths::TVector3<Real>& p_vecPoint);
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given axis-aligned bounding box is equal to this box.
@@ -158,7 +157,7 @@ public: // public methods
 	//----------------------------------------------------------------------------------------------
 	void EnumerateMaximalVertices(
 		const Meson::Common::Maths::TVector3<Real>& p_vecDirection,
-		Meson::Gravitas::PointList& p_listVertices) const;
+		Meson::Gravitas::VectorList& p_vectorList) const;
 };
 
 Meson_Gravitas_Geometry_END

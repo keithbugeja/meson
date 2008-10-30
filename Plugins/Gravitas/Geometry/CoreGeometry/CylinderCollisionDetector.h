@@ -12,9 +12,7 @@ class CylinderCollisionDetector
 {
 private: // private variables;
 	Meson::Common::Text::String m_strGeometryType;
-	Meson::Common::Collections::TArrayList<
-		Meson::Common::Maths::TPoint3<Real> >
-			m_listVertices1, m_listVertices2;
+	VectorArrayList	m_listVertices1, m_listVertices2;
 
 public: // public methods
 	CylinderCollisionDetector(void);

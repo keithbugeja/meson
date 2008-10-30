@@ -20,8 +20,8 @@ String AngularMotorConstraint::s_strType("AngularMotor");
 void AngularMotorConstraint::UpdateDerivativeVariables(void)
 {
 	// compute offset perp to axis
-	TVector3<Real> vecBody1AxisOffset(m_ptBody1Anchor2 - m_ptBody1Anchor1);
-	TVector3<Real> vecBody2AxisOffset(m_ptBody2Anchor2 - m_ptBody2Anchor1);
+	TVector3<Real> vecBody1AxisOffset(m_vecBody1Anchor2 - m_vecBody1Anchor1);
+	TVector3<Real> vecBody2AxisOffset(m_vecBody2Anchor2 - m_vecBody2Anchor1);
 
 	// compute relative velocity of a rotation point in body1 space
 	m_vecBody1DeltaVelocity = vecBody1AxisOffset ^ m_vecBody1TorqueOffset;
@@ -36,24 +36,24 @@ void AngularMotorConstraint::UpdateDerivativeVariables(void)
 	m_vecBody2DeltaVelocity *= m_vecBody2TorqueOffset.Length() * m_rAngularSpeed;
 }
 
-TPoint3<Real> AngularMotorConstraint::GetCurrentAxisPosition1(void) const
+TVector3<Real> AngularMotorConstraint::GetCurrentAxisPosition1(void) const
 {
-	TPoint3<Real> ptWorldBody1Anchor1, ptWorldBody2Anchor1;
+	TVector3<Real> vecWorldBody1Anchor1, vecWorldBody2Anchor1;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptBody1Anchor1, ptWorldBody1Anchor1);
+		m_vecBody1Anchor1, vecWorldBody1Anchor1);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptBody2Anchor1, ptWorldBody2Anchor1);
-	return ptWorldBody1Anchor1 + (ptWorldBody2Anchor1 - ptWorldBody1Anchor1) * (Real) 0.5;
+		m_vecBody2Anchor1, vecWorldBody2Anchor1);
+	return (vecWorldBody1Anchor1 + vecWorldBody2Anchor1) * (Real) 0.5;
 }
 
-TPoint3<Real> AngularMotorConstraint::GetCurrentAxisPosition2(void) const
+TVector3<Real> AngularMotorConstraint::GetCurrentAxisPosition2(void) const
 {
-	TPoint3<Real> ptWorldBody1Anchor2, ptWorldBody2Anchor2;
+	TVector3<Real> vecWorldBody1Anchor2, vecWorldBody2Anchor2;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptBody1Anchor2, ptWorldBody1Anchor2);
+		m_vecBody1Anchor2, vecWorldBody1Anchor2);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptBody2Anchor2, ptWorldBody2Anchor2);
-	return ptWorldBody1Anchor2 + (ptWorldBody2Anchor2 - ptWorldBody1Anchor2) * (Real) 0.5;
+		m_vecBody2Anchor2, vecWorldBody2Anchor2);
+	return (vecWorldBody1Anchor2 + vecWorldBody2Anchor2) * (Real) 0.5;
 }
 
 AngularMotorConstraint::AngularMotorConstraint(void)
@@ -61,12 +61,12 @@ AngularMotorConstraint::AngularMotorConstraint(void)
 	, m_pBody2(NULL)
 	, m_bBroken(true)
 	, m_rBreakingThreshold(TMaths<Real>::Maximum)
-	, m_ptBindAxisPoint1()
-	, m_ptBindAxisPoint2()
-	, m_ptBody1Anchor1()
-	, m_ptBody1Anchor2()
-	, m_ptBody2Anchor1()
-	, m_ptBody2Anchor2()
+	, m_vecBindAxisPoint1()
+	, m_vecBindAxisPoint2()
+	, m_vecBody1Anchor1()
+	, m_vecBody1Anchor2()
+	, m_vecBody2Anchor1()
+	, m_vecBody2Anchor2()
 	, m_rAngularSpeed((Real) 0.0)
 	, m_vecBody1TorqueOffset(true)
 	, m_vecBody2TorqueOffset(true)
@@ -82,12 +82,12 @@ AngularMotorConstraint::AngularMotorConstraint(const String& p_strId)
 	, m_pBody2(NULL)
 	, m_bBroken(true)
 	, m_rBreakingThreshold(TMaths<Real>::Maximum)
-	, m_ptBindAxisPoint1()
-	, m_ptBindAxisPoint2()
-	, m_ptBody1Anchor1()
-	, m_ptBody1Anchor2()
-	, m_ptBody2Anchor1()
-	, m_ptBody2Anchor2()
+	, m_vecBindAxisPoint1()
+	, m_vecBindAxisPoint2()
+	, m_vecBody1Anchor1()
+	, m_vecBody1Anchor2()
+	, m_vecBody2Anchor1()
+	, m_vecBody2Anchor2()
 	, m_rAngularSpeed((Real) 0.0)
 	, m_vecBody1TorqueOffset(true)
 	, m_vecBody2TorqueOffset(true)
@@ -107,15 +107,15 @@ void AngularMotorConstraint::EnumerateProperties(
 	p_mapProperties.Clear();
 
 	p_mapProperties["BindAxisPoint1"]
-		= PropertyDescriptor("BindAxisPoint1", PropertyType::Point, false);
+		= PropertyDescriptor("BindAxisPoint1", PropertyType::Vector, false);
 	p_mapProperties["BindAxisPoint2"]
-		= PropertyDescriptor("BindAxisPoint2", PropertyType::Point, false);
+		= PropertyDescriptor("BindAxisPoint2", PropertyType::Vector, false);
 	p_mapProperties["AngularSpeed"]
 		= PropertyDescriptor("AngularSpeed", PropertyType::Real, false);
 	p_mapProperties["CurrentAxisPosition1"]
-		= PropertyDescriptor("CurrentAxisPosition1", PropertyType::Point, true);
+		= PropertyDescriptor("CurrentAxisPosition1", PropertyType::Vector, true);
 	p_mapProperties["CurrentAxisPosition2"]
-		= PropertyDescriptor("CurrentAxisPosition2", PropertyType::Point, true);
+		= PropertyDescriptor("CurrentAxisPosition2", PropertyType::Vector, true);
 }
 
 void AngularMotorConstraint::GetProperty(const String &p_strName, Real &p_rValue) const
@@ -141,16 +141,16 @@ void AngularMotorConstraint::SetProperty(const String &p_strName, Real p_rValue)
 			__FILE__, __LINE__);
 }
 
-void AngularMotorConstraint::GetProperty(const String &p_strName, TPoint3<Real> &p_ptValue) const
+void AngularMotorConstraint::GetProperty(const String &p_strName, TVector3<Real> &p_vecValue) const
 {
 	if (p_strName == "BindAxisPoint1")
-		p_ptValue = m_ptBindAxisPoint1;
+		p_vecValue = m_vecBindAxisPoint1;
 	else if (p_strName == "BindAxisPoint2")
-		p_ptValue = m_ptBindAxisPoint2;
+		p_vecValue = m_vecBindAxisPoint2;
 	else if (p_strName == "CurrentAxisPosition1")
-		p_ptValue = GetCurrentAxisPosition1();
+		p_vecValue = GetCurrentAxisPosition1();
 	else if (p_strName == "CurrentAxisPosition2")
-		p_ptValue = GetCurrentAxisPosition2();
+		p_vecValue = GetCurrentAxisPosition2();
 	else
 		throw new MesonException(
 			"Unknown property '" + p_strName + "' for AngularMotor constraint.",
@@ -158,12 +158,12 @@ void AngularMotorConstraint::GetProperty(const String &p_strName, TPoint3<Real> 
 			
 }
 
-void AngularMotorConstraint::SetProperty(const String &p_strName, const TPoint3<Real> &p_ptValue)
+void AngularMotorConstraint::SetProperty(const String &p_strName, const TVector3<Real> &p_vecValue)
 {
 	if (p_strName == "BindAxisPoint1")
-		m_ptBindAxisPoint1 = p_ptValue;
+		m_vecBindAxisPoint1 = p_vecValue;
 	else if (p_strName == "BindAxisPoint2")
-		m_ptBindAxisPoint2 = p_ptValue;
+		m_vecBindAxisPoint2 = p_vecValue;
 	else if (p_strName == "CurrentAxisPosition1")
 		throw new MesonException(
 			"Property 'CurrentAxisPosition1' is read-only for AngularMotor constraint.",
@@ -220,18 +220,18 @@ void AngularMotorConstraint::Bind(void)
 
 	// body 1 anchors
 	m_pBody1->GetKineticProperties().TransformPointToLocal(
-		m_ptBindAxisPoint1, m_ptBody1Anchor1);
+		m_vecBindAxisPoint1, m_vecBody1Anchor1);
 	m_pBody1->GetKineticProperties().TransformPointToLocal(
-		m_ptBindAxisPoint2, m_ptBody1Anchor2);
+		m_vecBindAxisPoint2, m_vecBody1Anchor2);
 
 	// body 2 anchors
 	m_pBody2->GetKineticProperties().TransformPointToLocal(
-		m_ptBindAxisPoint1, m_ptBody2Anchor1);
+		m_vecBindAxisPoint1, m_vecBody2Anchor1);
 	m_pBody2->GetKineticProperties().TransformPointToLocal(
-		m_ptBindAxisPoint2, m_ptBody2Anchor2);
+		m_vecBindAxisPoint2, m_vecBody2Anchor2);
 
 	// compute offset perp to axis
-	TVector3<Real> vecBody1AxisOffset(m_ptBody1Anchor2 - m_ptBody1Anchor1);
+	TVector3<Real> vecBody1AxisOffset(m_vecBody1Anchor2 - m_vecBody1Anchor1);
 	m_vecBody1TorqueOffset = vecBody1AxisOffset ^ TVector3<Real>::Up;
 	if (m_vecBody1TorqueOffset.IsZero())
 		m_vecBody1TorqueOffset = vecBody1AxisOffset ^ TVector3<Real>::Right;
@@ -293,30 +293,30 @@ void AngularMotorConstraint::ComputeDiscrepancies(void)
 	// compute local anchor points in world space
 
 	// axis anchor 1
-	TPoint3<Real> ptWorldBody1Anchor1, ptWorldBody2Anchor1;
+	TVector3<Real> vecWorldBody1Anchor1, vecWorldBody2Anchor1;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptBody1Anchor1, ptWorldBody1Anchor1);
+		m_vecBody1Anchor1, vecWorldBody1Anchor1);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptBody2Anchor1, ptWorldBody2Anchor1);
+		m_vecBody2Anchor1, vecWorldBody2Anchor1);
 
 	// add connection discrepancy (may be nil, but still
 	// enforces velocity constraint with zero restitution)
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(
-			ptWorldBody1Anchor1, ptWorldBody2Anchor1));
+			vecWorldBody1Anchor1, vecWorldBody2Anchor1));
 
 	// axis anchor 2
-	TPoint3<Real> ptWorldBody1Anchor2, ptWorldBody2Anchor2;
+	TVector3<Real> vecWorldBody1Anchor2, vecWorldBody2Anchor2;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptBody1Anchor2, ptWorldBody1Anchor2);
+		m_vecBody1Anchor2, vecWorldBody1Anchor2);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptBody2Anchor2, ptWorldBody2Anchor2);
+		m_vecBody2Anchor2, vecWorldBody2Anchor2);
 
 	// add connection discrepancy (may be nil, but still
 	// enforces velocity constraint with zero restitution)
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(
-			ptWorldBody1Anchor2, ptWorldBody2Anchor2));
+			vecWorldBody1Anchor2, vecWorldBody2Anchor2));
 
 	// -- induce rotation
 
@@ -337,38 +337,33 @@ void AngularMotorConstraint::ComputeDiscrepancies(void)
 	TVector3<Real> vecWorldDeltaVelocity((vecWorld1DeltaVelocity + vecWorld2DeltaVelocity) * (Real) 0.5);
 
 	// compute average axis anchor points
-	TPoint3<Real> ptWorldBodyAnchor1(ptWorldBody1Anchor1);
-	ptWorldBodyAnchor1 += ptWorldBody2Anchor1.ToVector();
-	ptWorldBodyAnchor1.ToVector() *= (Real) 0.5;
-
-	TPoint3<Real> ptWorldBodyAnchor2(ptWorldBody1Anchor2);
-	ptWorldBodyAnchor2 += ptWorldBody2Anchor2.ToVector();
-	ptWorldBodyAnchor2.ToVector() *= (Real) 0.5;
+	TVector3<Real> vecWorldBodyAnchor1((vecWorldBody1Anchor1 + vecWorldBody2Anchor1) * (Real) 0.5);
+	TVector3<Real> vecWorldBodyAnchor2((vecWorldBody1Anchor2 + vecWorldBody2Anchor2) * (Real) 0.5);
 
 	// generate velocity discrepancies to induce rotation
 	// around axis anchor points
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(
-			ptWorldBodyAnchor1 + vecWorldTorqueOffset,
-			ptWorldBodyAnchor1 + vecWorldTorqueOffset,
+			vecWorldBodyAnchor1 + vecWorldTorqueOffset,
+			vecWorldBodyAnchor1 + vecWorldTorqueOffset,
 			vecWorldDeltaVelocity, (Real) 0.4));
 
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(
-			ptWorldBodyAnchor1 - vecWorldTorqueOffset,
-			ptWorldBodyAnchor1 - vecWorldTorqueOffset,
+			vecWorldBodyAnchor1 - vecWorldTorqueOffset,
+			vecWorldBodyAnchor1 - vecWorldTorqueOffset,
 			-vecWorldDeltaVelocity, (Real) 0.4));
 
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(
-			ptWorldBodyAnchor2 + vecWorldTorqueOffset,
-			ptWorldBodyAnchor2 + vecWorldTorqueOffset,
+			vecWorldBodyAnchor2 + vecWorldTorqueOffset,
+			vecWorldBodyAnchor2 + vecWorldTorqueOffset,
 			vecWorldDeltaVelocity, (Real) 0.4));
 
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(
-			ptWorldBodyAnchor2 - vecWorldTorqueOffset,
-			ptWorldBodyAnchor2 - vecWorldTorqueOffset,
+			vecWorldBodyAnchor2 - vecWorldTorqueOffset,
+			vecWorldBodyAnchor2 - vecWorldTorqueOffset,
 			-vecWorldDeltaVelocity, (Real) 0.4));
 }
 

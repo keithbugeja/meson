@@ -17,7 +17,7 @@ ConvexPolyhedronFace::ConvexPolyhedronFace(void)
 {
 }
 
-ConvexPolyhedronFace::ConvexPolyhedronFace(PointList* p_pVertices)
+ConvexPolyhedronFace::ConvexPolyhedronFace(VectorList* p_pVertices)
 	: Vertices(p_pVertices)
 	, VertexIndices()
 	, Normal(TVector3<Real>::Up)
@@ -61,11 +61,11 @@ Real ConvexPolyhedronFace::ComputeArea(void) const
 		return (Real) 0.0;
 
 	Real rDoubleArea((Real) 0.0);
-	const TPoint3<Real>& ptFirst = (*Vertices)[VertexIndices[0]];
+	const TVector3<Real>& vecFirst = (*Vertices)[VertexIndices[0]];
 	for (size_t unIndex1 = 1, unIndex2 = 2; unIndex1 < unCount - 1; unIndex1++, unIndex2++)
 	{
-		TVector3<Real> vecOffset01((*Vertices)[VertexIndices[unIndex1]] - ptFirst);
-		TVector3<Real> vecOffset02((*Vertices)[VertexIndices[unIndex2]] - ptFirst);
+		TVector3<Real> vecOffset01((*Vertices)[VertexIndices[unIndex1]] - vecFirst);
+		TVector3<Real> vecOffset02((*Vertices)[VertexIndices[unIndex2]] - vecFirst);
 		rDoubleArea += TMaths<Real>::Sqrt((vecOffset01 ^ vecOffset02).Length());
 	}
 
@@ -73,7 +73,7 @@ Real ConvexPolyhedronFace::ComputeArea(void) const
 }
 
 Real ConvexPolyhedronFace::ComputeSignedVolume(
-	const TPoint3<Real>& p_ptOrigin) const
+	const TVector3<Real>& p_vecOrigin) const
 {
 	if (Vertices == NULL)
 		throw new MesonException("Vertices reference not set.",
@@ -82,8 +82,8 @@ Real ConvexPolyhedronFace::ComputeSignedVolume(
 	if (VertexIndices.Size() < 3)
 		return (Real) 0.0;
 
-	TPoint3<Real>& ptFirst = (*Vertices)[VertexIndices[0]];
-	Real rSignedHeight((ptFirst - p_ptOrigin) * Normal);
+	TVector3<Real>& vecFirst = (*Vertices)[VertexIndices[0]];
+	Real rSignedHeight((vecFirst - p_vecOrigin) * Normal);
 
 	// cone-like volume is 1/3 A h
 	return ComputeArea() * rSignedHeight * (Real) (1.0 / 3.0);
@@ -101,10 +101,10 @@ void ConvexPolyhedronFace::UpdateDerivativeData(void)
 	if (unCount < 3)
 		return;
 
-	TPoint3<Real>& ptVertex0 = (*Vertices)[VertexIndices[0]];
-	TPoint3<Real>& ptVertex1 = (*Vertices)[VertexIndices[1]];
+	TVector3<Real>& vecVertex0 = (*Vertices)[VertexIndices[0]];
+	TVector3<Real>& vecVertex1 = (*Vertices)[VertexIndices[1]];
 
-	TVector3<Real> vecOffset1(ptVertex1 - ptVertex0);
+	TVector3<Real> vecOffset1(vecVertex1 - vecVertex0);
 
 	// compute most representative normal by using max x product
 	size_t unIndex(2);
@@ -112,8 +112,8 @@ void ConvexPolyhedronFace::UpdateDerivativeData(void)
 	Normal.MakeZero();
 	for(size_t unIndex = 2; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex2 = (*Vertices)[VertexIndices[unIndex]];
-		TVector3<Real> vecOffset2(ptVertex2 - ptVertex0);
+		TVector3<Real>& vecVertex2 = (*Vertices)[VertexIndices[unIndex]];
+		TVector3<Real> vecOffset2(vecVertex2 - vecVertex0);
 		TVector3<Real> vecNormal(vecOffset2 ^ vecOffset1);
 
 		if (Normal * vecNormal < (Real) 0.0)
@@ -132,39 +132,39 @@ bool ConvexPolyhedronFace::HasVertexIndex(ushort p_usVertexIndex) const
 	return VertexIndices.IndexOf(p_usVertexIndex) >= 0;
 }
 
-Real ConvexPolyhedronFace::GetSignedDistanceFromPlane(const TPoint3<Real>& ptPoint) const
+Real ConvexPolyhedronFace::GetSignedDistanceFromPlane(const TVector3<Real>& p_vecPoint) const
 {
 	MESON_ASSERT(Vertices != NULL, "Vertices reference not set.")
 
-	TPoint3<Real>& ptFirst = (*Vertices)[VertexIndices[0]];
-	return (ptPoint - ptFirst) * Normal;
+	TVector3<Real>& vecFirst = (*Vertices)[VertexIndices[0]];
+	return (p_vecPoint - vecFirst) * Normal;
 }
 
-bool ConvexPolyhedronFace::IsPointOnPlane(const TPoint3<Real>& ptPoint) const
+bool ConvexPolyhedronFace::IsPointOnPlane(const TVector3<Real>& p_vecPoint) const
 {
-	return TMaths<Real>::Equals(GetSignedDistanceFromPlane(ptPoint), (Real) 0.0);
+	return TMaths<Real>::Equals(GetSignedDistanceFromPlane(p_vecPoint), (Real) 0.0);
 }
 
-bool ConvexPolyhedronFace::IsPointAbovePlane(const TPoint3<Real>& ptPoint) const
+bool ConvexPolyhedronFace::IsPointAbovePlane(const TVector3<Real>& p_vecPoint) const
 {
-	Real rSignedDistanceFromPlane = GetSignedDistanceFromPlane(ptPoint);
+	Real rSignedDistanceFromPlane = GetSignedDistanceFromPlane(p_vecPoint);
 	return rSignedDistanceFromPlane > TMaths<Real>::Epsilon;
 }
 
-bool ConvexPolyhedronFace::IsPointBelowPlane(const TPoint3<Real>& ptPoint) const
+bool ConvexPolyhedronFace::IsPointBelowPlane(const TVector3<Real>& p_vecPoint) const
 {
-	return GetSignedDistanceFromPlane(ptPoint) < -TMaths<Real>::Epsilon;
+	return GetSignedDistanceFromPlane(p_vecPoint) < -TMaths<Real>::Epsilon;
 }
 
-bool ConvexPolyhedronFace::IsPointProjectableOnFace(const TPoint3<Real>& ptPoint) const
+bool ConvexPolyhedronFace::IsPointProjectableOnFace(const TVector3<Real>& p_vecPoint) const
 {
 	// test if point interior to face using winding
 	size_t unIndex0(VertexIndices.Size() - 1);
 	for (size_t unIndex1 = 0; unIndex1 < VertexIndices.Size(); unIndex1++)
 	{
-		TPoint3<Real>& ptVertex0 = (*Vertices)[VertexIndices[unIndex0]];
-		TPoint3<Real>& ptVertex1 = (*Vertices)[VertexIndices[unIndex1]];
-		TVector3<Real> vecPerp((ptVertex0 - ptPoint) ^ (ptVertex1 - ptPoint));
+		TVector3<Real>& vecVertex0 = (*Vertices)[VertexIndices[unIndex0]];
+		TVector3<Real>& vecVertex1 = (*Vertices)[VertexIndices[unIndex1]];
+		TVector3<Real> vecPerp((vecVertex0 - p_vecPoint) ^ (vecVertex1 - p_vecPoint));
 
 		if (vecPerp * Normal > (Real) 0.0)
 			return false;
@@ -177,12 +177,12 @@ bool ConvexPolyhedronFace::IsPointProjectableOnFace(const TPoint3<Real>& ptPoint
 
 bool ConvexPolyhedronFace::IntersectsRay(const Ray& p_ray) const
 {
-	static TPoint3<Real> s_ptIntersectionPoint;
-	return IntersectsRay(p_ray, s_ptIntersectionPoint);
+	static TVector3<Real> s_vecIntersectionPoint;
+	return IntersectsRay(p_ray, s_vecIntersectionPoint);
 }
 
 bool ConvexPolyhedronFace::IntersectsRay(const Ray& p_ray,
-	TPoint3<Real>& p_ptIntersectionPoint) const
+	TVector3<Real>& p_vecIntersectionPoint) const
 {
 	Real rSignedDistanceFromPlane(GetSignedDistanceFromPlane(p_ray.Source));
 	Real rDirectionProjection = Normal * p_ray.Direction;
@@ -200,13 +200,13 @@ bool ConvexPolyhedronFace::IntersectsRay(const Ray& p_ray,
 		return false;
 
 	// compute ray intersection with plane
-	TPoint3<Real> ptPlaneIntersection(p_ray.Source + p_ray.Direction * rRayDistance);
+	TVector3<Real> vecPlaneIntersection(p_ray.Source + p_ray.Direction * rRayDistance);
 
 	// if ray intersection point with plane is not on face, no intersection
-	if (!IsPointProjectableOnFace(ptPlaneIntersection))
+	if (!IsPointProjectableOnFace(vecPlaneIntersection))
 		return false;
 
 	// otherwise ray intersects face
-	p_ptIntersectionPoint = ptPlaneIntersection;
+	p_vecIntersectionPoint = vecPlaneIntersection;
 	return true;
 }

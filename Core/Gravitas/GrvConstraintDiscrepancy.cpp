@@ -24,12 +24,12 @@ ConstraintDiscrepancy::ConstraintDiscrepancy(const ConstraintDiscrepancy& p_cons
 }
 
 ConstraintDiscrepancy::ConstraintDiscrepancy(
-	const TPoint3<Real>& p_ptPoint1,
-	const TPoint3<Real>& p_ptPoint2,
+	const TVector3<Real>& p_vecPoint1,
+	const TVector3<Real>& p_vecPoint2,
 	const TVector3<Real>& p_vecRelativeVelocity,
 	Real p_rCorrectionFactor)
-	: Point1(p_ptPoint1)
-	, Point2(p_ptPoint2)
+	: Point1(p_vecPoint1)
+	, Point2(p_vecPoint2)
 	, RelativeVelocity(p_vecRelativeVelocity)
 	, CorrectionFactor(p_rCorrectionFactor)
 {

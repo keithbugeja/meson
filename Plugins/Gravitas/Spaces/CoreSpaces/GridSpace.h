@@ -18,7 +18,7 @@ struct CellKey
 	CellKey(int p_nX, int p_nY, int p_nZ);
 	CellKey& operator=(const CellKey& p_cellKey);
 	const bool operator==(const CellKey& p_cellKey) const;
-	Meson::Common::Maths::TPoint3<Real> ComputePosition(
+	Meson::Common::Maths::TVector3<Real> ComputePosition(
 		const Meson::Common::Maths::TVector3<Real>& p_vecCellSize) const;
 };
 

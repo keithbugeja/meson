@@ -19,22 +19,21 @@ String SphericalJointConstraint::s_strType("SphericalJoint");
 void SphericalJointConstraint::UpdateAngleLimitDerivatives(void)
 {
 	m_rAngleLimitCosine = TMaths<Real>::Cos(m_rAngleLimit);
-	Real rA = m_ptLocalConnectionPoint1.ToVector().Length();
-	Real rB = m_ptLocalConnectionPoint2.ToVector().Length();
+	Real rA = m_vecLocalConnectionPoint1.Length();
+	Real rB = m_vecLocalConnectionPoint2.Length();
 	Real rC2 = rA * rA + rB * rB + (Real) 2.0 * rA * rB * m_rAngleLimitCosine;
 	m_rMinimumCentroidDistance = TMaths<Real>::Sqrt(rC2);
 }
 
-TPoint3<Real> SphericalJointConstraint::GetCurrentJointPosition(void) const
+TVector3<Real> SphericalJointConstraint::GetCurrentJointPosition(void) const
 {
 	// compute current joint position
-	TPoint3<Real> ptWorldConnectionPoint1, ptWorldConnectionPoint2;
+	TVector3<Real> vecWorldConnectionPoint1, vecWorldConnectionPoint2;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptLocalConnectionPoint1, ptWorldConnectionPoint1);
+		m_vecLocalConnectionPoint1, vecWorldConnectionPoint1);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptLocalConnectionPoint2, ptWorldConnectionPoint2);
-	return ptWorldConnectionPoint1
-		+ (ptWorldConnectionPoint2 - ptWorldConnectionPoint1) * (Real) 0.5;
+		m_vecLocalConnectionPoint2, vecWorldConnectionPoint2);
+	return (vecWorldConnectionPoint1 + vecWorldConnectionPoint2) * (Real) 0.5;
 }
 
 SphericalJointConstraint::SphericalJointConstraint(void)
@@ -42,9 +41,9 @@ SphericalJointConstraint::SphericalJointConstraint(void)
 	, m_pBody2(NULL)
 	, m_bBroken(true)
 	, m_rBreakingThreshold(TMaths<Real>::Maximum)
-	, m_ptBindPoint()
-	, m_ptLocalConnectionPoint1()
-	, m_ptLocalConnectionPoint2()
+	, m_vecBindPoint()
+	, m_vecLocalConnectionPoint1()
+	, m_vecLocalConnectionPoint2()
 	, m_rAngleLimit(TMaths<Real>::Pi)
 	, m_rJointRestitution((Real) 0.0)
 	, m_rAngleLimitCosine((Real) -1.0)
@@ -59,9 +58,9 @@ SphericalJointConstraint::SphericalJointConstraint(const String& p_strId)
 	, m_pBody2(NULL)
 	, m_bBroken(true)
 	, m_rBreakingThreshold(TMaths<Real>::Maximum)
-	, m_ptBindPoint()
-	, m_ptLocalConnectionPoint1()
-	, m_ptLocalConnectionPoint2()
+	, m_vecBindPoint()
+	, m_vecLocalConnectionPoint1()
+	, m_vecLocalConnectionPoint2()
 	, m_rAngleLimit(TMaths<Real>::Pi)
 	, m_rJointRestitution((Real) 0.0)
 	, m_rAngleLimitCosine((Real) -1.0)
@@ -79,16 +78,16 @@ void SphericalJointConstraint::EnumerateProperties(
 {
 	p_mapProperties.Clear();
 	p_mapProperties["BindPoint"]
-		= PropertyDescriptor("BindPoint", PropertyType::Point, false);
+		= PropertyDescriptor("BindPoint", PropertyType::Vector, false);
 	p_mapProperties["AngleLimit"]
 		= PropertyDescriptor("AngleLimit", PropertyType::Real, false);
 	p_mapProperties["JointRestitution"]
 		= PropertyDescriptor("JointRestitution", PropertyType::Real, false);
 	p_mapProperties["CurrentJointPosition"]
-		= PropertyDescriptor("CurrentJointPosition", PropertyType::Point, true);
+		= PropertyDescriptor("CurrentJointPosition", PropertyType::Vector, true);
 }
 
-void SphericalJointConstraint::GetProperty(const String &p_strName, Real &p_rValue) const
+void SphericalJointConstraint::GetProperty(const String& p_strName, Real& p_rValue) const
 {
 	if (p_strName == "AngleLimit")
 		p_rValue = m_rAngleLimit;
@@ -100,7 +99,7 @@ void SphericalJointConstraint::GetProperty(const String &p_strName, Real &p_rVal
 			__FILE__, __LINE__);
 }
 
-void SphericalJointConstraint::SetProperty(const String &p_strName, Real p_rValue)
+void SphericalJointConstraint::SetProperty(const String& p_strName, Real p_rValue)
 {
 	if (p_strName == "AngleLimit")
 	{
@@ -118,13 +117,13 @@ void SphericalJointConstraint::SetProperty(const String &p_strName, Real p_rValu
 			__FILE__, __LINE__);
 }
 
-void SphericalJointConstraint::GetProperty(const String &p_strName, TPoint3<Real> &p_ptValue) const
+void SphericalJointConstraint::GetProperty(const String& p_strName, TVector3<Real>& p_vecValue) const
 {
 	if (p_strName == "BindPoint")
-		p_ptValue = m_ptBindPoint;
+		p_vecValue = m_vecBindPoint;
 	else if (p_strName == "CurrentJointPosition")
 	{
-		p_ptValue = GetCurrentJointPosition();
+		p_vecValue = GetCurrentJointPosition();
 	}
 	else
 		throw new MesonException(
@@ -132,10 +131,10 @@ void SphericalJointConstraint::GetProperty(const String &p_strName, TPoint3<Real
 			__FILE__, __LINE__);
 }
 
-void SphericalJointConstraint::SetProperty(const String &p_strName, const TPoint3<Real> &p_ptValue)
+void SphericalJointConstraint::SetProperty(const String &p_strName, const TVector3<Real> &p_vecValue)
 {
 	if (p_strName == "BindPoint")
-		m_ptBindPoint = p_ptValue;
+		m_vecBindPoint = p_vecValue;
 	else if (p_strName == "CurrentJointPosition")
 		throw new MesonException(
 			"Property 'CurrentJointPosition' is read-only for SphericalJoint constraint.",
@@ -153,14 +152,14 @@ void SphericalJointConstraint::RenderInstrumentation(
 		return;
 
 	// compute current joint position
-	TPoint3<Real> ptWorldConnectionPoint = GetCurrentJointPosition();
+	TVector3<Real> vecWorldConnectionPoint = GetCurrentJointPosition();
 
 	p_pInstrumentationDevice->DrawLine(
 		m_pBody1->GetKineticProperties().Position,
-		ptWorldConnectionPoint);
+		vecWorldConnectionPoint);
 
 	p_pInstrumentationDevice->DrawLine(
-		ptWorldConnectionPoint,
+		vecWorldConnectionPoint,
 		m_pBody2->GetKineticProperties().Position);
 }
 
@@ -196,9 +195,9 @@ void SphericalJointConstraint::Bind(void)
 
 	// compute bind point in local body coordinates
 	m_pBody1->GetKineticProperties().TransformPointToLocal(
-		m_ptBindPoint, m_ptLocalConnectionPoint1);
+		m_vecBindPoint, m_vecLocalConnectionPoint1);
 	m_pBody2->GetKineticProperties().TransformPointToLocal(
-		m_ptBindPoint, m_ptLocalConnectionPoint2);
+		m_vecBindPoint, m_vecLocalConnectionPoint2);
 
 	m_bBroken = false;
 
@@ -247,16 +246,16 @@ void SphericalJointConstraint::ComputeDiscrepancies(void)
 	// -- connection point
 
 	// compute local connection points in world space
-	TPoint3<Real> ptWorldConnectionPoint1, ptWorldConnectionPoint2;
+	TVector3<Real> vecWorldConnectionPoint1, vecWorldConnectionPoint2;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptLocalConnectionPoint1, ptWorldConnectionPoint1);
+		m_vecLocalConnectionPoint1, vecWorldConnectionPoint1);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptLocalConnectionPoint2, ptWorldConnectionPoint2);
+		m_vecLocalConnectionPoint2, vecWorldConnectionPoint2);
 
 	// add connection discrepancy (may be nil, but still
 	// enforces velocity constraint with zero restitution)
 	m_listConstraintDiscrepancies.Add(
-		ConstraintDiscrepancy(ptWorldConnectionPoint1, ptWorldConnectionPoint2));
+		ConstraintDiscrepancy(vecWorldConnectionPoint1, vecWorldConnectionPoint2));
 
 	// -- angle limit
 
@@ -264,9 +263,9 @@ void SphericalJointConstraint::ComputeDiscrepancies(void)
 		return;
 
 	// compute oriented directions from cm's to bind point
-	TVector3<Real> vecOrientedDirection1(ptWorldConnectionPoint1
+	TVector3<Real> vecOrientedDirection1(vecWorldConnectionPoint1
 		- m_pBody1->GetKineticProperties().Position);
-	TVector3<Real> vecOrientedDirection2(ptWorldConnectionPoint2
+	TVector3<Real> vecOrientedDirection2(vecWorldConnectionPoint2
 		- m_pBody2->GetKineticProperties().Position);
 
 	vecOrientedDirection1.Normalise();
@@ -295,7 +294,7 @@ void SphericalJointConstraint::ComputeDiscrepancies(void)
 	Real rDiscrepancy((m_rMinimumCentroidDistance - rCurrentDist) * (Real) 0.5);
 	TVector3<Real> vecDiscrepancy(rDiscrepancy * vecCentroidDirection);
 
-	TPoint3<Real> ptMidPoint(m_pBody1->GetKineticProperties().Position + vecCentroidOffset * (Real) 0.5);
+	TVector3<Real> ptMidPoint(m_pBody1->GetKineticProperties().Position + vecCentroidOffset * (Real) 0.5);
 
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(

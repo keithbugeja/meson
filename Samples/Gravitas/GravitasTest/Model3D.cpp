@@ -47,10 +47,10 @@ ModelVertex::ModelVertex(const ModelVertex& p_modelVertex)
 {
 }
 
-ModelVertex::ModelVertex(const Point3f& p_ptPosition, ColourRGBA p_colourRGBA,
+ModelVertex::ModelVertex(const Vector3f& p_vecPosition, ColourRGBA p_colourRGBA,
 	const Vector3f& p_vecNormal, const Vector3f& p_vecTangent,
 	const Vector2f& p_vecTexCoords)
-	: Position(p_ptPosition)
+	: Position(p_vecPosition)
 	, Colour(p_colourRGBA)
 	, Normal(p_vecNormal)
 	, Tangent(p_vecTangent)
@@ -186,35 +186,35 @@ void Model3D::MakeCube(const Vector3f& p_vecExtent, float p_fTextureScale)
 	float fZ = p_vecExtent.Z;
 
 	Vertices.Clear();
-	Vertices.Add(ModelVertex(Point3f(-fX, +fY, +fZ), Colour::Black, Vector3f::Out, Vector3f::Up, Vector2f(0.0f, 0.0f)));
-	Vertices.Add(ModelVertex(Point3f(+fX, +fY, +fZ), Colour::Black, Vector3f::Out, Vector3f::Up, Vector2f(p_fTextureScale, 0.0f)));
-	Vertices.Add(ModelVertex(Point3f(-fX, -fY, +fZ), Colour::Black, Vector3f::Out, Vector3f::Up, Vector2f(0.0f, p_fTextureScale)));
-	Vertices.Add(ModelVertex(Point3f(+fX, -fY, +fZ), Colour::Black, Vector3f::Out, Vector3f::Up, Vector2f(p_fTextureScale, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, +fY, +fZ), Colour::Black, Vector3f::Out, Vector3f::Up, Vector2f(0.0f, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, +fY, +fZ), Colour::Black, Vector3f::Out, Vector3f::Up, Vector2f(p_fTextureScale, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, -fY, +fZ), Colour::Black, Vector3f::Out, Vector3f::Up, Vector2f(0.0f, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, -fY, +fZ), Colour::Black, Vector3f::Out, Vector3f::Up, Vector2f(p_fTextureScale, p_fTextureScale)));
 
-	Vertices.Add(ModelVertex(Point3f(-fX, +fY, -fZ), Colour::Black, Vector3f::In, Vector3f::Up, Vector2f(p_fTextureScale, 0.0f)));
-	Vertices.Add(ModelVertex(Point3f(+fX, +fY, -fZ), Colour::Black, Vector3f::In, Vector3f::Up, Vector2f(0.0f, 0.0f)));
-	Vertices.Add(ModelVertex(Point3f(-fX, -fY, -fZ), Colour::Black, Vector3f::In, Vector3f::Up, Vector2f(p_fTextureScale, p_fTextureScale)));
-	Vertices.Add(ModelVertex(Point3f(+fX, -fY, -fZ), Colour::Black, Vector3f::In, Vector3f::Up, Vector2f(0.0f, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, +fY, -fZ), Colour::Black, Vector3f::In, Vector3f::Up, Vector2f(p_fTextureScale, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, +fY, -fZ), Colour::Black, Vector3f::In, Vector3f::Up, Vector2f(0.0f, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, -fY, -fZ), Colour::Black, Vector3f::In, Vector3f::Up, Vector2f(p_fTextureScale, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, -fY, -fZ), Colour::Black, Vector3f::In, Vector3f::Up, Vector2f(0.0f, p_fTextureScale)));
 
-	Vertices.Add(ModelVertex(Point3f(-fX, +fY, +fZ), Colour::Black, Vector3f::Left, Vector3f::Up, Vector2f(p_fTextureScale, 0.0f)));
-	Vertices.Add(ModelVertex(Point3f(-fX, -fY, +fZ), Colour::Black, Vector3f::Left, Vector3f::Up, Vector2f(p_fTextureScale, p_fTextureScale)));
-	Vertices.Add(ModelVertex(Point3f(-fX, +fY, -fZ), Colour::Black, Vector3f::Left, Vector3f::Up, Vector2f(0.0f, 0.0f)));
-	Vertices.Add(ModelVertex(Point3f(-fX, -fY, -fZ), Colour::Black, Vector3f::Left, Vector3f::Up, Vector2f(0.0f, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, +fY, +fZ), Colour::Black, Vector3f::Left, Vector3f::Up, Vector2f(p_fTextureScale, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, -fY, +fZ), Colour::Black, Vector3f::Left, Vector3f::Up, Vector2f(p_fTextureScale, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, +fY, -fZ), Colour::Black, Vector3f::Left, Vector3f::Up, Vector2f(0.0f, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, -fY, -fZ), Colour::Black, Vector3f::Left, Vector3f::Up, Vector2f(0.0f, p_fTextureScale)));
 
-	Vertices.Add(ModelVertex(Point3f(+fX, +fY, +fZ), Colour::Black, Vector3f::Right, Vector3f::Up, Vector2f(0.0f, 0.0f)));
-	Vertices.Add(ModelVertex(Point3f(+fX, -fY, +fZ), Colour::Black, Vector3f::Right, Vector3f::Up, Vector2f(0.0f, p_fTextureScale)));
-	Vertices.Add(ModelVertex(Point3f(+fX, +fY, -fZ), Colour::Black, Vector3f::Right, Vector3f::Up, Vector2f(p_fTextureScale, 0.0f)));
-	Vertices.Add(ModelVertex(Point3f(+fX, -fY, -fZ), Colour::Black, Vector3f::Right, Vector3f::Up, Vector2f(p_fTextureScale, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, +fY, +fZ), Colour::Black, Vector3f::Right, Vector3f::Up, Vector2f(0.0f, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, -fY, +fZ), Colour::Black, Vector3f::Right, Vector3f::Up, Vector2f(0.0f, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, +fY, -fZ), Colour::Black, Vector3f::Right, Vector3f::Up, Vector2f(p_fTextureScale, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, -fY, -fZ), Colour::Black, Vector3f::Right, Vector3f::Up, Vector2f(p_fTextureScale, p_fTextureScale)));
 
-	Vertices.Add(ModelVertex(Point3f(-fX, +fY, +fZ), Colour::Black, Vector3f::Up, Vector3f::In, Vector2f(p_fTextureScale, p_fTextureScale)));
-	Vertices.Add(ModelVertex(Point3f(+fX, +fY, +fZ), Colour::Black, Vector3f::Up, Vector3f::In, Vector2f(0.0f, p_fTextureScale)));
-	Vertices.Add(ModelVertex(Point3f(-fX, +fY, -fZ), Colour::Black, Vector3f::Up, Vector3f::In, Vector2f(p_fTextureScale, 0.0f)));
-	Vertices.Add(ModelVertex(Point3f(+fX, +fY, -fZ), Colour::Black, Vector3f::Up, Vector3f::In, Vector2f(0.0f, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, +fY, +fZ), Colour::Black, Vector3f::Up, Vector3f::In, Vector2f(p_fTextureScale, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, +fY, +fZ), Colour::Black, Vector3f::Up, Vector3f::In, Vector2f(0.0f, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, +fY, -fZ), Colour::Black, Vector3f::Up, Vector3f::In, Vector2f(p_fTextureScale, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, +fY, -fZ), Colour::Black, Vector3f::Up, Vector3f::In, Vector2f(0.0f, 0.0f)));
 
-	Vertices.Add(ModelVertex(Point3f(-fX, -fY, +fZ), Colour::Black, Vector3f::Down, Vector3f::Out, Vector2f(p_fTextureScale, p_fTextureScale)));
-	Vertices.Add(ModelVertex(Point3f(+fX, -fY, +fZ), Colour::Black, Vector3f::Down, Vector3f::Out, Vector2f(0.0f, p_fTextureScale)));
-	Vertices.Add(ModelVertex(Point3f(-fX, -fY, -fZ), Colour::Black, Vector3f::Down, Vector3f::Out, Vector2f(p_fTextureScale, 0.0f)));
-	Vertices.Add(ModelVertex(Point3f(+fX, -fY, -fZ), Colour::Black, Vector3f::Down, Vector3f::Out, Vector2f(0.0f, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, -fY, +fZ), Colour::Black, Vector3f::Down, Vector3f::Out, Vector2f(p_fTextureScale, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, -fY, +fZ), Colour::Black, Vector3f::Down, Vector3f::Out, Vector2f(0.0f, p_fTextureScale)));
+	Vertices.Add(ModelVertex(Vector3f(-fX, -fY, -fZ), Colour::Black, Vector3f::Down, Vector3f::Out, Vector2f(p_fTextureScale, 0.0f)));
+	Vertices.Add(ModelVertex(Vector3f(+fX, -fY, -fZ), Colour::Black, Vector3f::Down, Vector3f::Out, Vector2f(0.0f, 0.0f)));
 
 	Faces.Clear();
 	Faces.Add(ModelFace(0, 1, 2));
@@ -259,7 +259,7 @@ void Model3D::MakeSphere(float p_fRadius, size_t p_unSubDivisions)
 			modelVertex.Position.X = p_fRadius * TMaths<float>::Cos(fTheta) * fSinPhi;
 			modelVertex.Position.Z = p_fRadius * TMaths<float>::Sin(fTheta) * fSinPhi;
 			modelVertex.Position.Y = p_fRadius * TMaths<float>::Cos(fPhi);
-			modelVertex.Normal = modelVertex.Position.ToVector().NormaliseCopy();
+			modelVertex.Normal = modelVertex.Position.NormaliseCopy();
 
 			modelVertex.Normal.ComputeOrthonormals(modelVertex.Tangent, modelVertex.Binormal);
 
@@ -322,7 +322,7 @@ void Model3D::MakeCylinder(float p_fRadius, float p_fHeight, size_t p_unSubDivis
 			modelVertex.Position.Y = 0.0f;
 			modelVertex.Position.X = p_fRadius * TMaths<float>::Cos(fTheta);
 			modelVertex.Position.Z = p_fRadius * TMaths<float>::Sin(fTheta);
-			modelVertex.Normal = modelVertex.Position.ToVector().NormaliseCopy();
+			modelVertex.Normal = modelVertex.Position.NormaliseCopy();
 
 			modelVertex.Position.Y = fY;
 

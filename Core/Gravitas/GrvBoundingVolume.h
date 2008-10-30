@@ -57,9 +57,10 @@ public:
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given point is contained in the volume.
+	/// \param p_vecPoint Point to test.
 	/// \returns true if the given point is contained in the volume.
 	//----------------------------------------------------------------------------------------------
-	virtual bool Contains(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const = 0;
+	virtual bool Contains(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const = 0;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given ray intersects the volume.
@@ -72,11 +73,11 @@ public:
 	/// Returns true if the given ray intersects the volume. If the test is successful, the
 	/// given intersection point reference is also populated.
 	/// \param p_ray Ray to test against the volume.
-	/// \param p_ptIntersectionPoint Intersection point of the ray with the volume.
+	/// \param p_vecIntersectionPoint Intersection point of the ray with the volume.
 	/// \returns true if the given ray intersects the volume.
 	//----------------------------------------------------------------------------------------------
 	virtual bool Intersects(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const = 0;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const = 0;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given triangle intersects the volume.
@@ -127,12 +128,12 @@ public:
 	//----------------------------------------------------------------------------------------------
 	/// Computes the closest point, within the bounding volume, to the given point. If the given
 	/// point is within the volume, it should coincide with the computed point.
-	/// \param p_ptPoint Source point to operate on.
-	/// \param p_ptClosestPoint Computed closest point within the volume.
+	/// \param p_vecPoint Source point to operate on.
+	/// \param p_vecClosestPoint Computed closest point within the volume.
 	//----------------------------------------------------------------------------------------------
 	void ClosestPointTo(
-		const Meson::Common::Maths::TPoint3<Real> &p_ptPoint,
-		Meson::Common::Maths::TPoint3<Real> &p_ptClosestPoint) const;
+		const Meson::Common::Maths::TVector3<Real> &p_vecPoint,
+		Meson::Common::Maths::TVector3<Real>& p_vdcClosestPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Projects the bounding volume onto the given axis, storing the extents in the given interval.
@@ -142,8 +143,8 @@ public:
 	/// \param p_interval Interval used to store projection extents.
 	//----------------------------------------------------------------------------------------------
 	virtual void ProjectToInterval(
-		const Meson::Common::Maths::TVector3<Real> &p_vecAxis,
-		Meson::Common::Maths::TInterval<Real> &p_interval) const = 0;
+		const Meson::Common::Maths::TVector3<Real>& p_vecAxis,
+		Meson::Common::Maths::TInterval<Real>& p_interval) const = 0;
 };
 
 //----------------------------------------------------------------------------------------------

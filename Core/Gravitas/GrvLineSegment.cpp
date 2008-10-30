@@ -19,10 +19,10 @@ LineSegment::LineSegment(const LineSegment& p_lineSegment)
 }
 
 LineSegment::LineSegment(
-	const TPoint3<Real>& p_ptStart,
-	const TPoint3<Real>& p_ptEnd)
-	: Start(p_ptStart)
-	, End(p_ptEnd)
+	const TVector3<Real>& p_vecStart,
+	const TVector3<Real>& p_vecEnd)
+	: Start(p_vecStart)
+	, End(p_vecEnd)
 {
 }
 
@@ -49,15 +49,15 @@ TVector3<Real> LineSegment::Direction(void) const
 		return (End - Start).NormaliseCopy();
 }
 
-TPoint3<Real> LineSegment::Midpoint(void) const
+TVector3<Real> LineSegment::Midpoint(void) const
 {
-	return Start + (End - Start) * (Real) 0.5;
+	return (Start + Start) * (Real) 0.5;
 }
 
-Real LineSegment::DistanceFromPoint(const TPoint3<Real>& p_ptPoint) const
+Real LineSegment::DistanceFromPoint(const TVector3<Real>& p_vecPoint) const
 {
 	TVector3<Real> vecSegmentOffset = End - Start;
-	TVector3<Real> vecPointOffset = p_ptPoint - Start;
+	TVector3<Real> vecPointOffset = p_vecPoint - Start;
 	Real rLineParameter = (vecSegmentOffset * vecPointOffset)
 		/ vecSegmentOffset.LengthSquared(); 
 
@@ -69,37 +69,37 @@ Real LineSegment::DistanceFromPoint(const TPoint3<Real>& p_ptPoint) const
 		return (vecPointOffset - vecSegmentOffset).Length();
 }
 
-Real LineSegment::DistanceFromPoint(const TPoint3<Real>& p_ptPoint, TPoint3<Real>& p_ptClosestPoint) const
+Real LineSegment::DistanceFromPoint(const TVector3<Real>& p_vecPoint, TVector3<Real>& p_vecClosestPoint) const
 {
 	TVector3<Real> vecSegmentOffset = End - Start;
-	TVector3<Real> vecPointOffset = p_ptPoint - Start;
+	TVector3<Real> vecPointOffset = p_vecPoint - Start;
 	Real rLineParameter = (vecSegmentOffset * vecPointOffset)
 		/ vecSegmentOffset.LengthSquared(); 
 
 	if (rLineParameter <= (Real) 0.0)
 	{
-		p_ptClosestPoint = Start;
+		p_vecClosestPoint = Start;
 		return vecPointOffset.Length();
 	}
 	else if (rLineParameter < (Real) 1.0)
 	{
-		p_ptClosestPoint = Start + vecSegmentOffset * rLineParameter;
+		p_vecClosestPoint = Start + vecSegmentOffset * rLineParameter;
 		return (vecPointOffset - vecSegmentOffset * rLineParameter).Length();
 	}
 	else
 	{
-		return (p_ptPoint - End).Length();
+		return (p_vecPoint - End).Length();
 	}
 }
 
-TPoint3<Real> LineSegment::ClosestPoint(const TPoint3<Real>& p_ptPoint) const
+TVector3<Real> LineSegment::ClosestPoint(const TVector3<Real>& p_vecPoint) const
 {
 	TVector3<Real> vecSegmentOffset(End - Start);
 
 	if (vecSegmentOffset.IsZero())
 		return Start;
 
-	TVector3<Real> vecPointOffset(p_ptPoint - Start);
+	TVector3<Real> vecPointOffset(p_vecPoint - Start);
 	Real rLineParameter = (vecSegmentOffset * vecPointOffset) / vecSegmentOffset.LengthSquared(); 
 
 	if (rLineParameter <= (Real) 0.0)
@@ -118,8 +118,8 @@ TPoint3<Real> LineSegment::ClosestPoint(const TPoint3<Real>& p_ptPoint) const
 
 void LineSegment::ClosestPointsToSegment(
 	const LineSegment& p_lineSegment,
-	TPoint3<Real>& p_ptPoint1, 
-	TPoint3<Real>& p_ptPoint2)
+	TVector3<Real>& p_vecPoint1, 
+	TVector3<Real>& p_vecPoint2)
 {
 	// compute segment offsets and sequare lengths
 	TVector3<Real> vecOffset1 = Offset();
@@ -133,8 +133,8 @@ void LineSegment::ClosestPointsToSegment(
 		&& TMaths<Real>::Equals(rLengthSquared2, (Real) 0.0))
 	{
 		// both segments are degenerate i.e. points
-		p_ptPoint1 = Start;
-		p_ptPoint2 = p_lineSegment.Start; 
+		p_vecPoint1 = Start;
+		p_vecPoint2 = p_lineSegment.Start; 
 		return;
 	}
 
@@ -190,15 +190,15 @@ void LineSegment::ClosestPointsToSegment(
 	}
 
 	// compute closest points by applying parameters to line eqns
-	p_ptPoint1 = Start + vecOffset1 * rParam1;
-	p_ptPoint2 = p_lineSegment.Start + vecOffset2 * rParam2;
+	p_vecPoint1 = Start + vecOffset1 * rParam1;
+	p_vecPoint2 = p_lineSegment.Start + vecOffset2 * rParam2;
 }
 
 void LineSegment::Invert(void)
 {
-	TPoint3<Real> ptTemp = Start;
+	TVector3<Real> vecTemp = Start;
 	Start = End;
-	End = ptTemp;
+	End = vecTemp;
 }
 
 void LineSegment::Transform(const Meson::Gravitas::Geometry::Transform& p_transform)

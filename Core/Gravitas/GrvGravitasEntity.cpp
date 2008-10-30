@@ -40,8 +40,7 @@ bool PropertyDescriptor::IsSimpleProperty(void) const
 		|| Type == PropertyType::Integer
 		|| Type == PropertyType::Real
 		|| Type == PropertyType::String
-		|| Type == PropertyType::Vector
-		|| Type == PropertyType::Point;
+		|| Type == PropertyType::Vector;
 }
 
 bool PropertyDescriptor::IsIndexedProperty(void) const
@@ -50,8 +49,7 @@ bool PropertyDescriptor::IsIndexedProperty(void) const
 		|| Type == PropertyType::IndexedInteger
 		|| Type == PropertyType::IndexedReal
 		|| Type == PropertyType::IndexedString
-		|| Type == PropertyType::IndexedVector
-		|| Type == PropertyType::IndexedPoint; 
+		|| Type == PropertyType::IndexedVector; 
 }
 
 bool PropertyDescriptor::IsListProperty(void) const
@@ -60,8 +58,7 @@ bool PropertyDescriptor::IsListProperty(void) const
 		|| Type == PropertyType::IntegerList 
 		|| Type == PropertyType::RealList
 		|| Type == PropertyType::StringList
-		|| Type == PropertyType::VectorList
-		|| Type == PropertyType::PointList;
+		|| Type == PropertyType::VectorList;
 }
 
 bool PropertyDescriptor::operator==(
@@ -129,9 +126,6 @@ void IGravitasEntity::GetProperty(const String& p_strName,
 void IGravitasEntity::GetProperty(const String& p_strName,
 	TVector3<Real>& p_vecValue) const { };
 
-void IGravitasEntity::GetProperty(const String& p_strName,
-	TPoint3<Real>& p_ptValue) const { };
-
 // indexed property queries
 void IGravitasEntity::GetProperty(const String& p_strName,
 	size_t p_unIndex, bool& p_bValue) const { };
@@ -147,9 +141,6 @@ void IGravitasEntity::GetProperty(const String& p_strName,
 
 void IGravitasEntity::GetProperty(const String& p_strName,
 	size_t p_unIndex, TVector3<Real>& p_vecValue) const { };
-
-void IGravitasEntity::GetProperty(const String& p_strName,
-	size_t p_unIndex, TPoint3<Real>& p_ptValue) const { };
 
 // list property queries
 void IGravitasEntity::GetProperty(const String& p_strName,
@@ -167,9 +158,6 @@ void IGravitasEntity::GetProperty(const String& p_strName,
 void IGravitasEntity::GetProperty(const String& p_strName,
 	VectorList& p_listValues) const { };
 
-void IGravitasEntity::GetProperty(const String& p_strName,
-	PointList& p_listValues) const { };
-
 // simple property updates
 void IGravitasEntity::SetProperty(const String& p_strName,
 	bool p_bValue) { };
@@ -185,9 +173,6 @@ void IGravitasEntity::SetProperty(const String& p_strName,
 
 void IGravitasEntity::SetProperty(const String& p_strName,
 	const TVector3<Real>& p_vecValue) { };
-
-void IGravitasEntity::SetProperty(const String& p_strName,
-	const TPoint3<Real>& p_ptValue) { };
 
 // indexed property updates
 void IGravitasEntity::SetProperty(const String& p_strName,
@@ -205,9 +190,6 @@ void IGravitasEntity::SetProperty(const String& p_strName,
 void IGravitasEntity::SetProperty(const String& p_strName,
 	size_t p_unIndex, const TVector3<Real>& p_vecValue) { };
 
-void IGravitasEntity::SetProperty(const String& p_strName,
-	size_t p_unIndex, const TPoint3<Real>& p_ptValue) { };
-
 // list property updates
 void IGravitasEntity::SetProperty(const String& p_strName,
 	const TList<bool>& p_listValues) { };
@@ -223,9 +205,6 @@ void IGravitasEntity::SetProperty(const String& p_strName,
 
 void IGravitasEntity::SetProperty(const String& p_strName,
 	const VectorList& p_listValues) { };
-
-void IGravitasEntity::SetProperty(const String& p_strName,
-	const PointList& p_listValues) { };
 
 // instrumentation
 void IGravitasEntity::RenderInstrumentation(

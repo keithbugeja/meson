@@ -37,8 +37,8 @@ void BoundingAxisAlignedBox::QuickSweep(
 }
 
 BoundingAxisAlignedBox::BoundingAxisAlignedBox(void)
-	: Min(TPoint3<Real>::Origin)
-	, Max(TPoint3<Real>::Origin)
+	: Min(TVector3<Real>::Zero)
+	, Max(TVector3<Real>::Zero)
 {
 }
 
@@ -50,9 +50,9 @@ BoundingAxisAlignedBox::BoundingAxisAlignedBox(
 }
 
 BoundingAxisAlignedBox::BoundingAxisAlignedBox(
-	const TPoint3<Real> &p_ptMin, const TPoint3<Real> &p_ptMax)
-	: Min(p_ptMin)
-	, Max(p_ptMax)
+	const TVector3<Real> &p_vecMin, const TVector3<Real> &p_vecMax)
+	: Min(p_vecMin)
+	, Max(p_vecMax)
 {
 }
 
@@ -65,25 +65,25 @@ BoundingVolumeType::BoundingVolumeType BoundingAxisAlignedBox::GetType(void) con
 	return BoundingVolumeType::AxisAlignedBox;
 }
 
-bool BoundingAxisAlignedBox::Contains(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const
+bool BoundingAxisAlignedBox::Contains(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const
 {
-	if (p_ptPoint.X < Min.X) return false;
-	if (p_ptPoint.X > Max.X) return false;
-	if (p_ptPoint.Y < Min.Y) return false;
-	if (p_ptPoint.Y > Max.Y) return false;
-	if (p_ptPoint.Z < Min.Z) return false;
-	if (p_ptPoint.Z > Max.Z) return false;
+	if (p_vecPoint.X < Min.X) return false;
+	if (p_vecPoint.X > Max.X) return false;
+	if (p_vecPoint.Y < Min.Y) return false;
+	if (p_vecPoint.Y > Max.Y) return false;
+	if (p_vecPoint.Z < Min.Z) return false;
+	if (p_vecPoint.Z > Max.Z) return false;
 	return true;
 }
 
 bool BoundingAxisAlignedBox::Intersects(const Ray& p_ray) const
 {
-	static TPoint3<Real> s_ptIntersction;
-	return Intersects(p_ray, s_ptIntersction);
+	static TVector3<Real> s_vecIntersction;
+	return Intersects(p_ray, s_vecIntersction);
 }
 
 bool BoundingAxisAlignedBox::Intersects(const Ray& p_ray,
-	Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const
+	Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const
 {
 	Real rTMin((Real) 0.0);
 	Real rTMax(TMaths<Real>::Maximum);
@@ -120,7 +120,7 @@ bool BoundingAxisAlignedBox::Intersects(const Ray& p_ray,
 	}
 
 	// compute intersection point
-	p_ptIntersectionPoint = p_ray.Source + p_ray.Direction * rTMin;
+	p_vecIntersectionPoint = p_ray.Source + p_ray.Direction * rTMin;
 
 	// if this point reached - intersection occured
 	return true;
@@ -252,28 +252,28 @@ void BoundingAxisAlignedBox::Transform(
 }
 
 void BoundingAxisAlignedBox::ClosestPointTo(
-	const TPoint3<Real> &p_ptPoint, TPoint3<Real> &p_ptClosestPoint) const
+	const TVector3<Real>& p_vecPoint, TVector3<Real>& p_vecClosestPoint) const
 {
-	p_ptClosestPoint = p_ptPoint;
+	p_vecClosestPoint = p_vecPoint;
 
 	// clamp point to within AABB
-	if (p_ptClosestPoint.X < Min.X) p_ptClosestPoint.X = Min.X;
-	if (p_ptClosestPoint.Y < Min.Y) p_ptClosestPoint.Y = Min.Y;
-	if (p_ptClosestPoint.Z < Min.Z) p_ptClosestPoint.Z = Min.Z;
+	if (p_vecClosestPoint.X < Min.X) p_vecClosestPoint.X = Min.X;
+	if (p_vecClosestPoint.Y < Min.Y) p_vecClosestPoint.Y = Min.Y;
+	if (p_vecClosestPoint.Z < Min.Z) p_vecClosestPoint.Z = Min.Z;
 
-	if (p_ptClosestPoint.X > Max.X) p_ptClosestPoint.X = Max.X;
-	if (p_ptClosestPoint.Y > Max.Y) p_ptClosestPoint.Y = Max.Y;
-	if (p_ptClosestPoint.Z > Max.Z) p_ptClosestPoint.Z = Max.Z;
+	if (p_vecClosestPoint.X > Max.X) p_vecClosestPoint.X = Max.X;
+	if (p_vecClosestPoint.Y > Max.Y) p_vecClosestPoint.Y = Max.Y;
+	if (p_vecClosestPoint.Z > Max.Z) p_vecClosestPoint.Z = Max.Z;
 }
 
 void BoundingAxisAlignedBox::ProjectToInterval(
-	const Meson::Common::Maths::TVector3<Real> &p_vecAxis,
-	Meson::Common::Maths::TInterval<Real> &p_interval) const
+	const Meson::Common::Maths::TVector3<Real>& p_vecAxis,
+	Meson::Common::Maths::TInterval<Real>& p_interval) const
 {
-	TPoint3<Real> ptCentre = Min + (Max - Min) * (Real) 0.5;
-	Real rCentre = ptCentre.ToVector() * p_vecAxis;
+	TVector3<Real> vecCentre = Min + (Max - Min) * (Real) 0.5;
+	Real rCentre = vecCentre * p_vecAxis;
 
-	TVector3<Real> vecRadius = Max - ptCentre;
+	TVector3<Real> vecRadius = Max - vecCentre;
 	Real rRadius
 		= TMaths<Real>::Abs(vecRadius.X * p_vecAxis.X)
 		+ TMaths<Real>::Abs(vecRadius.Y * p_vecAxis.Y)
@@ -283,7 +283,7 @@ void BoundingAxisAlignedBox::ProjectToInterval(
 	p_interval.Max = rCentre + rRadius;
 }
 
-TPoint3<Real> BoundingAxisAlignedBox::Centre(void) const
+TVector3<Real> BoundingAxisAlignedBox::Centre(void) const
 {
 	return Min + (Max - Min) * (Real) 0.5;
 }
@@ -302,15 +302,15 @@ BoundingAxisAlignedBox &BoundingAxisAlignedBox::operator=(
 }
 
 void BoundingAxisAlignedBox::ExtendToPoint(
-	const Meson::Common::Maths::TPoint3<Real> &p_ptPoint)
+	const Meson::Common::Maths::TVector3<Real> &p_vecPoint)
 {
-	Min.X = TMaths<Real>::Min(Min.X, p_ptPoint.X);
-	Min.Y = TMaths<Real>::Min(Min.Y, p_ptPoint.Y);
-	Min.Z = TMaths<Real>::Min(Min.Z, p_ptPoint.Z);
+	Min.X = TMaths<Real>::Min(Min.X, p_vecPoint.X);
+	Min.Y = TMaths<Real>::Min(Min.Y, p_vecPoint.Y);
+	Min.Z = TMaths<Real>::Min(Min.Z, p_vecPoint.Z);
 
-	Max.X = TMaths<Real>::Max(Max.X, p_ptPoint.X);
-	Max.Y = TMaths<Real>::Max(Max.Y, p_ptPoint.Y);
-	Max.Z = TMaths<Real>::Max(Max.Z, p_ptPoint.Z);
+	Max.X = TMaths<Real>::Max(Max.X, p_vecPoint.X);
+	Max.Y = TMaths<Real>::Max(Max.Y, p_vecPoint.Y);
+	Max.Z = TMaths<Real>::Max(Max.Z, p_vecPoint.Z);
 }
 
 const bool BoundingAxisAlignedBox::operator==(
@@ -345,15 +345,15 @@ bool BoundingAxisAlignedBox::Intersects(
 
 bool BoundingAxisAlignedBox::Intersects(const BoundingSphere &p_boundingSphere) const
 {
-	TPoint3<Real> ptClosestPoint;
-	ClosestPointTo(p_boundingSphere.Centre, ptClosestPoint);
+	TVector3<Real> vecClosestPoint;
+	ClosestPointTo(p_boundingSphere.Centre, vecClosestPoint);
 
-	return (p_boundingSphere.Centre - ptClosestPoint).LengthSquared()
+	return (p_boundingSphere.Centre - vecClosestPoint).LengthSquared()
 		<= p_boundingSphere.RadiusSquared;
 }
 
 void BoundingAxisAlignedBox::EnumerateMaximalVertices(
-	const TVector3<Real>& p_vecDirection, PointList& p_listVertices) const
+	const TVector3<Real>& p_vecDirection, VectorList& p_listVertices) const
 {
 	// clear vertex list
 	p_listVertices.Clear();
@@ -362,14 +362,14 @@ void BoundingAxisAlignedBox::EnumerateMaximalVertices(
 	Real rMaximumProjection = -TMaths<Real>::Maximum;
 
 	// determine maximal vertices in terms of projection
-	TPoint3<Real> ptVertex; 
+	TVector3<Real> vecVertex; 
 	for (size_t unIndex = 0; unIndex < 8; unIndex++)
 	{
-		ptVertex.X = unIndex % 2 == 0 ? Min.X : Max.X;
-		ptVertex.Y = (unIndex >> 1) % 2 == 0 ? Min.Y : Max.Y;
-		ptVertex.Z = (unIndex >> 2) % 2 == 0 ? Min.Z : Max.Z;
+		vecVertex.X = unIndex % 2 == 0 ? Min.X : Max.X;
+		vecVertex.Y = (unIndex >> 1) % 2 == 0 ? Min.Y : Max.Y;
+		vecVertex.Z = (unIndex >> 2) % 2 == 0 ? Min.Z : Max.Z;
 
-		Real rProjection = p_vecDirection * ptVertex.ToVector();
+		Real rProjection = p_vecDirection * vecVertex;
 
 		// ignore vertices that are definitely less extreme than current
 		if (rProjection + TMaths<Real>::Epsilon < rMaximumProjection) continue;
@@ -380,6 +380,6 @@ void BoundingAxisAlignedBox::EnumerateMaximalVertices(
 			p_listVertices.Clear();
 
 		rMaximumProjection = rProjection;
-		p_listVertices.Add(ptVertex);
+		p_listVertices.Add(vecVertex);
 	}
 }

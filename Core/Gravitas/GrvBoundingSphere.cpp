@@ -17,7 +17,7 @@ using namespace Meson::Gravitas;
 using namespace Meson::Gravitas::Geometry;
 
 BoundingSphere::BoundingSphere(void)
-	: Centre(TPoint3<Real>::Origin)
+	: Centre(TVector3<Real>::Zero)
 	, Radius((Real) 1.0)
 	, RadiusSquared((Real) 1.0)
 {
@@ -30,8 +30,8 @@ BoundingSphere::BoundingSphere(const BoundingSphere& p_boundingSphere)
 {
 }
 
-BoundingSphere::BoundingSphere(const TPoint3<Real>& p_ptCentre, Real p_rRadius)
-	: Centre(p_ptCentre)
+BoundingSphere::BoundingSphere(const TVector3<Real>& p_vecCentre, Real p_rRadius)
+	: Centre(p_vecCentre)
 	, Radius(p_rRadius)
 	, RadiusSquared(p_rRadius * p_rRadius)
 {
@@ -46,9 +46,9 @@ BoundingVolumeType::BoundingVolumeType BoundingSphere::GetType(void) const
 	return BoundingVolumeType::Sphere;
 }
 
-bool BoundingSphere::Contains(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const
+bool BoundingSphere::Contains(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const
 {
-	return (p_ptPoint - Centre).LengthSquared() <= RadiusSquared;
+	return (p_vecPoint - Centre).LengthSquared() <= RadiusSquared;
 }
 
 bool BoundingSphere::Intersects(const Ray& p_ray) const
@@ -57,24 +57,24 @@ bool BoundingSphere::Intersects(const Ray& p_ray) const
 }
 
 bool BoundingSphere::Intersects(const Ray& p_ray,
-	Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const
+	Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const
 {
-	TPoint3<Real> ptClosestPoint(p_ray.ClosestPointTo(Centre));
-	Real rDistanceSquared = (ptClosestPoint - Centre).LengthSquared();
+	TVector3<Real> vecClosestPoint(p_ray.ClosestPointTo(Centre));
+	Real rDistanceSquared = (vecClosestPoint - Centre).LengthSquared();
 	if (rDistanceSquared > RadiusSquared)
 		return false;
 
 	Real rClosestToSurface(TMaths<Real>::Sqrt(RadiusSquared - rDistanceSquared));
 
-	p_ptIntersectionPoint = ptClosestPoint - p_ray.Direction * rClosestToSurface;
+	p_vecIntersectionPoint = vecClosestPoint - p_ray.Direction * rClosestToSurface;
 
 	return true;
 }
 
 bool BoundingSphere::Intersects(const Triangle& p_triangle) const
 {
-	TPoint3<Real> ptClosest = p_triangle.ClosestPoint(Centre);
-	TVector3<Real> vecAxis(ptClosest - Centre);
+	TVector3<Real> vecClosest = p_triangle.ClosestPoint(Centre);
+	TVector3<Real> vecAxis(vecClosest - Centre);
 	if (vecAxis.IsZero())
 		return true;
 
@@ -137,21 +137,21 @@ void BoundingSphere::Transform(
 }
 
 void BoundingSphere::ClosestPointTo(
-	const TPoint3<Real>& p_ptPoint, TPoint3<Real>& p_ptClosestPoint) const
+	const TVector3<Real>& p_vecPoint, TVector3<Real>& p_vecClosestPoint) const
 {
-	TVector3<Real> vecOffset = p_ptPoint - Centre;
+	TVector3<Real> vecOffset = p_vecPoint - Centre;
 
 	if (vecOffset.LengthSquared() < RadiusSquared)
-		p_ptClosestPoint = p_ptPoint;
+		p_vecClosestPoint = p_vecPoint;
 	else
-		p_ptClosestPoint = Centre + vecOffset.NormaliseCopy() * Radius;
+		p_vecClosestPoint = Centre + vecOffset.NormaliseCopy() * Radius;
 }
 
 void BoundingSphere::ProjectToInterval(
 	const Meson::Common::Maths::TVector3<Real>& p_vecAxis,
 	Meson::Common::Maths::TInterval<Real>& p_interval) const
 {
-	Real rCentre = Centre.ToVector() * p_vecAxis;
+	Real rCentre = Centre * p_vecAxis;
 
 	p_interval.Min = rCentre - Radius;
 	p_interval.Max = rCentre + Radius;

@@ -46,10 +46,10 @@ bool ConvexPolyhedronToSphereCollisionDetector::TestIntersection(
 	const Sphere& sphere = (Sphere &) p_geometry2;
 
 	// transform sphere centre to polyhedron space
-	TPoint3<Real> ptSphereCentre(TPoint3<Real>::Origin + p_trnRelativePlacement.Translation);
+	const TVector3<Real>& vecSphereCentre = p_trnRelativePlacement.Translation;
 
-	TPoint3<Real> ptClosest = convexPolyhedron.GetClosestPoint(ptSphereCentre);
-	TVector3<Real> vecOffset(ptSphereCentre - ptClosest);
+	TVector3<Real> vecClosest = convexPolyhedron.GetClosestPoint(vecSphereCentre);
+	TVector3<Real> vecOffset(vecSphereCentre - vecClosest);
 
 	return vecOffset.LengthSquared() <= sphere.RadiusSquared;
 }
@@ -81,13 +81,13 @@ void ConvexPolyhedronToSphereCollisionDetector::ComputeContactManifold(
 	const Sphere& sphere = (Sphere &) p_geometry2;
 
 	// transform sphere centre to polyhedron space
-	TPoint3<Real> ptSphereCentre(TPoint3<Real>::Origin + p_trnRelativePlacement.Translation);
+	const TVector3<Real>& vecSphereCentre = p_trnRelativePlacement.Translation;
 
 	// get closest point in polyhedron to sphere centre
-	TPoint3<Real> ptClosest = convexPolyhedron.GetClosestPoint(ptSphereCentre);
+	TVector3<Real> vecClosest = convexPolyhedron.GetClosestPoint(vecSphereCentre);
 
 	// compute offset between sphere centre and point
-	TVector3<Real> vecOffset(ptSphereCentre - ptClosest);
+	TVector3<Real> vecOffset(vecSphereCentre - vecClosest);
 
 	// clear manifold
 	p_contactManifold.ContactPoints.Clear();
@@ -103,10 +103,10 @@ void ConvexPolyhedronToSphereCollisionDetector::ComputeContactManifold(
 	static TVector3<Real> vecNormal;
 	if (!vecOffset.IsZero())
 		vecNormal = vecOffset.NormaliseCopy();
-	else if (!ptSphereCentre.IsOrigin())
-		vecNormal = ptSphereCentre.ToVector().NormaliseCopy();
+	else if (!vecSphereCentre.IsZero())
+		vecNormal = vecSphereCentre.NormaliseCopy();
 	else
 		vecNormal = TVector3<Real>::Up;
 
-	p_contactManifold.ContactPoints.Add(ContactPoint(ptClosest, vecNormal, rPenetration));
+	p_contactManifold.ContactPoints.Add(ContactPoint(vecClosest, vecNormal, rPenetration));
 }

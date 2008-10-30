@@ -65,29 +65,27 @@ Transform Transform::InvertCopy(void) const
 	return Transform(qtnConjugate, -qtnConjugate.TransformCopy(Translation));
 }
 
-void Transform::Apply(TPoint3<Real>& p_ptPoint) const
+void Transform::Apply(TVector3<Real>& p_vecPoint) const
 {
-	p_ptPoint = TPoint3<Real>::Origin
-		+ Rotation.TransformCopy(p_ptPoint.ToVector()) + Translation;
+	p_vecPoint = Rotation.TransformCopy(p_vecPoint) + Translation;
 }
 
-void Transform::Apply(PointList& p_pointList) const
+void Transform::Apply(VectorList& p_vectorList) const
 {
-	for (size_t unIndex = 0; unIndex < p_pointList.Size(); unIndex++)
-		Apply(p_pointList(unIndex));
+	for (size_t unIndex = 0; unIndex < p_vectorList.Size(); unIndex++)
+		Apply(p_vectorList[unIndex]);
 }
 
-TPoint3<Real> Transform::ApplyCopy(const TPoint3<Real>& p_ptPoint) const
+TVector3<Real> Transform::ApplyCopy(const TVector3<Real>& p_vecPoint) const
 {
-	return TPoint3<Real>::Origin
-		+ Rotation.TransformCopy(p_ptPoint.ToVector()) + Translation;
+	return Rotation.TransformCopy(p_vecPoint) + Translation;
 }
 
-void Transform::ApplyCopy(const PointList& p_pointList, PointList& p_pointListTransformed) const
+void Transform::ApplyCopy(const VectorList& p_vectorList, VectorList& p_vectorListTransformed) const
 {
-	p_pointListTransformed.Clear();
-	for (size_t unIndex = 0; unIndex < p_pointList.Size(); unIndex++)
-		p_pointListTransformed.Add(ApplyCopy(p_pointList(unIndex)));
+	p_vectorListTransformed.Clear();
+	for (size_t unIndex = 0; unIndex < p_vectorList.Size(); unIndex++)
+		p_vectorListTransformed.Add(ApplyCopy(p_vectorList[unIndex]));
 }
 
 void Transform::ChangeBasis(const Transform& p_trnBasis)
@@ -135,7 +133,7 @@ Transform Transform::operator*(const Transform& p_transform) const
 	return ComposeCopy(p_transform);
 }
 
-TPoint3<Real> Transform::operator()(const TPoint3<Real>& p_ptPoint) const
+TVector3<Real> Transform::operator()(const TVector3<Real>& p_vecPoint) const
 {
-	return ApplyCopy(p_ptPoint);
+	return ApplyCopy(p_vecPoint);
 }

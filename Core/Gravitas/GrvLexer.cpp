@@ -422,11 +422,6 @@ TVector3<Real> Lexer::ReadVector(void)
 	return vecValue;
 }
 
-TPoint3<Real> Lexer::ReadPoint(void)
-{
-	return TPoint3<Real>::Origin + ReadVector();
-}
-
 TQuaternion<Real> Lexer::ReadQuaternion(void)
 {
 	TQuaternion<Real> qtnValue;
@@ -512,27 +507,6 @@ void Lexer::ReadVectorList(VectorList& p_listVectors)
 	ReadToken(LexerTokenType::ClosingBrace);
 }
 
-void Lexer::ReadPointList(PointList& p_listPoints)
-{
-	p_listPoints.Clear();
-
-	ReadToken(LexerTokenType::OpeningBrace);
-	while(true)
-	{
-		LexerToken lexerToken = PeekToken();
-
-		if (lexerToken.Type == LexerTokenType::ClosingBrace)
-			break;
-
-		if (p_listPoints.Size() > 0)
-			ReadToken(LexerTokenType::Comma);
-
-		p_listPoints.Add(ReadPoint());
-	}
-
-	ReadToken(LexerTokenType::ClosingBrace);
-}
-
 LexerToken Lexer::ReadProperty(const String& p_strPropertyName,
 	LexerTokenType::LexerTokenType p_lexerTokenType)
 {
@@ -582,11 +556,6 @@ TVector3<Real> Lexer::ReadPropertyVector(const String& p_strPropertyName)
 	return ReadVector();
 }
 
-TPoint3<Real> Lexer::ReadPropertyPoint(const String& p_strPropertyName)
-{
-	return TPoint3<Real>::Origin + ReadPropertyVector(p_strPropertyName);
-}
-
 void Lexer::ReadCustomProperties(IGravitasEntity& p_gravitasEntity)
 {
 	LexerToken lexerToken = ReadToken(LexerTokenType::Identifier);
@@ -609,7 +578,6 @@ void Lexer::ReadCustomProperties(IGravitasEntity& p_gravitasEntity)
 	TArrayList<Real> listReals;
 	TArrayList<String> listStrings;
 	VectorArrayList listVectors;
-	PointArrayList listPoints;
 
 	// properties
 	while (true)
@@ -678,9 +646,6 @@ void Lexer::ReadCustomProperties(IGravitasEntity& p_gravitasEntity)
 		case PropertyType::Vector:
 			p_gravitasEntity.SetProperty(strPropertyName, ReadVector());
 			break;
-		case PropertyType::Point:
-			p_gravitasEntity.SetProperty(strPropertyName, ReadPoint());
-			break;
 
 		case PropertyType::IndexedBoolean:
 			lexerTokenValue = ReadToken(LexerTokenType::Boolean);
@@ -705,10 +670,6 @@ void Lexer::ReadCustomProperties(IGravitasEntity& p_gravitasEntity)
 		case PropertyType::IndexedVector:
 			p_gravitasEntity.SetProperty(strPropertyName, (size_t) nPropertyIndex,
 				ReadVector());
-			break;
-		case PropertyType::IndexedPoint:
-			p_gravitasEntity.SetProperty(strPropertyName, (size_t) nPropertyIndex,
-				ReadPoint());
 			break;
 
 		case PropertyType::BooleanList:
@@ -742,10 +703,6 @@ void Lexer::ReadCustomProperties(IGravitasEntity& p_gravitasEntity)
 		case PropertyType::VectorList:
 			ReadVectorList(listVectors);
 			p_gravitasEntity.SetProperty(strPropertyName, listVectors);
-			break;
-		case PropertyType::PointList:
-			ReadPointList(listPoints);
-			p_gravitasEntity.SetProperty(strPropertyName, listPoints);
 			break;
 		}
 	}

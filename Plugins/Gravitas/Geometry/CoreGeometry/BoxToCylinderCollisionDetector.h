@@ -12,9 +12,7 @@ class BoxToCylinderCollisionDetector
 private: // private variables;
 	Meson::Common::Text::String m_strGeometryType1;
 	Meson::Common::Text::String m_strGeometryType2;
-	Meson::Common::Collections::TArrayList<
-		Meson::Common::Maths::TPoint3<Real> >
-			m_listVertices1, m_listVertices2;
+	VectorArrayList m_listVertices1, m_listVertices2;
 
 private: // private methods
 

@@ -44,8 +44,8 @@ bool ConvexPolyhedronToCylinderCollisionDetector::TestIntersection(
 
 	static LineSegment lnsShaft;
 	Real rHalfHeight = cylinder.Height * (Real) 0.5;
-	lnsShaft.Start = TPoint3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0);
-	lnsShaft.End = TPoint3<Real>((Real) 0.0, rHalfHeight, (Real) 0.0);
+	lnsShaft.Start = TVector3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0);
+	lnsShaft.End = TVector3<Real>((Real) 0.0, rHalfHeight, (Real) 0.0);
 	lnsShaft.Transform(p_trnRelativePlacement);
 	Real rRadius(cylinder.Radius);
 
@@ -59,7 +59,7 @@ bool ConvexPolyhedronToCylinderCollisionDetector::TestIntersection(
 	if (!itvProjection1.Intersects(itvProjection2)) return false;
 
 	// try closest point from shaft to poly centroid as SA
-	TVector3<Real> vecAxis(lnsShaft.ClosestPoint(TPoint3<Real>::Origin).ToVector());
+	TVector3<Real> vecAxis(lnsShaft.ClosestPoint(TVector3<Real>::Zero));
 	if (!vecAxis.IsZero())
 	{
 		convexPolyhedron.ProjectToInterval(vecAxis, itvProjection1);
@@ -126,8 +126,8 @@ void ConvexPolyhedronToCylinderCollisionDetector::ComputeContactManifold(
 
 	static LineSegment lnsShaft;
 	Real rHalfHeight = cylinder.Height * (Real) 0.5;
-	lnsShaft.Start = TPoint3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0);
-	lnsShaft.End = TPoint3<Real>((Real) 0.0, rHalfHeight, (Real) 0.0);
+	lnsShaft.Start = TVector3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0);
+	lnsShaft.End = TVector3<Real>((Real) 0.0, rHalfHeight, (Real) 0.0);
 	lnsShaft.Transform(p_trnRelativePlacement);
 	Real rRadius(cylinder.Radius);
 
@@ -154,7 +154,7 @@ void ConvexPolyhedronToCylinderCollisionDetector::ComputeContactManifold(
 	}
 
 	// try closest point from shaft to poly centroid as SA
-	TVector3<Real> vecAxis(lnsShaft.ClosestPoint(TPoint3<Real>::Origin).ToVector());
+	TVector3<Real> vecAxis(lnsShaft.ClosestPoint(TVector3<Real>::Zero));
 	if (!vecAxis.IsZero())
 	{
 		// normalise axis for correct penetration
@@ -233,7 +233,7 @@ void ConvexPolyhedronToCylinderCollisionDetector::ComputeContactManifold(
 	contactPoint.Penetration = rLeastOverlap;
 
 	// compute maximal / minimal vertices
-	static PointArrayList m_listVertices1, m_listVertices2;
+	static VectorArrayList m_listVertices1, m_listVertices2;
 	convexPolyhedron.EnumerateMaximalVertices(vecAxisLeastOverlap, m_listVertices1);
 	Cylinder::EnumerateMaximalVertices(
 		lnsShaft, rRadius, -vecAxisLeastOverlap, m_listVertices2);
@@ -243,9 +243,7 @@ void ConvexPolyhedronToCylinderCollisionDetector::ComputeContactManifold(
 	// single point - single point (cylinder end edge contact with poly vertex)
 	if (m_listVertices1.Size() == 1 && m_listVertices2.Size() == 1)
 	{
-		TPoint3<Real> ptPosition(m_listVertices1[0]
-			+ (m_listVertices2[0] - m_listVertices1[0]) * (Real) 0.5);
-		contactPoint.Position = ptPosition;
+		contactPoint.Position = (m_listVertices1[0] + m_listVertices2[0]) * (Real) 0.5;
 		p_contactManifold.ContactPoints.Add(contactPoint);
 		return;
 	}
@@ -255,10 +253,10 @@ void ConvexPolyhedronToCylinderCollisionDetector::ComputeContactManifold(
 	{
 		LineSegment lnsEdge1(m_listVertices1[0], m_listVertices1[1]),
 			lnsEdge2(m_listVertices2[0], m_listVertices2[1]);
-		TPoint3<Real> ptClosest1, ptClosest2;
-		lnsEdge1.ClosestPointsToSegment(lnsEdge2, ptClosest1, ptClosest2);
+		TVector3<Real> vecClosest1, vecClosest2;
+		lnsEdge1.ClosestPointsToSegment(lnsEdge2, vecClosest1, vecClosest2);
 
-		contactPoint.Position = ptClosest1 + (ptClosest2 - ptClosest1) * (Real) 0.5;
+		contactPoint.Position = (vecClosest1 + vecClosest2) * (Real) 0.5;
 		p_contactManifold.ContactPoints.Add(contactPoint);
 		return;
 	}
@@ -283,10 +281,10 @@ void ConvexPolyhedronToCylinderCollisionDetector::ComputeContactManifold(
 	size_t unCount = m_listVertices1.Size();
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = m_listVertices1[unIndex];
-		if (Cylinder::IntersectsPoint(lnsShaft, cylinder.Radius, ptVertex))
+		TVector3<Real>& vecVertex = m_listVertices1[unIndex];
+		if (Cylinder::IntersectsPoint(lnsShaft, cylinder.Radius, vecVertex))
 		{
-			contactPoint.Position = ptVertex;
+			contactPoint.Position = vecVertex;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
 	}
@@ -294,10 +292,10 @@ void ConvexPolyhedronToCylinderCollisionDetector::ComputeContactManifold(
 	unCount = m_listVertices2.Size();
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = m_listVertices2[unIndex];
-		if (convexPolyhedron.ContainsPoint(ptVertex))
+		TVector3<Real>& vecVertex = m_listVertices2[unIndex];
+		if (convexPolyhedron.ContainsPoint(vecVertex))
 		{
-			contactPoint.Position = ptVertex;
+			contactPoint.Position = vecVertex;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
 	}

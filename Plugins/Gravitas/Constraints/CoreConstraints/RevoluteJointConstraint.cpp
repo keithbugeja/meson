@@ -21,9 +21,9 @@ void RevoluteJointConstraint::UpdateAngleLimitDerivatives(void)
 	m_rAngleLimitCosine = TMaths<Real>::Cos(m_rAngleLimit);
 
 	TVector3<Real> vecLocalAxisMidpint1(
-		(m_ptBody1Anchor1.ToVector() + m_ptBody1Anchor2.ToVector()) * (Real) 0.5);
+		(m_vecBody1Anchor1 + m_vecBody1Anchor2) * (Real) 0.5);
 	TVector3<Real> vecLocalAxisMidpint2(
-		(m_ptBody2Anchor1.ToVector() + m_ptBody2Anchor2.ToVector()) * (Real) 0.5);
+		(m_vecBody2Anchor1 + m_vecBody2Anchor2) * (Real) 0.5);
 
 	Real rA = vecLocalAxisMidpint1.Length();
 	Real rB = vecLocalAxisMidpint2.Length();
@@ -31,24 +31,24 @@ void RevoluteJointConstraint::UpdateAngleLimitDerivatives(void)
 	m_rMinimumCentroidDistance = TMaths<Real>::Sqrt(rC2);
 }
 
-TPoint3<Real> RevoluteJointConstraint::GetCurrentAxisPosition1(void) const
+TVector3<Real> RevoluteJointConstraint::GetCurrentAxisPosition1(void) const
 {
-	TPoint3<Real> ptWorldBody1Anchor1, ptWorldBody2Anchor1;
+	TVector3<Real> vecWorldBody1Anchor1, vecWorldBody2Anchor1;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptBody1Anchor1, ptWorldBody1Anchor1);
+		m_vecBody1Anchor1, vecWorldBody1Anchor1);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptBody2Anchor1, ptWorldBody2Anchor1);
-	return ptWorldBody1Anchor1 + (ptWorldBody2Anchor1 - ptWorldBody1Anchor1) * (Real) 0.5;
+		m_vecBody2Anchor1, vecWorldBody2Anchor1);
+	return (vecWorldBody1Anchor1 + vecWorldBody2Anchor1) * (Real) 0.5;
 }
 
-TPoint3<Real> RevoluteJointConstraint::GetCurrentAxisPosition2(void) const
+TVector3<Real> RevoluteJointConstraint::GetCurrentAxisPosition2(void) const
 {
-	TPoint3<Real> ptWorldBody1Anchor2, ptWorldBody2Anchor2;
+	TVector3<Real> vecWorldBody1Anchor2, vecWorldBody2Anchor2;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptBody1Anchor2, ptWorldBody1Anchor2);
+		m_vecBody1Anchor2, vecWorldBody1Anchor2);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptBody2Anchor2, ptWorldBody2Anchor2);
-	return ptWorldBody1Anchor2 + (ptWorldBody2Anchor2 - ptWorldBody1Anchor2) * (Real) 0.5;
+		m_vecBody2Anchor2, vecWorldBody2Anchor2);
+	return (vecWorldBody1Anchor2 + vecWorldBody2Anchor2) * (Real) 0.5;
 }
 
 RevoluteJointConstraint::RevoluteJointConstraint(void)
@@ -56,12 +56,12 @@ RevoluteJointConstraint::RevoluteJointConstraint(void)
 	, m_pBody2(NULL)
 	, m_bBroken(true)
 	, m_rBreakingThreshold(TMaths<Real>::Maximum)
-	, m_ptBindAxisPoint1()
-	, m_ptBindAxisPoint2()
-	, m_ptBody1Anchor1()
-	, m_ptBody1Anchor2()
-	, m_ptBody2Anchor1()
-	, m_ptBody2Anchor2()
+	, m_vecBindAxisPoint1()
+	, m_vecBindAxisPoint2()
+	, m_vecBody1Anchor1()
+	, m_vecBody1Anchor2()
+	, m_vecBody2Anchor1()
+	, m_vecBody2Anchor2()
 	, m_rAngleLimit(TMaths<Real>::Pi)
 	, m_rJointRestitution((Real) 0.0)
 	, m_rAngleLimitCosine((Real) -1.0)
@@ -76,12 +76,12 @@ RevoluteJointConstraint::RevoluteJointConstraint(const String& p_strId)
 	, m_pBody2(NULL)
 	, m_bBroken(true)
 	, m_rBreakingThreshold(TMaths<Real>::Maximum)
-	, m_ptBindAxisPoint1()
-	, m_ptBindAxisPoint2()
-	, m_ptBody1Anchor1()
-	, m_ptBody1Anchor2()
-	, m_ptBody2Anchor1()
-	, m_ptBody2Anchor2()
+	, m_vecBindAxisPoint1()
+	, m_vecBindAxisPoint2()
+	, m_vecBody1Anchor1()
+	, m_vecBody1Anchor2()
+	, m_vecBody2Anchor1()
+	, m_vecBody2Anchor2()
 	, m_rAngleLimit(TMaths<Real>::Pi)
 	, m_rJointRestitution((Real) 0.0)
 	, m_rAngleLimitCosine((Real) -1.0)
@@ -100,17 +100,17 @@ void RevoluteJointConstraint::EnumerateProperties(
 	p_mapProperties.Clear();
 
 	p_mapProperties["BindAxisPoint1"]
-		= PropertyDescriptor("BindAxisPoint1", PropertyType::Point, false);
+		= PropertyDescriptor("BindAxisPoint1", PropertyType::Vector, false);
 	p_mapProperties["BindAxisPoint2"]
-		= PropertyDescriptor("BindAxisPoint2", PropertyType::Point, false);
+		= PropertyDescriptor("BindAxisPoint2", PropertyType::Vector, false);
 	p_mapProperties["AngleLimit"]
 		= PropertyDescriptor("AngleLimit", PropertyType::Real, false);
 	p_mapProperties["JointRestitution"]
 		= PropertyDescriptor("JointRestitution", PropertyType::Real, false);
 	p_mapProperties["CurrentAxisPosition1"]
-		= PropertyDescriptor("CurrentAxisPosition1", PropertyType::Point, true);
+		= PropertyDescriptor("CurrentAxisPosition1", PropertyType::Vector, true);
 	p_mapProperties["CurrentAxisPosition2"]
-		= PropertyDescriptor("CurrentAxisPosition2", PropertyType::Point, true);
+		= PropertyDescriptor("CurrentAxisPosition2", PropertyType::Vector, true);
 }
 
 void RevoluteJointConstraint::GetProperty(const String &p_strName, Real &p_rValue) const
@@ -143,16 +143,16 @@ void RevoluteJointConstraint::SetProperty(const String &p_strName, Real p_rValue
 			__FILE__, __LINE__);
 }
 
-void RevoluteJointConstraint::GetProperty(const String &p_strName, TPoint3<Real> &p_ptValue) const
+void RevoluteJointConstraint::GetProperty(const String &p_strName, TVector3<Real> &p_vecValue) const
 {
 	if (p_strName == "BindAxisPoint1")
-		p_ptValue = m_ptBindAxisPoint1;
+		p_vecValue = m_vecBindAxisPoint1;
 	else if (p_strName == "BindAxisPoint2")
-		p_ptValue = m_ptBindAxisPoint2;
+		p_vecValue = m_vecBindAxisPoint2;
 	else if (p_strName == "CurrentAxisPosition1")
-		p_ptValue = GetCurrentAxisPosition1();
+		p_vecValue = GetCurrentAxisPosition1();
 	else if (p_strName == "CurrentAxisPosition2")
-		p_ptValue = GetCurrentAxisPosition2();
+		p_vecValue = GetCurrentAxisPosition2();
 	else
 		throw new MesonException(
 			"Unknown property '" + p_strName + "' for RevoluteJoint constraint.",
@@ -160,12 +160,12 @@ void RevoluteJointConstraint::GetProperty(const String &p_strName, TPoint3<Real>
 			
 }
 
-void RevoluteJointConstraint::SetProperty(const String &p_strName, const TPoint3<Real> &p_ptValue)
+void RevoluteJointConstraint::SetProperty(const String &p_strName, const TVector3<Real> &p_vecValue)
 {
 	if (p_strName == "BindAxisPoint1")
-		m_ptBindAxisPoint1 = p_ptValue;
+		m_vecBindAxisPoint1 = p_vecValue;
 	else if (p_strName == "BindAxisPoint2")
-		m_ptBindAxisPoint2 = p_ptValue;
+		m_vecBindAxisPoint2 = p_vecValue;
 	else if (p_strName == "CurrentAxisPosition1")
 		throw new MesonException(
 			"Property 'CurrentAxisPosition1' is read-only for RevoluteJoint constraint.",
@@ -186,15 +186,15 @@ void RevoluteJointConstraint::RenderInstrumentation(
 	if (m_bBroken)
 		return;
 
-	TPoint3<Real>& ptBodyPosition1 = m_pBody1->GetKineticProperties().Position;
-	TPoint3<Real>& ptBodyPosition2 = m_pBody2->GetKineticProperties().Position;
-	TPoint3<Real> ptAxisAnchor1 = GetCurrentAxisPosition1();
-	TPoint3<Real> ptAxisAnchor2 = GetCurrentAxisPosition2();
+	TVector3<Real>& vecBodyPosition1 = m_pBody1->GetKineticProperties().Position;
+	TVector3<Real>& vecBodyPosition2 = m_pBody2->GetKineticProperties().Position;
+	TVector3<Real> vecAxisAnchor1 = GetCurrentAxisPosition1();
+	TVector3<Real> vecAxisAnchor2 = GetCurrentAxisPosition2();
 
-	p_pInstrumentationDevice->DrawLine(ptBodyPosition1, ptAxisAnchor1);
-	p_pInstrumentationDevice->DrawLine(ptBodyPosition1, ptAxisAnchor2);
-	p_pInstrumentationDevice->DrawLine(ptBodyPosition2, ptAxisAnchor1);
-	p_pInstrumentationDevice->DrawLine(ptBodyPosition2, ptAxisAnchor2);
+	p_pInstrumentationDevice->DrawLine(vecBodyPosition1, vecAxisAnchor1);
+	p_pInstrumentationDevice->DrawLine(vecBodyPosition1, vecAxisAnchor2);
+	p_pInstrumentationDevice->DrawLine(vecBodyPosition2, vecAxisAnchor1);
+	p_pInstrumentationDevice->DrawLine(vecBodyPosition2, vecAxisAnchor2);
 }
 
 const String& RevoluteJointConstraint::GetType(void) const
@@ -231,15 +231,15 @@ void RevoluteJointConstraint::Bind(void)
 
 	// body 1 anchors
 	m_pBody1->GetKineticProperties().TransformPointToLocal(
-		m_ptBindAxisPoint1, m_ptBody1Anchor1);
+		m_vecBindAxisPoint1, m_vecBody1Anchor1);
 	m_pBody1->GetKineticProperties().TransformPointToLocal(
-		m_ptBindAxisPoint2, m_ptBody1Anchor2);
+		m_vecBindAxisPoint2, m_vecBody1Anchor2);
 
 	// body 2 anchors
 	m_pBody2->GetKineticProperties().TransformPointToLocal(
-		m_ptBindAxisPoint1, m_ptBody2Anchor1);
+		m_vecBindAxisPoint1, m_vecBody2Anchor1);
 	m_pBody2->GetKineticProperties().TransformPointToLocal(
-		m_ptBindAxisPoint2, m_ptBody2Anchor2);
+		m_vecBindAxisPoint2, m_vecBody2Anchor2);
 
 	m_bBroken = false;
 
@@ -290,28 +290,28 @@ void RevoluteJointConstraint::ComputeDiscrepancies(void)
 	// compute local anchor points in world space
 
 	// axis anchor 1
-	TPoint3<Real> ptWorldBody1Anchor1, ptWorldBody2Anchor1;
+	TVector3<Real> vecWorldBody1Anchor1, vecWorldBody2Anchor1;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptBody1Anchor1, ptWorldBody1Anchor1);
+		m_vecBody1Anchor1, vecWorldBody1Anchor1);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptBody2Anchor1, ptWorldBody2Anchor1);
+		m_vecBody2Anchor1, vecWorldBody2Anchor1);
 
 	// add connection discrepancy (may be nil, but still
 	// enforces velocity constraint with zero restitution)
 	m_listConstraintDiscrepancies.Add(
-		ConstraintDiscrepancy(ptWorldBody1Anchor1, ptWorldBody2Anchor1));
+		ConstraintDiscrepancy(vecWorldBody1Anchor1, vecWorldBody2Anchor1));
 
 	// axis anchor 2
-	TPoint3<Real> ptWorldBody1Anchor2, ptWorldBody2Anchor2;
+	TVector3<Real> vecWorldBody1Anchor2, vecWorldBody2Anchor2;
 	m_pBody1->GetKineticProperties().TransformPointToWorld(
-		m_ptBody1Anchor2, ptWorldBody1Anchor2);
+		m_vecBody1Anchor2, vecWorldBody1Anchor2);
 	m_pBody2->GetKineticProperties().TransformPointToWorld(
-		m_ptBody2Anchor2, ptWorldBody2Anchor2);
+		m_vecBody2Anchor2, vecWorldBody2Anchor2);
 
 	// add connection discrepancy (may be nil, but still
 	// enforces velocity constraint with zero restitution)
 	m_listConstraintDiscrepancies.Add(
-		ConstraintDiscrepancy(ptWorldBody1Anchor2, ptWorldBody2Anchor2));
+		ConstraintDiscrepancy(vecWorldBody1Anchor2, vecWorldBody2Anchor2));
 
 	// -- angle limit
 
@@ -319,19 +319,16 @@ void RevoluteJointConstraint::ComputeDiscrepancies(void)
 		return;
 
 	// compute average world anchors
-	TPoint3<Real> ptWorldAnchor1(TPoint3<Real>::Origin
-		+ (ptWorldBody1Anchor1.ToVector() + ptWorldBody2Anchor1.ToVector()) * (Real) 0.5);
-	TPoint3<Real> ptWorldAnchor2(TPoint3<Real>::Origin
-		+ (ptWorldBody1Anchor2.ToVector() + ptWorldBody2Anchor2.ToVector()) * (Real) 0.5);
+	TVector3<Real> vecWorldAnchor1((vecWorldBody1Anchor1 + vecWorldBody2Anchor1) * (Real) 0.5);
+	TVector3<Real> vecWorldAnchor2((vecWorldBody1Anchor2 + vecWorldBody2Anchor2) * (Real) 0.5);
 
 	// compute axis midpoint
-	TPoint3<Real> ptAxisMidpoint(TPoint3<Real>::Origin
-		+ (ptWorldAnchor1.ToVector() + ptWorldAnchor2.ToVector()) * (Real) 0.5);
+	TVector3<Real> vecAxisMidpoint((vecWorldAnchor1 + vecWorldAnchor2) * (Real) 0.5);
 
 	// compute oriented directions from cm's to bind point
-	TVector3<Real> vecOrientedDirection1(ptAxisMidpoint
+	TVector3<Real> vecOrientedDirection1(vecAxisMidpoint
 		- m_pBody1->GetKineticProperties().Position);
-	TVector3<Real> vecOrientedDirection2(ptAxisMidpoint
+	TVector3<Real> vecOrientedDirection2(vecAxisMidpoint
 		- m_pBody2->GetKineticProperties().Position);
 
 	vecOrientedDirection1.Normalise();
@@ -360,20 +357,20 @@ void RevoluteJointConstraint::ComputeDiscrepancies(void)
 	Real rDiscrepancy((m_rMinimumCentroidDistance - rCurrentDist) * (Real) 0.5);
 	TVector3<Real> vecDiscrepancy(rDiscrepancy * vecCentroidDirection);
 
-	TPoint3<Real> ptMidPoint(m_pBody1->GetKineticProperties().Position + vecCentroidOffset * (Real) 0.5);
+	TVector3<Real> vecMidPoint(m_pBody1->GetKineticProperties().Position + vecCentroidOffset * (Real) 0.5);
 
-	TVector3<Real> vecHalfAxisOffset(ptWorldAnchor2 - ptWorldAnchor1);
+	TVector3<Real> vecHalfAxisOffset(vecWorldAnchor2 - vecWorldAnchor1);
 
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(
-			ptMidPoint + vecHalfAxisOffset + vecDiscrepancy,
-			ptMidPoint + vecHalfAxisOffset - vecDiscrepancy,
+			vecMidPoint + vecHalfAxisOffset + vecDiscrepancy,
+			vecMidPoint + vecHalfAxisOffset - vecDiscrepancy,
 			m_rJointRestitution));			
 
 	m_listConstraintDiscrepancies.Add(
 		ConstraintDiscrepancy(
-			ptMidPoint - vecHalfAxisOffset + vecDiscrepancy,
-			ptMidPoint - vecHalfAxisOffset - vecDiscrepancy,
+			vecMidPoint - vecHalfAxisOffset + vecDiscrepancy,
+			vecMidPoint - vecHalfAxisOffset - vecDiscrepancy,
 			m_rJointRestitution));			
 }
 

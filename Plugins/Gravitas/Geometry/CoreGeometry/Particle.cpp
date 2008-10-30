@@ -57,7 +57,7 @@ bool Particle::IsBounded(void) const
 
 void Particle::ComputeBoundingVolume(BoundingSphere &p_boundingSphere) const
 {
-	p_boundingSphere.Centre = TPoint3<Real>::Origin;
+	p_boundingSphere.Centre = TVector3<Real>::Zero;
 	p_boundingSphere.Radius = TMaths<Real>::Epsilon;
 	p_boundingSphere.RadiusSquared = TMaths<Real>::Epsilon;
 }
@@ -72,7 +72,7 @@ void Particle::ComputeBoundingVolume(BoundingAxisAlignedBox &p_boundingAxisAlign
 
 void Particle::ComputeBoundingVolume(BoundingOrientedBox &p_boundingOrientedBox) const
 {
-	p_boundingOrientedBox.Centre = TPoint3<Real>::Origin;
+	p_boundingOrientedBox.Centre = TVector3<Real>::Zero;
 	p_boundingOrientedBox.Axis[0] = TVector3<Real>::Right;
 	p_boundingOrientedBox.Axis[1] = TVector3<Real>::Up;
 	p_boundingOrientedBox.Axis[2] = TVector3<Real>::Out;
@@ -85,7 +85,7 @@ bool Particle::IntersectsRay(const Ray& p_ray) const
 	return false;
 }
 
-bool Particle::IntersectsRay(const Ray& p_ray, TPoint3<Real>& p_ptIntersectionPoint) const
+bool Particle::IntersectsRay(const Ray& p_ray, TVector3<Real>& p_vecIntersectionPoint) const
 {
 	return false;
 }

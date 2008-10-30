@@ -2,7 +2,6 @@
 
 #include "String8.h"
 #include "Vector3.h"
-#include "Point3.h"
 #include "List.h"
 #include "Map.h"
 #include "Pointer.h"
@@ -22,19 +21,16 @@ namespace PropertyType
 		Real,
 		String,
 		Vector,
-		Point,
 		IndexedBoolean,
 		IndexedInteger,
 		IndexedReal,
 		IndexedString,
 		IndexedVector,
-		IndexedPoint,
 		BooleanList,
 		IntegerList,
 		RealList,
 		StringList,
 		VectorList,
-		PointList,
 	};
 }
 
@@ -84,8 +80,6 @@ public:
 		Meson::Common::Text::String& p_strValue) const;
 	virtual void GetProperty(const Meson::Common::Text::String& p_strName,
 		Meson::Common::Maths::TVector3<Real>& p_vecValue) const;
-	virtual void GetProperty(const Meson::Common::Text::String& p_strName,
-		Meson::Common::Maths::TPoint3<Real>& p_ptValue) const;
 
 	// indexed property queries
 	virtual void GetProperty(const Meson::Common::Text::String& p_strName, size_t p_unIndex,
@@ -98,8 +92,6 @@ public:
 		Meson::Common::Text::String& p_strValue) const;
 	virtual void GetProperty(const Meson::Common::Text::String& p_strName, size_t p_unIndex,
 		Meson::Common::Maths::TVector3<Real>& p_vecValue) const;
-	virtual void GetProperty(const Meson::Common::Text::String& p_strName, size_t p_unIndex,
-		Meson::Common::Maths::TPoint3<Real>& p_ptValue) const;
 
 	// list property queries
 	virtual void GetProperty(const Meson::Common::Text::String& p_strName,
@@ -112,8 +104,6 @@ public:
 		Meson::Common::Collections::TList<Meson::Common::Text::String>& p_listValues) const;
 	virtual void GetProperty(const Meson::Common::Text::String& p_strName,
 		VectorList& p_listValues) const;
-	virtual void GetProperty(const Meson::Common::Text::String& p_strName,
-		PointList& p_listValues) const;
 
 	// simple property updates
 	virtual void SetProperty(const Meson::Common::Text::String& p_strName, bool p_bValue);
@@ -123,8 +113,6 @@ public:
 		const Meson::Common::Text::String& p_strValue);
 	virtual void SetProperty(const Meson::Common::Text::String& p_strName,
 		const Meson::Common::Maths::TVector3<Real>& p_vecValue);
-	virtual void SetProperty(const Meson::Common::Text::String& p_strName,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptValue);
 
 	// indexed property updates
 	virtual void SetProperty(const Meson::Common::Text::String& p_strName,
@@ -139,9 +127,6 @@ public:
 	virtual void SetProperty(const Meson::Common::Text::String& p_strName,
 		size_t p_unIndex,
 		const Meson::Common::Maths::TVector3<Real>& p_vecValue);
-	virtual void SetProperty(const Meson::Common::Text::String& p_strName,
-		size_t p_unIndex,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptValue);
 
 	// list property updates
 	virtual void SetProperty(const Meson::Common::Text::String& p_strName,
@@ -154,8 +139,6 @@ public:
 		const Meson::Common::Collections::TList<Meson::Common::Text::String>& p_listValues);
 	virtual void SetProperty(const Meson::Common::Text::String& p_strName,
 		const VectorList& p_listValues);
-	virtual void SetProperty(const Meson::Common::Text::String& p_strName,
-		const PointList& p_listValues);
 
 	// instrumentation
 	virtual void RenderInstrumentation(

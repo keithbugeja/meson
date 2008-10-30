@@ -43,9 +43,9 @@ bool HalfspaceToConvexPolyhedronCollisionDetector::TestIntersection(
 
 	for (size_t unIndex = 0; unIndex < convexPolyhedron.Vertices.Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = convexPolyhedron.Vertices[unIndex];
-		TPoint3<Real> ptVertexRelative = p_trnRelativePlacement.ApplyCopy(ptVertex);
-		if (ptVertexRelative.Y <= (Real) 0.0)
+		TVector3<Real>& vecVertex = convexPolyhedron.Vertices[unIndex];
+		TVector3<Real> vecVertexRelative = p_trnRelativePlacement.ApplyCopy(vecVertex);
+		if (vecVertexRelative.Y <= (Real) 0.0)
 			return true;
 	}
 
@@ -83,13 +83,13 @@ void HalfspaceToConvexPolyhedronCollisionDetector::ComputeContactManifold(
 
 	for (size_t unIndex = 0; unIndex < convexPolyhedron.Vertices.Size(); unIndex++)
 	{
-		TPoint3<Real>& ptVertex = convexPolyhedron.Vertices[unIndex];
-		TPoint3<Real> ptVertexRelative = p_trnRelativePlacement.ApplyCopy(ptVertex);
-		if (ptVertexRelative.Y > (Real) 0.0)
+		TVector3<Real>& vecVertex = convexPolyhedron.Vertices[unIndex];
+		TVector3<Real> vecVertexRelative = p_trnRelativePlacement.ApplyCopy(vecVertex);
+		if (vecVertexRelative.Y > (Real) 0.0)
 			continue;
 
-		contactPoint.Position = ptVertexRelative;
-		contactPoint.Penetration = -ptVertexRelative.Y;
+		contactPoint.Position = vecVertexRelative;
+		contactPoint.Penetration = -vecVertexRelative.Y;
 
 		p_contactManifold.ContactPoints.Add(contactPoint);
 	}

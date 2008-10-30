@@ -1,3 +1,5 @@
+/*
+
 //----------------------------------------------------------------------------------------------
 //	Meson::Common::Maths::TVector3<T>
 //	Templated class for 3D points.
@@ -219,3 +221,5 @@ typedef TPoint3<double> Point3;
 typedef TPoint3<float>	Point3f;
 
 Meson_Common_Maths_END
+
+*/

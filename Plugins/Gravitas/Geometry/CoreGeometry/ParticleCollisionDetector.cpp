@@ -90,9 +90,9 @@ void ParticleCollisionDetector::ComputeContactManifold(
 	p_contactManifold.ContactPoints.Clear();
 
 	const TVector3<Real>& vecOffset = p_trnRelativePlacement.Translation;
-	TPoint3<Real> ptContact = TPoint3<Real>::Origin + vecOffset * (Real) 0.5;
+	TVector3<Real> vecContact = vecOffset * (Real) 0.5;
 	TVector3<Real> vecNormal = vecOffset.NormaliseCopy();
 
 	p_contactManifold.ContactPoints.Add(
-		ContactPoint(ptContact, vecNormal, (Real) 0.0));
+		ContactPoint(vecContact, vecNormal, (Real) 0.0));
 }

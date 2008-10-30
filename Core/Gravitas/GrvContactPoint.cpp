@@ -10,7 +10,7 @@ using namespace Meson::Gravitas;
 using namespace Meson::Gravitas::Collision;
 
 ContactPoint::ContactPoint(void)
-	: Position(TPoint3<Real>::Origin)
+	: Position(TVector3<Real>::Zero)
 	, Normal(TVector3<Real>::Right)
 	, Penetration((Real) 0.0)
 	, RelativeVelocity(TVector3<Real>::Zero)
@@ -26,10 +26,10 @@ ContactPoint::ContactPoint(const ContactPoint& p_contactPoint)
 }
 
 ContactPoint::ContactPoint(
-	const TPoint3<Real>& p_ptPosition,
+	const TVector3<Real>& p_vecPosition,
 	const TVector3<Real>& p_vecNormal,
 	Real p_rPenetration)
-	: Position(p_ptPosition)
+	: Position(p_vecPosition)
 	, Normal(p_vecNormal)
 	, Penetration(p_rPenetration)
 	, RelativeVelocity(TVector3<Real>::Zero)

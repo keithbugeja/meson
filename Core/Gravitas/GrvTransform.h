@@ -2,7 +2,6 @@
 
 #include "Quaternion.h"
 #include "Vector3.h"
-#include "Point3.h"
 #include "Matrix4.h"
 
 #include "GrvNamespaces.h"
@@ -81,23 +80,23 @@ struct Transform
 
 	//----------------------------------------------------------------------------------------------
 	/// Applies the transform on the given point.
-	/// \param p_ptPoint Point to transform.
+	/// \param p_vecPoint Point to transform.
 	//----------------------------------------------------------------------------------------------
-	void Apply(Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	void Apply(Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
-	/// Applies the transform on the given point list.
-	/// \param p_pointList Abstract list of points on which to apply the transform.
+	/// Applies the transform on the given vector list.
+	/// \param p_vectorList Abstract list of vectors on which to apply the transform.
 	//----------------------------------------------------------------------------------------------
-	void Apply(PointList& p_pointList) const;
+	void Apply(VectorList& p_vectorList) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns a transformed copy of the given point.
-	/// \param p_ptPoint Point to transform.
+	/// \param p_vecPoint Point to transform.
 	/// \returns a transformed copy of the given point.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> ApplyCopy(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	Meson::Common::Maths::TVector3<Real> ApplyCopy(
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Transforms the given point list and stores it into the given destination list.
@@ -105,7 +104,7 @@ struct Transform
 	/// \param p_pointListTransformed Destination list of transformed points.
 	//----------------------------------------------------------------------------------------------
 	void ApplyCopy(
-		const PointList& p_pointList, PointList& p_pointListTransformed) const;
+		const VectorList& p_vectorList, VectorList& p_vectorListTransformed) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Changes the transform with respect to the given basis transform.
@@ -154,8 +153,8 @@ struct Transform
 	/// \param p_ptPoint Point to transform.
 	/// \returns a transformed copy of the given point.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> operator()(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	Meson::Common::Maths::TVector3<Real> operator()(
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 };
 
 Meson_Gravitas_Geometry_END

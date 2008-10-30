@@ -356,7 +356,7 @@ void ProtectedMain(void)
 	pRigidBodyGround->GetMassProperties().SetInfiniteMass();
 	pRigidBodyGround->SetMaterial(pMaterialGround);
 
-	pRigidBodyGround->GetKineticProperties().Position = TPoint3<Real>(0.0, -3.0, 0.0);
+	pRigidBodyGround->GetKineticProperties().Position = TVector3<Real>(0.0, -3.0, 0.0);
 	//pRigidBodyGround->GetKineticProperties().Orientation.MakeRotation(TVector3<Real>::Right, TMaths<Real>::Pi * 0.1);
 	//pRigidBodyGround->GetKineticProperties().LinearVelocity = TVector3<Real>::Up * 0.5;
 	//pRigidBodyGround->GetKineticProperties().AngularVelocity = TVector3<Real>::Up * TMaths<Real>::PiHalf;
@@ -457,7 +457,7 @@ void ProtectedMain(void)
 		{
 			static Vector3f vecLookAtOld = Vector3f::Zero;
 			Vector3f vecLookAt;
-			TPoint3<Real>& ptPosition = (*g_pEntityList)(g_pEntityList->Size() - 1).Body->GetKineticProperties().Position;
+			TVector3<Real>& ptPosition = (*g_pEntityList)[g_pEntityList->Size() - 1].Body->GetKineticProperties().Position;
 			vecLookAt.Set((float) ptPosition.X, (float) ptPosition.Y, (float) ptPosition.Z);
 			vecLookAt = vecLookAt * 0.05f + vecLookAtOld * 0.95f;
 			vecLookAtOld = vecLookAt;
@@ -501,7 +501,7 @@ void ProtectedMain(void)
 
 			Model3DPtr pModel = entity.Model3D;
 
-			pModel->Transform.Translation = pRigidBody->GetKineticProperties().Position.ToVector();
+			pModel->Transform.Translation = pRigidBody->GetKineticProperties().Position;
 			pModel->Transform.Rotation = pRigidBody->GetKineticProperties().Orientation;
 			pModel->SetColour(pRigidBody->GetKineticProperties().Active ? Vector4f(0.0f, 0.0f, 0.0f, 0.0f) : Vector4f(0.0f, 0.0f, 0.2f, 1.0f));
 			pModel->Render(g_pRenderDevice);
@@ -512,7 +512,7 @@ void ProtectedMain(void)
 		g_pRenderDevice->BindShaderProgram(g_pPixelProgramInstrumentation);
 
 		// ray cast test
-		Ray ray(TPoint3<Real>(0.0, 10.0, 0.0), TVector3<Real>::Down);
+		Ray ray(TVector3<Real>(0.0, 10.0, 0.0), TVector3<Real>::Down);
 		static BodyRayIntersectionArrayList listBodyRayIntersections;
 		g_pSpace->IntersectRay(ray, listBodyRayIntersections);
 

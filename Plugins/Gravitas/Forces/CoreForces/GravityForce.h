@@ -31,7 +31,7 @@ public: // public methods
 		Meson::Gravitas::Geometry::GeometryPtr p_pGeometry,
 		Real p_rTime);
 
-	Meson::Common::Maths::TPoint3<Real> GetApplicationPoint(
+	Meson::Common::Maths::TVector3<Real> GetApplicationPoint(
 		Meson::Gravitas::Body::MassProperties* p_pMassProperties,
 		Meson::Gravitas::Kinetics::KineticProperties* p_pKineticProperties,
 		Meson::Gravitas::Geometry::GeometryPtr p_pGeometry,

@@ -18,11 +18,11 @@ private: // private variables
 private: // private methods
 	TriangleMeshNode* PartitionTriangles(
 		uint p_unLevel,
-		const PointList* p_listVertices,
+		const VectorList* p_listVertices,
 		const IndexedTriangleList& p_listTriangles) const;
 
 public: // public variables
-	PointArrayList Vertices;
+	VectorArrayList Vertices;
 	TriangleMeshNode* Root;
 
 public: // public methods
@@ -40,14 +40,14 @@ public: // public methods
 	void GetProperty(const Meson::Common::Text::String& p_strName,
 		Meson::Common::Collections::TList<int>& p_listValues) const;
 	void GetProperty(const Meson::Common::Text::String& p_strName,
-		Meson::Common::Collections::TList< Meson::Common::Maths::TPoint3<Real> >& p_listValues) const;
+		VectorList& p_listValues) const;
 	void SetProperty(const Meson::Common::Text::String& p_strName, int p_nValue);
 	void SetProperty(const Meson::Common::Text::String& p_strName,
 		const Meson::Common::Text::String& p_strValue);
 	void SetProperty(const Meson::Common::Text::String& p_strName,
 		const Meson::Common::Collections::TList<int>& p_listValues);
 	void SetProperty(const Meson::Common::Text::String& p_strName,
-		const Meson::Common::Collections::TList< Meson::Common::Maths::TPoint3<Real> >& p_listValues);
+		const VectorList& p_listValues);
 
 	void RenderInstrumentation(
 		Meson::Gravitas::Instrumentation::IInstrumentationDevice* p_pInstrumentationDevice);
@@ -66,10 +66,10 @@ public: // public methods
 
 	bool IntersectsRay(const Ray& p_ray) const;
 	bool IntersectsRay(const Ray& p_ray,
-		Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const;
 
 	// custom interface
-	Meson::Common::Maths::TPoint3<Real> GetCentroid(void) const;
+	Meson::Common::Maths::TVector3<Real> GetCentroid(void) const;
 };
 
 Meson_Gravitas_Geometry_END

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Point3.h"
 #include "Vector3.h"
 #include "ArrayList.h"
 #include "LinkedList.h"
@@ -22,7 +21,7 @@ struct Tetrahedron
 	//----------------------------------------------------------------------------------------------
 	/// Vertices of the tetrahedron.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Vertices[4];
+	Meson::Common::Maths::TVector3<Real> Vertices[4];
 
 	// methods
 
@@ -39,16 +38,16 @@ struct Tetrahedron
 
 	//----------------------------------------------------------------------------------------------
 	/// Constructs a tetrahedron using the given vertices.
-	/// \param p_ptVertex0 First vertex for the tetrahedron.
-	/// \param p_ptVertex1 Second vertex for the tetrahedron.
-	/// \param p_ptVertex2 Third vertex for the tetrahedron.
-	/// \param p_ptVertex3 Fourth vertex for the tetrahedron.
+	/// \param p_vecVertex0 First vertex for the tetrahedron.
+	/// \param p_vecVertex1 Second vertex for the tetrahedron.
+	/// \param p_vecVertex2 Third vertex for the tetrahedron.
+	/// \param p_vecVertex3 Fourth vertex for the tetrahedron.
 	//----------------------------------------------------------------------------------------------
 	Tetrahedron(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptVertex0,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptVertex1,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptVertex2,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptVertex3);
+		const Meson::Common::Maths::TVector3<Real>& p_vecVertex0,
+		const Meson::Common::Maths::TVector3<Real>& p_vecVertex1,
+		const Meson::Common::Maths::TVector3<Real>& p_vecVertex2,
+		const Meson::Common::Maths::TVector3<Real>& p_vecVertex3);
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the volume of the tetrahedron.
@@ -60,41 +59,41 @@ struct Tetrahedron
 	/// Returns the tetrahedron centroid.
 	/// \returns the tetrahedron centroid.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Centroid(void) const;
+	Meson::Common::Maths::TVector3<Real> Centroid(void) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the distance of the given point to the tetrahedron.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns the distance of the given point to the tetrahedron.
 	//----------------------------------------------------------------------------------------------
 	Real DistanceFromPoint(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the distance of the given point to the tetrahedron and computes the closest point
 	/// on the tetrahedron.
-	/// \param p_ptPoint Point to test.
-	/// \param p_ptClosestPoint Computed point on the tetrahedron, closest to the test point.
+	/// \param p_vecPoint Point to test.
+	/// \param p_vecClosestPoint Computed point on the tetrahedron, closest to the test point.
 	/// \returns the distance of the given point to the tetrahedron.
 	//----------------------------------------------------------------------------------------------
 	Real DistanceFromPoint(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint,
-		Meson::Common::Maths::TPoint3<Real>& p_ptClosestPoint) const;
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint,
+		Meson::Common::Maths::TVector3<Real>& p_vecClosestPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns the closest point on the tetrahedron to the given point.
-	/// \param p_ptPoint Point to test.
+	/// \param p_vecPoint Point to test.
 	/// \returns the closest point on the tetrahedron to the given point.
 	//----------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> ClosestPoint(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	Meson::Common::Maths::TVector3<Real> ClosestPoint(
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Returns true if the given point is contained in the tetrahedron.
-	/// \param p_ptPoint Point to test for containment.
+	/// \param p_vecPoint Point to test for containment.
 	/// \returns true if the given point is contained in the tetrahedron.
 	//----------------------------------------------------------------------------------------------
-	bool Contains(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const;
+	bool Contains(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const;
 
 	//----------------------------------------------------------------------------------------------
 	/// Transforms the tetrahedron using the given transform object.

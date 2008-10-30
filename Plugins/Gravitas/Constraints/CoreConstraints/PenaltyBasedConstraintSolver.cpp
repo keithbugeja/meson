@@ -25,11 +25,11 @@ void PenaltyBasedConstraintSolver::ResolveConstraintDiscrepancy(
 		return;
 
 	// get discrepancy points in world space
-	const TPoint3<Real>& ptDiscrepancyPoint1 = p_constraintDiscrepancy.Point1;
-	const TPoint3<Real>& ptDiscrepancyPoint2 = p_constraintDiscrepancy.Point2;
+	const TVector3<Real>& vecDiscrepancyPoint1 = p_constraintDiscrepancy.Point1;
+	const TVector3<Real>& vecDiscrepancyPoint2 = p_constraintDiscrepancy.Point2;
 
 	// compute offset between discrepancy points
-	TVector3<Real> vecDiscrepancyOffset(ptDiscrepancyPoint2 - ptDiscrepancyPoint1);
+	TVector3<Real> vecDiscrepancyOffset(vecDiscrepancyPoint2 - vecDiscrepancyPoint1);
 
 	// cast bodies to rigid bodies
 	RigidBody* pRigidBody1 = (RigidBody*) (IBody*)p_pConstraint->GetBody1();
@@ -55,8 +55,8 @@ void PenaltyBasedConstraintSolver::ResolveConstraintDiscrepancy(
 
 	// compute relative velocity of discrepancy points
 	TVector3<Real> vecVelocity1, vecVelocity2;
-	kineticProperties1.ComputeWorldPointVelocity(ptDiscrepancyPoint1, vecVelocity1);
-	kineticProperties2.ComputeWorldPointVelocity(ptDiscrepancyPoint2, vecVelocity2);
+	kineticProperties1.ComputeWorldPointVelocity(vecDiscrepancyPoint1, vecVelocity1);
+	kineticProperties2.ComputeWorldPointVelocity(vecDiscrepancyPoint2, vecVelocity2);
 	TVector3<Real> vecRelativeVelocity(vecVelocity2 - vecVelocity1);
 
 	// propagate awake state
@@ -122,8 +122,8 @@ void PenaltyBasedConstraintSolver::ResolveConstraintDiscrepancy(
 	vecPenaltyForce *= rMassCoefficient;
 
 	// create instantenaeous penalty force generators
-	TPoint3<Real> ptOffset1 = TPoint3<Real>::Origin + (ptDiscrepancyPoint1 - kineticProperties1.Position);
-	TPoint3<Real> ptOffset2 = TPoint3<Real>::Origin + (ptDiscrepancyPoint2 - kineticProperties2.Position);
+	TVector3<Real> vecOffset1 = vecDiscrepancyPoint1 - kineticProperties1.Position;
+	TVector3<Real> vecOffset2 = vecDiscrepancyPoint2 - kineticProperties2.Position;
 	
 	// NOTE: add custom penalty force implementation to avoid external dependency
 

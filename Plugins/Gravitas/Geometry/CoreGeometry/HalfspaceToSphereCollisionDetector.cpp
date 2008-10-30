@@ -74,10 +74,10 @@ void HalfspaceToSphereCollisionDetector::ComputeContactManifold(
 	if (p_trnRelativePlacement.Translation.Y > sphere.Radius)
 		return;
 
-	TPoint3<Real> ptSphereOrigin(TPoint3<Real>::Origin + p_trnRelativePlacement.Translation);
-	Real rPenetration(sphere.Radius - ptSphereOrigin.Y);
-	TPoint3<Real> ptContactPoint(ptSphereOrigin.X, -rPenetration * (Real) 0.5, ptSphereOrigin.Z);
+	const TVector3<Real>& vecSphereOrigin = p_trnRelativePlacement.Translation;
+	Real rPenetration(sphere.Radius - vecSphereOrigin.Y);
+	TVector3<Real> vecContactPoint(vecSphereOrigin.X, -rPenetration * (Real) 0.5, vecSphereOrigin.Z);
 
 	p_contactManifold.ContactPoints.Add(
-		ContactPoint(ptContactPoint, TVector3<Real>::Up, rPenetration));
+		ContactPoint(vecContactPoint, TVector3<Real>::Up, rPenetration));
 }

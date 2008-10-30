@@ -14,7 +14,7 @@ class VortexForce
 	: public IForce
 {
 private: // private variables
-	Meson::Common::Maths::TPoint3<Real> m_ptEyePosition;
+	Meson::Common::Maths::TVector3<Real> m_vecEyePosition;
 	Real m_rAxialAttraction;
 	Real m_rVerticalAttraction;
 	
@@ -29,10 +29,10 @@ public: // public methods
 			p_mapProperties) const;
 	void GetProperty(const Meson::Common::Text::String& p_strName, Real& p_rValue) const;
 	void GetProperty(const Meson::Common::Text::String& p_strName,
-		Meson::Common::Maths::TPoint3<Real>& p_ptValue) const;
+		Meson::Common::Maths::TVector3<Real>& p_vecValue) const;
 	void SetProperty(const Meson::Common::Text::String& p_strName, Real p_rValue);
 	void SetProperty(const Meson::Common::Text::String& p_strName,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptValue);
+		const Meson::Common::Maths::TVector3<Real>& p_vecValue);
 
 	// IForce interface
 	Meson::Common::Maths::TVector3<Real> GetForceValue(
@@ -41,7 +41,7 @@ public: // public methods
 		Meson::Gravitas::Geometry::GeometryPtr p_pGeometry,
 		Real p_rTime);
 
-	Meson::Common::Maths::TPoint3<Real> GetApplicationPoint(
+	Meson::Common::Maths::TVector3<Real> GetApplicationPoint(
 		Meson::Gravitas::Body::MassProperties* p_pMassProperties,
 		Meson::Gravitas::Kinetics::KineticProperties* p_pKineticProperties,
 		Meson::Gravitas::Geometry::GeometryPtr p_pGeometry,

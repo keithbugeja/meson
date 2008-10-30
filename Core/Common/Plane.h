@@ -11,7 +11,6 @@
 #include "Namespaces.h"
 #include "DebugSupport.h"
 #include "Vector3.h"
-#include "Point3.h"
 #include "Maths.h"
 
 Meson_Common_Maths_BEGIN
@@ -61,12 +60,6 @@ public:
 		Normal = p_vec3Normal;
 	}
 
-	TPlane( const TVector3<TReal>& p_vec3Normal, const TPoint3<TReal>& p_pt3Point ) 
-	{
-		Distance = ((TVector3<TReal>&)p_pt3Point).DotProduct(p_vec3Normal);
-		Normal = p_vec3Normal;
-	}
-
 	//----------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------
 	TPlane(const TVector3<TReal>& p_point1, const TVector3<TReal>& p_point2, const TVector3<TReal>& p_point3) 
@@ -79,15 +72,6 @@ public:
 		
 		Normal = AB.CrossProduct(AC).Normalise();
 		Distance = p_point1.DotProduct(Normal);
-	}
-
-	TPlane( const TPoint3<TReal> &p_point1, const TPoint3<TReal> &p_point2, const TPoint3<TReal> &p_point3 ) 
-	{
-		TVector3<TReal> AB = p_point2 - p_point1,
-						AC = p_point3 - p_point1;
-		
-		Normal = AB.CrossProduct(AC).Normalise();
-		Distance = ((TVector3<TReal>)p_point1).DotProduct(Normal);
 	}
 
 	//----------------------------------------------------------------------------------------------

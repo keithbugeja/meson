@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Point3.h"
 #include "List.h"
 #include "ArrayList.h"
 #include "LinkedList.h"
@@ -24,12 +23,12 @@ struct ConstraintDiscrepancy
 	//------------------------------------------------------------------------------------------
 	/// First discrepancy point.
 	//------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Point1;
+	Meson::Common::Maths::TVector3<Real> Point1;
 
 	//------------------------------------------------------------------------------------------
 	/// Second discrepancy point.
 	//------------------------------------------------------------------------------------------
-	Meson::Common::Maths::TPoint3<Real> Point2;
+	Meson::Common::Maths::TVector3<Real> Point2;
 
 	//------------------------------------------------------------------------------------------
 	/// Relative velocity to be satisfied by the two points.
@@ -79,14 +78,14 @@ struct ConstraintDiscrepancy
 	/// Constructs a constraint discrepancy using the given points, relative velocity and
 	/// correction factor. If not specified, the relative velocity and correction factor are
 	/// respectively assumed zero and 0.8.
-	/// \param p_ptPoint1 First discrepancy point.
-	/// \param p_ptPoint2 Second discrepancy point.
+	/// \param p_vecPoint1 First discrepancy point.
+	/// \param p_vecPoint2 Second discrepancy point.
 	/// \param p_vecRelativeVelocity Relative velocity to be satisfied by the two points.
 	/// \param p_rCorrectionFactor Degree of correction required for this discrepancy.
 	//------------------------------------------------------------------------------------------
 	ConstraintDiscrepancy(
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint1,
-		const Meson::Common::Maths::TPoint3<Real>& p_ptPoint2,
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint1,
+		const Meson::Common::Maths::TVector3<Real>& p_vecPoint2,
 		const Meson::Common::Maths::TVector3<Real>& p_vecRelativeVelocity
 			= Meson::Common::Maths::TVector3<Real>::Zero,
 		Real p_rCorrectionFactor = (Real) 0.8);

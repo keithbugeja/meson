@@ -53,10 +53,10 @@ const bool CellKey::operator==(const CellKey& p_cellKey) const
 	return true;
 }
 
-Meson::Common::Maths::TPoint3<Real> CellKey::ComputePosition(
+Meson::Common::Maths::TVector3<Real> CellKey::ComputePosition(
 	const TVector3<Real>& p_vecCellSize) const
 {
-	return TPoint3<Real>(
+	return TVector3<Real>(
 		X * p_vecCellSize.X,
 		Y * p_vecCellSize.Y,
 		Z * p_vecCellSize.Z);
@@ -210,12 +210,12 @@ void GridSpace::RemoveBodyFromCells(BodyPtr p_pBody)
 void GridSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ray, BodyPtr p_pBody,
 	BodyRayIntersectionList& p_listBodyRayIntersections) const
 {
-	TPoint3<Real> ptIntersection;
+	TVector3<Real> vecIntersection;
 	Transform trnWorld, trnLocal;
 
 	// prepare world and local transforms
 	KineticProperties& kineticProperties = p_pBody->GetKineticProperties();
-	trnWorld.Translation = kineticProperties.Position.ToVector();
+	trnWorld.Translation = kineticProperties.Position;
 	trnWorld.Rotation = kineticProperties.Orientation;
 	trnLocal = trnWorld.InvertCopy();
 
@@ -225,11 +225,11 @@ void GridSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ray, BodyPt
 
 	// do local ray cast but skip on failure
 	GeometryPtr pGeometry(p_pBody->GetGeometry());
-	if (!pGeometry->IntersectsRay(rayLocal, ptIntersection))
+	if (!pGeometry->IntersectsRay(rayLocal, vecIntersection))
 		return;
 	
 	// transform local intersection point to world coords
-	trnWorld.Apply(ptIntersection);
+	trnWorld.Apply(vecIntersection);
 
 	// avoid duplicate due to overlap across cells
 	size_t unListCount = p_listBodyRayIntersections.Size();
@@ -238,7 +238,7 @@ void GridSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ray, BodyPt
 			return;
 
 	// insert in sorted order
-	BodyRayIntersection bodyRayIntersection(p_ray, p_pBody, ptIntersection);
+	BodyRayIntersection bodyRayIntersection(p_ray, p_pBody, vecIntersection);
 	for (size_t unListIndex = 0; unListIndex < unListCount; unListIndex++)
 	{
 		// find index for body further away from ray and insert before it
@@ -259,7 +259,6 @@ void GridSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ray, BodyPt
 void GridSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ray, GridCell& p_gridCell,
 	BodyRayIntersectionList& p_listBodyRayIntersections) const
 {
-	TPoint3<Real> ptIntersection;
 	Transform trnWorld, trnLocal;
 	size_t unBodyCount = p_gridCell.Bodies.Size();
 	for (size_t unBodyIndex = 0; unBodyIndex < unBodyCount; unBodyIndex++)
@@ -546,7 +545,7 @@ void GridSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ray,
 {
 	p_listBodyRayIntersections.Clear();
 
-	TPoint3<Real> ptIntersection;
+	TVector3<Real> vecIntersection;
 	Transform trnWorld, trnLocal;
 	size_t unBodyCount = m_listBodies.Size();
 	for (size_t unBodyIndex = 0; unBodyIndex < unBodyCount; unBodyIndex++)
@@ -560,7 +559,7 @@ void GridSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ray,
 
 		// prepare world and local transforms
 		KineticProperties& kineticProperties = pBody->GetKineticProperties();
-		trnWorld.Translation = kineticProperties.Position.ToVector();
+		trnWorld.Translation = kineticProperties.Position;
 		trnWorld.Rotation = kineticProperties.Orientation;
 		trnLocal = trnWorld.InvertCopy();
 
@@ -570,14 +569,14 @@ void GridSpace::IntersectRay(const Meson::Gravitas::Geometry::Ray& p_ray,
 
 		// do local ray cast but skip on failure
 		GeometryPtr pGeometry(pBody->GetGeometry());
-		if (!pGeometry->IntersectsRay(rayLocal, ptIntersection))
+		if (!pGeometry->IntersectsRay(rayLocal, vecIntersection))
 			continue;
 		
 		// transform local intersection point to world coords
-		trnWorld.Apply(ptIntersection);
+		trnWorld.Apply(vecIntersection);
 
 		// insert in sorted order
-		BodyRayIntersection bodyRayIntersection(p_ray, pBody, ptIntersection);
+		BodyRayIntersection bodyRayIntersection(p_ray, pBody, vecIntersection);
 		size_t unListCount = p_listBodyRayIntersections.Size();
 		int nInsertIndex = 0;
 		for (size_t unListIndex = 0; unListIndex < unListCount; unListIndex++)

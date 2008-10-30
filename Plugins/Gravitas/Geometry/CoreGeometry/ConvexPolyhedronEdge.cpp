@@ -24,7 +24,7 @@ ConvexPolyhedronEdge::ConvexPolyhedronEdge(const ConvexPolyhedronEdge& p_convexP
 }
 
 ConvexPolyhedronEdge::ConvexPolyhedronEdge(
-	PointList* p_pVertices,
+	VectorList* p_pVertices,
 	ushort p_nVertexIndex0, ushort p_nVertexIndex1)
 	: Vertices(p_pVertices)
 {

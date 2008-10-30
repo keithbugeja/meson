@@ -46,8 +46,8 @@ bool HalfspaceToCylinderCollisionDetector::TestIntersection(
 
 	Real rHalfHeight(cylinder.Height * (Real) 0.5);
 	LineSegment lnsShaft(
-		TPoint3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0),
-		TPoint3<Real>((Real) 0.0,  rHalfHeight, (Real) 0.0));
+		TVector3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0),
+		TVector3<Real>((Real) 0.0,  rHalfHeight, (Real) 0.0));
 	p_trnRelativePlacement.Apply(lnsShaft.Start);
 	p_trnRelativePlacement.Apply(lnsShaft.End);
 
@@ -84,12 +84,12 @@ void HalfspaceToCylinderCollisionDetector::ComputeContactManifold(
 
 	Real rHalfHeight(cylinder.Height * (Real) 0.5);
 	LineSegment lnsShaft(
-		TPoint3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0),
-		TPoint3<Real>((Real) 0.0,  rHalfHeight, (Real) 0.0));
+		TVector3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0),
+		TVector3<Real>((Real) 0.0,  rHalfHeight, (Real) 0.0));
 	p_trnRelativePlacement.Apply(lnsShaft.Start);
 	p_trnRelativePlacement.Apply(lnsShaft.End);
 
-	static PointArrayList listVertices;
+	static VectorArrayList listVertices;
 	Cylinder::EnumerateMaximalVertices(lnsShaft, cylinder.Radius, TVector3<Real>::Down,
 		listVertices);
 
@@ -101,12 +101,12 @@ void HalfspaceToCylinderCollisionDetector::ComputeContactManifold(
 	size_t unCount = listVertices.Size();
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = listVertices[unIndex];
-		if (ptVertex.Y > (Real) 0.0)
+		TVector3<Real>& vecVertex = listVertices[unIndex];
+		if (vecVertex.Y > (Real) 0.0)
 			continue;
 
-		contactPoint.Position = ptVertex;
-		contactPoint.Penetration = -ptVertex.Y;
+		contactPoint.Position = vecVertex;
+		contactPoint.Penetration = -vecVertex.Y;
 		p_contactManifold.ContactPoints.Add(contactPoint);
 	}
 }

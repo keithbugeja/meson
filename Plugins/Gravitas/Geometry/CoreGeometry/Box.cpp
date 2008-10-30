@@ -102,7 +102,7 @@ bool Box::IsBounded(void) const
 
 void Box::ComputeBoundingVolume(BoundingSphere &p_boundingSphere) const
 {
-	p_boundingSphere.Centre = TPoint3<Real>::Origin;
+	p_boundingSphere.Centre = TVector3<Real>::Zero;
 	p_boundingSphere.RadiusSquared = Extent.LengthSquared();
 	p_boundingSphere.Radius = TMaths<Real>::Sqrt(p_boundingSphere.RadiusSquared);
 }
@@ -113,8 +113,8 @@ void Box::ComputeBoundingVolume(BoundingAxisAlignedBox &p_boundingAxisAlignedBox
 	MESON_ASSERT(Extent.Y >= (Real) 0.0, "Box extents must be positive.");
 	MESON_ASSERT(Extent.Z >= (Real) 0.0, "Box extents must be positive.");
 
-	p_boundingAxisAlignedBox.Min = TPoint3<Real>::Origin - Extent;
-	p_boundingAxisAlignedBox.Max = TPoint3<Real>::Origin + Extent;
+	p_boundingAxisAlignedBox.Min = -Extent;
+	p_boundingAxisAlignedBox.Max =  Extent;
 }
 
 void Box::ComputeBoundingVolume(BoundingOrientedBox &p_boundingOrientedBox) const
@@ -123,16 +123,16 @@ void Box::ComputeBoundingVolume(BoundingOrientedBox &p_boundingOrientedBox) cons
 	MESON_ASSERT(Extent.Y >= (Real) 0.0, "Box extents must be positive.");
 	MESON_ASSERT(Extent.Z >= (Real) 0.0, "Box extents must be positive.");
 
-	p_boundingOrientedBox = BoundingOrientedBox(TPoint3<Real>::Origin, Extent);
+	p_boundingOrientedBox = BoundingOrientedBox(TVector3<Real>::Zero, Extent);
 }
 
 bool Box::IntersectsRay(const Ray& p_ray) const
 {
-	static TPoint3<Real> s_ptIntersction;
-	return IntersectsRay(p_ray, s_ptIntersction);
+	static TVector3<Real> s_vecIntersctionPoint;
+	return IntersectsRay(p_ray, s_vecIntersctionPoint);
 }
 
-bool Box::IntersectsRay(const Ray& p_ray, TPoint3<Real>& p_ptIntersectionPoint) const
+bool Box::IntersectsRay(const Ray& p_ray, TVector3<Real>& p_vecIntersectionPoint) const
 {
 	Real rTMin((Real) 0.0);
 	Real rTMax(TMaths<Real>::Maximum);
@@ -169,7 +169,7 @@ bool Box::IntersectsRay(const Ray& p_ray, TPoint3<Real>& p_ptIntersectionPoint) 
 	}
 
 	// compute intersection point
-	p_ptIntersectionPoint = p_ray.Source + p_ray.Direction * rTMin;
+	p_vecIntersectionPoint = p_ray.Source + p_ray.Direction * rTMin;
 
 	// if this point reached - intersection occured
 	return true;

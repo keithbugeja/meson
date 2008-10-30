@@ -15,13 +15,13 @@ using namespace Meson::Gravitas::Instrumentation;
 
 struct DeviceVertex
 {
-	Point3f Position;
+	Vector3f Position;
 	ColourRGBA Colour;
 
 	DeviceVertex(void);
 	DeviceVertex(const DeviceVertex& p_deviceVertex);
-	DeviceVertex(const Point3f& p_ptPosition);
-	DeviceVertex(const Point3f& p_ptPosition, const ColourRGBA& p_colourRGBA);
+	DeviceVertex(const Vector3f& p_vecPosition);
+	DeviceVertex(const Vector3f& p_vecPosition, const ColourRGBA& p_colourRGBA);
 	bool operator==(const DeviceVertex& p_deviceVertex) const;
 };
 
@@ -76,30 +76,30 @@ public:
 	DrawMode::DrawMode GetDrawMode(void);
 	void SetDrawMode(DrawMode::DrawMode p_drawMode);
 
-	void DrawText(const TPoint3<Real>& p_ptPosition,
+	void DrawText(const TVector3<Real>& p_vecPosition,
 		const String& p_strText);
 
 	void DrawPoint(
-		const TPoint3<Real>& p_ptPosition);
+		const TVector3<Real>& p_vecPosition);
 
 	void DrawLine(
-		const TPoint3<Real>& p_ptStart,
-		const TPoint3<Real>& p_ptEnd);
+		const TVector3<Real>& p_vecStart,
+		const TVector3<Real>& p_vecEnd);
 
 	void DrawArrow(
-		const TPoint3<Real>& p_ptHead,
-		const TPoint3<Real>& p_ptTail);
+		const TVector3<Real>& p_vecHead,
+		const TVector3<Real>& p_vecTail);
 
 	void DrawSphere(
-		const TPoint3<Real>& p_ptCentre,
+		const TVector3<Real>& p_vecCentre,
 		Real p_rRadius);
 
 	void DrawBox(
-		const TPoint3<Real>& p_ptCentre,
+		const TVector3<Real>& p_vecCentre,
 		const TVector3<Real>& p_vecExtents);
 
 	void DrawBox(
 		const TMatrix3<Real>& p_matOrientation,
-		const TPoint3<Real>& p_ptCentre,
+		const TVector3<Real>& p_vecCentre,
 		const TVector3<Real>& p_vecExtents);
 };

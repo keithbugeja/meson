@@ -44,14 +44,12 @@ bool BoxToCylinderCollisionDetector::TestIntersection(
 	const Box& box = (Box &) p_geometry1;
 	const Cylinder& cylinder = (Cylinder &) p_geometry2;
 
-	BoundingAxisAlignedBox boundingAxisAlignedBox(
-		TPoint3<Real>::Origin - box.Extent,
-		TPoint3<Real>::Origin + box.Extent);
+	BoundingAxisAlignedBox boundingAxisAlignedBox(-box.Extent, box.Extent);
 
 	static LineSegment lnsShaft;
 	Real rHalfHeight = cylinder.Height * (Real) 0.5;
-	lnsShaft.Start = TPoint3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0);
-	lnsShaft.End = TPoint3<Real>((Real) 0.0, rHalfHeight, (Real) 0.0);
+	lnsShaft.Start = TVector3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0);
+	lnsShaft.End = TVector3<Real>((Real) 0.0, rHalfHeight, (Real) 0.0);
 	lnsShaft.Transform(p_trnRelativePlacement);
 	Real rRadius = cylinder.Radius;
 
@@ -145,14 +143,12 @@ void BoxToCylinderCollisionDetector::ComputeContactManifold(
 	const Box& box = (Box &) p_geometry1;
 	const Cylinder& cylinder = (Cylinder &) p_geometry2;
 
-	BoundingAxisAlignedBox boundingAxisAlignedBox(
-		TPoint3<Real>::Origin - box.Extent,
-		TPoint3<Real>::Origin + box.Extent);
+	BoundingAxisAlignedBox boundingAxisAlignedBox(-box.Extent, box.Extent);
 
 	static LineSegment lnsShaft;
 	Real rHalfHeight = cylinder.Height * (Real) 0.5;
-	lnsShaft.Start = TPoint3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0);
-	lnsShaft.End = TPoint3<Real>((Real) 0.0, rHalfHeight, (Real) 0.0);
+	lnsShaft.Start = TVector3<Real>((Real) 0.0, -rHalfHeight, (Real) 0.0);
+	lnsShaft.End = TVector3<Real>((Real) 0.0, rHalfHeight, (Real) 0.0);
 	lnsShaft.Transform(p_trnRelativePlacement);
 	Real rRadius = cylinder.Radius;
 
@@ -299,8 +295,8 @@ void BoxToCylinderCollisionDetector::ComputeContactManifold(
 	// single point - single point (cylinder end edge contact with box vertex)
 	if (m_listVertices1.Size() == 1 && m_listVertices2.Size() == 1)
 	{
-		TPoint3<Real> ptPosition = m_listVertices1[0] + (m_listVertices2[0] - m_listVertices1[0]) * (Real) 0.5;
-		contactPoint.Position = ptPosition;
+		TVector3<Real> vecPosition = m_listVertices1[0] + (m_listVertices2[0] - m_listVertices1[0]) * (Real) 0.5;
+		contactPoint.Position = vecPosition;
 		p_contactManifold.ContactPoints.Add(contactPoint);
 		return;
 	}
@@ -310,10 +306,10 @@ void BoxToCylinderCollisionDetector::ComputeContactManifold(
 	{
 		LineSegment lnsEdge1(m_listVertices1[0], m_listVertices1[1]),
 			lnsEdge2(m_listVertices2[0], m_listVertices2[1]);
-		TPoint3<Real> ptClosest1, ptClosest2;
-		lnsEdge1.ClosestPointsToSegment(lnsEdge2, ptClosest1, ptClosest2);
+		TVector3<Real> vecClosest1, vecClosest2;
+		lnsEdge1.ClosestPointsToSegment(lnsEdge2, vecClosest1, vecClosest2);
 
-		contactPoint.Position = ptClosest1 + (ptClosest2 - ptClosest1) * (Real) 0.5;
+		contactPoint.Position = (vecClosest1 + vecClosest2) * (Real) 0.5;
 		p_contactManifold.ContactPoints.Add(contactPoint);
 		return;
 	}
@@ -338,10 +334,10 @@ void BoxToCylinderCollisionDetector::ComputeContactManifold(
 	size_t unCount = m_listVertices1.Size();
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = m_listVertices1[unIndex];
-		if (Cylinder::IntersectsPoint(lnsShaft, cylinder.Radius, ptVertex))
+		TVector3<Real>& vecVertex = m_listVertices1[unIndex];
+		if (Cylinder::IntersectsPoint(lnsShaft, cylinder.Radius, vecVertex))
 		{
-			contactPoint.Position = ptVertex;
+			contactPoint.Position = vecVertex;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
 	}
@@ -349,10 +345,10 @@ void BoxToCylinderCollisionDetector::ComputeContactManifold(
 	unCount = m_listVertices2.Size();
 	for (size_t unIndex = 0; unIndex < unCount; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = m_listVertices2[unIndex];
-		if (boundingAxisAlignedBox.Contains(ptVertex))
+		TVector3<Real>& vecVertex = m_listVertices2[unIndex];
+		if (boundingAxisAlignedBox.Contains(vecVertex))
 		{
-			contactPoint.Position = ptVertex;
+			contactPoint.Position = vecVertex;
 			p_contactManifold.ContactPoints.Add(contactPoint);
 		}
 	}

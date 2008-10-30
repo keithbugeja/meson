@@ -13,10 +13,10 @@ private: // private variables
 	Meson::Gravitas::Body::BodyPtr m_pBody2;
 	bool m_bBroken;
 	Real m_rBreakingThreshold;
-	Meson::Common::Maths::TPoint3<Real> m_ptBody1Anchor2;
-	Meson::Common::Maths::TPoint3<Real> m_ptBody2Anchor1;
-	Meson::Common::Maths::TPoint3<Real> m_ptBody1Anchor3;
-	Meson::Common::Maths::TPoint3<Real> m_ptBody2Anchor3;
+	Meson::Common::Maths::TVector3<Real> m_vecBody1Anchor2;
+	Meson::Common::Maths::TVector3<Real> m_vecBody2Anchor1;
+	Meson::Common::Maths::TVector3<Real> m_vecBody1Anchor3;
+	Meson::Common::Maths::TVector3<Real> m_vecBody2Anchor3;
 	ConstraintDiscrepancyArrayList m_listConstraintDiscrepancies;
 
 public: // public methods

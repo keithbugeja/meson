@@ -47,7 +47,7 @@ void BoundingOrientedBox::NormaliseAxes(void)
 }
 
 BoundingOrientedBox::BoundingOrientedBox(void)
-	: Centre(TPoint3<Real>::Origin)
+	: Centre(TVector3<Real>::Zero)
 	, Extent((Real) 1.0, (Real) 1.0, (Real) 1.0)
 {
 	Axis[0] = TVector3<Real>::Right;
@@ -76,10 +76,10 @@ BoundingOrientedBox::BoundingOrientedBox(
 }
 
 BoundingOrientedBox::BoundingOrientedBox(
-	const TPoint3<Real> &p_ptCentre,
+	const TVector3<Real> &p_vecCentre,
 	const TQuaternion<Real> &p_qtnOrientation,
 	const TVector3<Real> &p_vecExtent)
-	: Centre(p_ptCentre)
+	: Centre(p_vecCentre)
 	, Extent(p_vecExtent)
 {
 	TQuaternion<Real> qtnConjugate = p_qtnOrientation.ConjugateCopy();
@@ -89,9 +89,9 @@ BoundingOrientedBox::BoundingOrientedBox(
 }
 
 BoundingOrientedBox::BoundingOrientedBox(
-	const TPoint3<Real> &p_ptCentre,
+	const TVector3<Real> &p_vecCentre,
 	const TVector3<Real> &p_vecExtent)
-	: Centre(p_ptCentre)
+	: Centre(p_vecCentre)
 	, Extent(p_vecExtent)
 {
 	Axis[0] = TVector3<Real>::Right;
@@ -108,9 +108,9 @@ BoundingVolumeType::BoundingVolumeType BoundingOrientedBox::GetType(void) const
 	return BoundingVolumeType::OrientedBox;
 }
 
-bool BoundingOrientedBox::Contains(const Meson::Common::Maths::TPoint3<Real>& p_ptPoint) const
+bool BoundingOrientedBox::Contains(const Meson::Common::Maths::TVector3<Real>& p_vecPoint) const
 {
-	TVector3<Real> vecPointOffset(p_ptPoint - Centre);
+	TVector3<Real> vecPointOffset(p_vecPoint - Centre);
 
 	Real rProjectionX(vecPointOffset * Axis[0]);
 	if (rProjectionX < -Extent.X) return false;
@@ -129,12 +129,12 @@ bool BoundingOrientedBox::Contains(const Meson::Common::Maths::TPoint3<Real>& p_
 
 bool BoundingOrientedBox::Intersects(const Ray& p_ray) const
 {
-	static TPoint3<Real> s_ptIntersction;
-	return Intersects(p_ray, s_ptIntersction);
+	static TVector3<Real> s_vecIntersction;
+	return Intersects(p_ray, s_vecIntersction);
 }
 
 bool BoundingOrientedBox::Intersects(const Ray& p_ray,
-	Meson::Common::Maths::TPoint3<Real>& p_ptIntersectionPoint) const
+	Meson::Common::Maths::TVector3<Real>& p_vecIntersectionPoint) const
 {
 	// compute rotation matrix from OBB axes
 	TMatrix3<Real> matWorld(false);
@@ -144,21 +144,21 @@ bool BoundingOrientedBox::Intersects(const Ray& p_ray,
 	// prepare local and world transforms
 	Meson::Gravitas::Geometry::Transform trnWorld;
 	trnWorld.Rotation.MakeRotation(matWorld);
-	trnWorld.Translation = Centre.ToVector();
+	trnWorld.Translation = Centre;
 	Meson::Gravitas::Geometry::Transform trnLocal(trnWorld.InvertCopy());
 
 	/// transform ray to local space
 	Ray rayLocal(p_ray.TransformCopy(trnLocal));
 
 	// prepare AABB version of OBB
-	BoundingAxisAlignedBox boundingAxisAlignedBox(TPoint3<Real>::Origin - Extent, TPoint3<Real>::Origin + Extent);
+	BoundingAxisAlignedBox boundingAxisAlignedBox(-Extent, Extent);
 
 	// do test with local ray on AABB
-	if (!boundingAxisAlignedBox.Intersects(rayLocal, p_ptIntersectionPoint))
+	if (!boundingAxisAlignedBox.Intersects(rayLocal, p_vecIntersectionPoint))
 		return false;
 
 	// transform the local intersection point to world
-	trnWorld.Apply(p_ptIntersectionPoint);
+	trnWorld.Apply(p_vecIntersectionPoint);
 
 	return true;
 }
@@ -259,12 +259,12 @@ void BoundingOrientedBox::Transform(
 }
 
 void BoundingOrientedBox::ClosestPointTo(
-	const TPoint3<Real> &p_ptPoint, TPoint3<Real> &p_ptClosestPoint) const
+	const TVector3<Real> &p_vecPoint, TVector3<Real> &p_vecClosestPoint) const
 {
-	TVector3<Real> vecOffset = p_ptPoint - Centre;
+	TVector3<Real> vecOffset = p_vecPoint - Centre;
 
 	// start closest point at box centre
-	p_ptClosestPoint = Centre;
+	p_vecClosestPoint = Centre;
 
 	// process all box axes
 	for (size_t unIndex = 0; unIndex < 3; unIndex++)
@@ -277,7 +277,7 @@ void BoundingOrientedBox::ClosestPointTo(
 			-Extent.Element[unIndex], Extent.Element[unIndex]);
 
 		// shift closest point along axis by clamped distance
-		p_ptClosestPoint += rDistance * Axis[unIndex];
+		p_vecClosestPoint += rDistance * Axis[unIndex];
 	}
 }
 
@@ -285,7 +285,7 @@ void BoundingOrientedBox::ProjectToInterval(
 	const Meson::Common::Maths::TVector3<Real> &p_vecAxis,
 	Meson::Common::Maths::TInterval<Real> &p_interval) const
 {
-	Real rCentre = Centre.ToVector() * p_vecAxis;
+	Real rCentre = Centre * p_vecAxis;
 	Real rRadius
 		= Extent.X * TMaths<Real>::Abs(Axis[0] * p_vecAxis)
 		+ Extent.Y * TMaths<Real>::Abs(Axis[1] * p_vecAxis)
@@ -338,10 +338,10 @@ TMatrix3<Real> BoundingOrientedBox::Orientation(void) const
 
 bool BoundingOrientedBox::Intersects(const BoundingSphere &p_boundingSphere) const
 {
-	TPoint3<Real> ptClosestPoint;
-	ClosestPointTo(p_boundingSphere.Centre, ptClosestPoint);
+	TVector3<Real> vecClosestPoint;
+	ClosestPointTo(p_boundingSphere.Centre, vecClosestPoint);
 
-	return (p_boundingSphere.Centre - ptClosestPoint).LengthSquared()
+	return (p_boundingSphere.Centre - vecClosestPoint).LengthSquared()
 		<= p_boundingSphere.RadiusSquared;
 }
 
@@ -474,7 +474,7 @@ bool BoundingOrientedBox::Intersects(const BoundingOrientedBox &p_boundingOrient
 }
 
 void BoundingOrientedBox::EnumerateFeatures(
-	PointList& p_listVertices) const
+	VectorList& p_listVertices) const
 {
 	// compute transformed extents
 	TVector3<Real> vecExtent[3];
@@ -484,27 +484,27 @@ void BoundingOrientedBox::EnumerateFeatures(
 
 	p_listVertices.Clear();
 
-	TPoint3<Real> ptCME0 = Centre - vecExtent[0];
-	TPoint3<Real> ptCPE0 = Centre + vecExtent[0];
-	TPoint3<Real> ptCME0ME1 = ptCME0 - vecExtent[1];
-	TPoint3<Real> ptCME0PE1 = ptCME0 + vecExtent[1];
-	TPoint3<Real> ptCPE0ME1 = ptCPE0 - vecExtent[1];
-	TPoint3<Real> ptCPE0PE1 = ptCPE0 + vecExtent[1];
+	TVector3<Real> vecCME0 = Centre - vecExtent[0];
+	TVector3<Real> vecCPE0 = Centre + vecExtent[0];
+	TVector3<Real> vecCME0ME1 = vecCME0 - vecExtent[1];
+	TVector3<Real> vecCME0PE1 = vecCME0 + vecExtent[1];
+	TVector3<Real> vecCPE0ME1 = vecCPE0 - vecExtent[1];
+	TVector3<Real> vecCPE0PE1 = vecCPE0 + vecExtent[1];
 
-	p_listVertices.Add(ptCME0ME1 - vecExtent[2]);
-	p_listVertices.Add(ptCME0ME1 + vecExtent[2]);
-	p_listVertices.Add(ptCME0PE1 - vecExtent[2]);
-	p_listVertices.Add(ptCME0PE1 + vecExtent[2]);
-	p_listVertices.Add(ptCPE0ME1 - vecExtent[2]);
-	p_listVertices.Add(ptCPE0ME1 + vecExtent[2]);
-	p_listVertices.Add(ptCPE0PE1 - vecExtent[2]);
-	p_listVertices.Add(ptCPE0PE1 + vecExtent[2]);
+	p_listVertices.Add(vecCME0ME1 - vecExtent[2]);
+	p_listVertices.Add(vecCME0ME1 + vecExtent[2]);
+	p_listVertices.Add(vecCME0PE1 - vecExtent[2]);
+	p_listVertices.Add(vecCME0PE1 + vecExtent[2]);
+	p_listVertices.Add(vecCPE0ME1 - vecExtent[2]);
+	p_listVertices.Add(vecCPE0ME1 + vecExtent[2]);
+	p_listVertices.Add(vecCPE0PE1 - vecExtent[2]);
+	p_listVertices.Add(vecCPE0PE1 + vecExtent[2]);
 }
 
 void BoundingOrientedBox::EnumerateFeatures(
 	LineSegmentList& p_listEdges) const
 {
-	PointArrayList listVertices(8);
+	VectorArrayList listVertices(8);
 	EnumerateFeatures(listVertices);
 
 	p_listEdges.Clear();
@@ -523,7 +523,7 @@ void BoundingOrientedBox::EnumerateFeatures(
 }
 
 void BoundingOrientedBox::EnumerateFeatures(
-	PointList& p_listVertices, LineSegmentList& p_listEdges) const
+	VectorList& p_listVertices, LineSegmentList& p_listEdges) const
 {
 	EnumerateFeatures(p_listVertices);
 
@@ -543,21 +543,21 @@ void BoundingOrientedBox::EnumerateFeatures(
 }
 
 void BoundingOrientedBox::EnumerateMaximalVertices(
-	const TVector3<Real>& p_vecDirection, PointList& p_listVertices) const
+	const TVector3<Real>& p_vecDirection, VectorList& p_listVertices) const
 {
 	// clear vertex list
 	p_listVertices.Clear();
 
 	// enumerate 8 OBB vertices
-	TArrayList< TPoint3<Real> > listAllVertices(8);
+	VectorArrayList listAllVertices(8);
 	Real rMaximumProjection = -TMaths<Real>::Maximum;
 	EnumerateFeatures(listAllVertices);
 
 	// determine maximal vertices in terms of projection
 	for (size_t unIndex = 0; unIndex < 8; unIndex++)
 	{
-		TPoint3<Real>& ptVertex = listAllVertices(unIndex);
-		Real rProjection = p_vecDirection * ptVertex.ToVector();
+		TVector3<Real>& vecVertex = listAllVertices(unIndex);
+		Real rProjection = p_vecDirection * vecVertex;
 
 		// ignore vertices that are definitely less extreme than current
 		if (rProjection + TMaths<Real>::Epsilon < rMaximumProjection) continue;
@@ -568,6 +568,6 @@ void BoundingOrientedBox::EnumerateMaximalVertices(
 			p_listVertices.Clear();
 
 		rMaximumProjection = rProjection;
-		p_listVertices.Add(ptVertex);
+		p_listVertices.Add(vecVertex);
 	}
 }
