@@ -21,7 +21,8 @@
 Meson_Common_Maths_BEGIN
 
 // TMatrix2 template
-template <typename TReal> class TMatrix2
+template <typename TReal> 
+class TMatrix2
 {
 public:
 	//----------------------------------------------------------------------------------------------

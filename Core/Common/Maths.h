@@ -402,23 +402,23 @@ public:
 		return ( Abs(p_tValue1 - p_tValue2) <= Epsilon );
 	}
 
-	static const TReal E,
-					   Pi,
-					   PiTwo,
-					   PiHalf,
-					   InvPi,
-					   InvPiTwo,
-					   SqrtPi,
-					   SqrtPiTwo,
-					   InvSqrtPi,
-					   InvSqrtPiTwo,
-					   Epsilon,
-					   Infinity,
-					   Minimum,
-					   Maximum,
-					   DegToRad,
-					   RadToDeg,
-					   Tolerance;
+	static const TReal E;
+	static const TReal Pi;
+	static const TReal PiTwo;
+	static const TReal PiHalf;
+	static const TReal InvPi;
+	static const TReal InvPiTwo;
+	static const TReal SqrtPi;
+	static const TReal SqrtPiTwo;
+	static const TReal InvSqrtPi;
+	static const TReal InvSqrtPiTwo;
+	static const TReal Epsilon;
+	static const TReal Infinity;
+	static const TReal Minimum;
+	static const TReal Maximum;
+	static const TReal DegToRad;
+	static const TReal RadToDeg;
+	static const TReal Tolerance;
 };
 
 // Prevent confusion with min/max macros
