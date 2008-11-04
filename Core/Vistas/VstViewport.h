@@ -17,7 +17,7 @@ Meson_Vistas_BEGIN
 		  2. If viewport is made aware that it is currently active, should
 			 render device binding also be included to show activity scope?
  */
-class Viewport
+class VISTAS_API Viewport
 {
 public:
 	//----------------------------------------------------------------------------------------------

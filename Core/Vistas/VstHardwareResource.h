@@ -18,7 +18,7 @@ Meson_Vistas_BEGIN
 	//  \class HardwareResource
 	//  Base class for all hardware resource entities in the Vistas framework. 
 	//----------------------------------------------------------------------------------------------	
-	class HardwareResource : public Resource
+	class VISTAS_API HardwareResource : public Resource
 	{
 		VISTAS_IMPLEMENT_RTTI(HardwareResource, Resource);
 

@@ -15,7 +15,7 @@
 Meson_Vistas_BEGIN
 	
 	//----------------------------------------------------------------------------------------------
-	class IndexBuffer : public HardwareResource
+	class VISTAS_API IndexBuffer : public HardwareResource
 	{
 		VISTAS_IMPLEMENT_RTTI(IndexBuffer, HardwareResource);
 

@@ -16,7 +16,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class MaterialManager : public Meson::Common::TSingleton<MaterialManager>
+	class VISTAS_API MaterialManager : public Meson::Common::TSingleton<MaterialManager>
 	{
 		friend class Meson::Common::TSingleton<MaterialManager>;
 

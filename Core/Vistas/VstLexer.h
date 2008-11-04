@@ -16,7 +16,7 @@
 
 Meson_Vistas_BEGIN
 
-	class LexerToken
+	class VISTAS_API LexerToken
 	{
 	public:
 		enum TokenType
@@ -59,7 +59,7 @@ Meson_Vistas_BEGIN
 		int IntegerValue;
 	};
 
-	class Lexer
+	class VISTAS_API Lexer
 	{
 	public:
 		enum LexerState
@@ -127,7 +127,7 @@ Meson_Vistas_BEGIN
 	};
 
 	//----------------------------------------------------------------------------------------------
-	class ILexer 
+	class VISTAS_API ILexer 
 	{
 	public:
 		ILexer(Meson::Common::IO::IInputStream* p_pInputStream)

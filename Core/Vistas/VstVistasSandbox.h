@@ -11,7 +11,7 @@ Meson_Vistas_BEGIN
 		\brief A generic sanbox application for Vistas applications.
 	 */
 	//----------------------------------------------------------------------------------------------
-	class VistasSandbox : public VistasApplication
+	class VISTAS_API VistasSandbox : public VistasApplication
 	{
 	public:
 		//----------------------------------------------------------------------------------------------

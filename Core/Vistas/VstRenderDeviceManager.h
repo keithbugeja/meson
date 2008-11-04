@@ -14,7 +14,7 @@
 
 Meson_Vistas_BEGIN
 
-	class RenderDeviceManager : public Meson::Common::TSingleton<RenderDeviceManager>
+	class VISTAS_API RenderDeviceManager : public Meson::Common::TSingleton<RenderDeviceManager>
 	{
 		friend class Meson::Common::TSingleton<RenderDeviceManager>;
 

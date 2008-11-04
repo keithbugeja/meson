@@ -15,7 +15,7 @@ Meson_Vistas_BEGIN
 
 	class RenderConstant;
 
-	class RenderDeviceAdapter : public IRenderDevice
+	class VISTAS_API RenderDeviceAdapter : public IRenderDevice
 	{
 	public:
 		//----------------------------------------------------------------------------------------------

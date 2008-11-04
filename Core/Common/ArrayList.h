@@ -6,7 +6,6 @@
 //----------------------------------------------------------------------------------------------
 //	Gordon Mangion 	07/09/2007	1.0.0		Initial version.
 //----------------------------------------------------------------------------------------------
-
 #pragma once
 
 #include "List.h"
@@ -15,6 +14,8 @@
 #include "Pointer.h"
 #include "DebugSupport.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
 
 Meson_Common_Collections_BEGIN
 
@@ -792,8 +793,6 @@ private: // private internal methods
 };
 
 Meson_Common_Collections_END
-
-
 
 template<class TElement>
 Meson::Common::Collections::TArrayList<TElement>

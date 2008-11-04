@@ -12,7 +12,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class TextureState : public Meson::Common::TReferenceCounter<TextureState>
+	class VISTAS_API TextureState : public Meson::Common::TReferenceCounter<TextureState>
 	{
 	public:
 		enum TextureType

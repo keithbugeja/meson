@@ -16,9 +16,13 @@
 #include "Matrix3.h"
 #include "Vector3.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 Meson_Common_Maths_BEGIN
 
-template <typename TReal> class TQuaternion
+template <typename TReal> 
+class TQuaternion
 {
 public:
 	//----------------------------------------------------------------------------------------------

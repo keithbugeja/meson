@@ -1,5 +1,3 @@
-#pragma once
-
 //----------------------------------------------------------------------------------------------
 //	
 //	
@@ -8,11 +6,14 @@
 //----------------------------------------------------------------------------------------------
 //	Gordon Mangion 	07/09/2007	1.0.0		Initial version.
 //----------------------------------------------------------------------------------------------
+#pragma once
 
 #include "Namespaces.h"
 #include "MesonException.h"
 #include "List.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
 
 Meson_Common_Collections_BEGIN
 
@@ -76,7 +77,8 @@ public:
 // use of 'this' in queue enumerator constructor
 #pragma warning( disable : 4355 )
 
-template< class TElement > class TQueue : public TImmutableList< TElement >
+template< class TElement > 
+class TQueue : public TImmutableList< TElement >
 {
 protected:
 	TElement	*m_pBegin,

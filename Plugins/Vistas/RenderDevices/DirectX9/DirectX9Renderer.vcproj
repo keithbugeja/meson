@@ -46,7 +46,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(SolutionDir)Core\Common; $(SolutionDir)Core\Vistas;&quot;C:\Program Files\Microsoft DirectX SDK\Include&quot;"
-				PreprocessorDefinitions="MESON_PLUGIN;WIN32;_DEBUG;_WINDOWS;_USRDLL;DIRECTX9RENDERER_EXPORTS;D3D_DEBUG_INFO"
+				PreprocessorDefinitions="MESON_PLUGIN;WIN32;_DEBUG;_WINDOWS;_USRDLL;D3D_DEBUG_INFO"
 				StringPooling="true"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -126,7 +126,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="$(SolutionDir)Core\Common; $(SolutionDir)Core\Vistas;&quot;C:\Program Files\Microsoft DirectX SDK\Include&quot;"
-				PreprocessorDefinitions="MESON_PLUGIN;WIN32;NDEBUG;_WINDOWS;_USRDLL;DIRECTX9RENDERER_EXPORTS"
+				PreprocessorDefinitions="MESON_PLUGIN;WIN32;NDEBUG;_WINDOWS;_USRDLL"
 				ExceptionHandling="1"
 				RuntimeLibrary="2"
 				BufferSecurityCheck="false"

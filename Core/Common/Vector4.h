@@ -17,6 +17,9 @@
 
 Meson_Common_Maths_BEGIN
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 template <typename TReal> 
 class TVector4
 {

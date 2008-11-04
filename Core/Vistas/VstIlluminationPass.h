@@ -10,7 +10,7 @@
 
 Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
-	class IlluminationPass : public IPass
+	class VISTAS_API IlluminationPass : public IPass
 	{
 	public:
 		IlluminationPass(void);

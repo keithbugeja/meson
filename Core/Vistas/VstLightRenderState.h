@@ -8,7 +8,7 @@
 
 Meson_Vistas_BEGIN
 
-	class LightRenderState : public IRenderState
+	class VISTAS_API LightRenderState : public IRenderState
 	{
 	public:
 		LightRenderState();

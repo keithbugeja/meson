@@ -14,7 +14,7 @@
 
 Meson_Vistas_BEGIN
 	
-	class VisibleEntitySet : public VistasObject
+	class VISTAS_API VisibleEntitySet : public VistasObject
 	{
 	public:
 		//----------------------------------------------------------------------------------------------

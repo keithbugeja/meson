@@ -16,7 +16,7 @@ Meson_Vistas_BEGIN
 
 	class RenderDeviceAdapter;
 
-	class RenderConstant : public ShaderProgramVariable
+	class VISTAS_API RenderConstant : public ShaderProgramVariable
 	{
 	public:
 		RenderConstant(RenderConstantType::RenderConstantType p_constantType, RenderDeviceAdapter* p_pRenderDeviceAdapter);

@@ -12,7 +12,7 @@
 
 Meson_Vistas_BEGIN
 
-	class BiasRenderState : public IRenderState
+	class VISTAS_API BiasRenderState : public IRenderState
 	{
 	public:
 		BiasRenderState(void);

@@ -3,6 +3,9 @@
 #include "Set.h"
 #include "TreeMap.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 Meson_Common_Collections_BEGIN
 
 Meson::Common::Memory::MemoryManager* GetTreeSetMemoryManager(void);

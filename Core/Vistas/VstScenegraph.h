@@ -15,7 +15,7 @@
 Meson_Vistas_BEGIN
 	
 	//----------------------------------------------------------------------------------------------
-	class Scenegraph : public VistasObject
+	class VISTAS_API Scenegraph : public VistasObject
 	{
 		VISTAS_IMPLEMENT_RTTI(Scenegraph, VistasObject);
 

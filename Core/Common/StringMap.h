@@ -1,5 +1,3 @@
-#pragma once
-
 //----------------------------------------------------------------------------------------------
 //	
 //	
@@ -8,12 +6,17 @@
 //----------------------------------------------------------------------------------------------
 //	Gordon Mangion 	07/09/2007	1.0.0		Initial version.
 //----------------------------------------------------------------------------------------------
+#pragma once
 
 #include "TrieMap.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 Meson_Common_Collections_BEGIN
 
-template< typename TValue > class TStringMap
+template< typename TValue > 
+class TStringMap
 	: public TTrieMap< Meson::Common::Text::String, TValue >
 {
 public:

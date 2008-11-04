@@ -15,7 +15,7 @@ Meson_Vistas_BEGIN
 	// TODO: 1. Extend texture object to allow for an image shadow buffer.
 	//		 2. Provide more properties as to what regards the contained texture buffer object.
 	//----------------------------------------------------------------------------------------------
-	class Texture : public Meson::Common::TReferenceCounter<Texture>
+	class VISTAS_API Texture : public Meson::Common::TReferenceCounter<Texture>
 	{
 		friend class TextureManager;
 

@@ -11,7 +11,7 @@
 
 Meson_Vistas_BEGIN
 
-	class Transformation
+	class VISTAS_API Transformation
 	{
 	public:
 		//----------------------------------------------------------------------------------------------

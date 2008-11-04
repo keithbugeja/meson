@@ -52,7 +52,7 @@ Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
 
 	//----------------------------------------------------------------------------------------------
-	class ISceneNode : public VistasObject
+	class VISTAS_API ISceneNode : public VistasObject
 	{
 		VISTAS_IMPLEMENT_RTTI(ISceneNode, VistasObject);
 

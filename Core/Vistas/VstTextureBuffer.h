@@ -14,7 +14,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class TextureBuffer : public HardwareResource
+	class VISTAS_API TextureBuffer : public HardwareResource
 	{
 		VISTAS_IMPLEMENT_RTTI(TextureBuffer, HardwareResource);
 

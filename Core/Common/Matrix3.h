@@ -21,6 +21,9 @@
 #include <memory.h>
 #include <algorithm>
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 Meson_Common_Maths_BEGIN
 
 // TMatrix3 template

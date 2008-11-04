@@ -15,7 +15,7 @@
 
 Meson_Vistas_BEGIN
 
-	class RenderContext : public Meson::Common::TReferenceCounter<RenderContext>
+	class VISTAS_API RenderContext : public Meson::Common::TReferenceCounter<RenderContext>
 	{
 	protected:
 		void ClearRenderContext(void)

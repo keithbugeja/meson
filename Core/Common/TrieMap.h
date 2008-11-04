@@ -1,5 +1,3 @@
-#pragma once
-
 //----------------------------------------------------------------------------------------------
 //	
 //	
@@ -8,11 +6,15 @@
 //----------------------------------------------------------------------------------------------
 //	Gordon Mangion 	07/09/2007	1.0.0		Initial version.
 //----------------------------------------------------------------------------------------------
+#pragma once
 
 #include <memory>
 
 #include "Map.h"
 #include "BufferList.h"
+
+// Disable DLL export warnings
+#pragma warning (disable:4251)
 
 Meson_Common_Collections_BEGIN
 
@@ -792,6 +794,8 @@ public: // TImmutableMap
 
 Meson_Common_Collections_END
 
+// Restore DLL export warnings
+#pragma warning (default:4251)
 
 template< class TKey >
 inline const byte* FlattenKey( const TKey& p_key, size_t& p_size )
@@ -812,4 +816,3 @@ inline const byte* FlattenKey( const Meson::Common::Text::String& p_strKey, size
 	p_size = p_strKey.Size();
 	return (const byte*)(p_strKey.GetBuffer());
 }
-

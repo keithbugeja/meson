@@ -19,7 +19,7 @@ Meson_Vistas_BEGIN
 
 	/** Base class for all shader program types.
 	 */
-	class IShaderProgram : public VistasObject
+	class VISTAS_API IShaderProgram : public VistasObject
 	{
 	public:
 		/** This enumeration lists the shader program types which

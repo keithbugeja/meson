@@ -1,4 +1,3 @@
-#pragma once
 //----------------------------------------------------------------------------------------------
 //	
 //	
@@ -7,16 +6,18 @@
 //----------------------------------------------------------------------------------------------
 //	Gordon Mangion 	26/02/2008	1.0.0		Initial version.
 //----------------------------------------------------------------------------------------------
+#pragma once
 
 #include "MesonException.h"
 #include "Pointer.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
 
 Meson_Common_Collections_BEGIN
 
 #define BUFFER_DUAL_LEFT_GROWTH_FACTOR 1.25f
 #define BUFFER_DUAL_RIGHT_GROWTH_FACTOR 1.25f
-
 
 template< typename TElement > 
 class TBufferDual 
@@ -546,9 +547,5 @@ public:
 #pragma endregion
 
 };
-
-
-
-
 
 Meson_Common_Collections_END

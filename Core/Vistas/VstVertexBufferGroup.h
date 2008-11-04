@@ -12,7 +12,7 @@
 Meson_Vistas_BEGIN
 	
 	//----------------------------------------------------------------------------------------------
-	class VertexBufferGroup : public Meson::Common::TReferenceCounter<VertexBufferGroup>
+	class VISTAS_API VertexBufferGroup : public Meson::Common::TReferenceCounter<VertexBufferGroup>
 	{
 	protected:
 		void RefreshVertexCounts(void);

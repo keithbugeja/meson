@@ -44,7 +44,7 @@ Meson_Vistas_BEGIN
 
 	typedef Meson::Common::Collections::TEnumerator<RenderTarget*>& RenderTargetEnumerator;
 
-	class IRenderDevice
+	class VISTAS_API IRenderDevice
 	{
 	public:
 		//----------------------------------------------------------------------------------------------

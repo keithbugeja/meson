@@ -13,7 +13,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class Light : public VistasObject, IPropertySet
+	class VISTAS_API Light : public VistasObject, IPropertySet
 	{
 		VISTAS_IMPLEMENT_RTTI(Light, VistasObject);
 

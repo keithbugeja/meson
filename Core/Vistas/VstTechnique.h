@@ -18,7 +18,7 @@ Meson_Vistas_BEGIN
 
 	typedef Meson::Common::Collections::TEnumerator<PassPtr>& PassEnumerator;
 
-	class Technique : public Meson::Common::TReferenceCounter<Technique>
+	class VISTAS_API Technique : public Meson::Common::TReferenceCounter<Technique>
 	{
 	protected:
 		void SaveState(void);

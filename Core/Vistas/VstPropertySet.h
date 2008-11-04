@@ -12,7 +12,7 @@ Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
 	class Property;
 
-	class PropertyDescriptor
+	class VISTAS_API PropertyDescriptor
 	{
 	public:
 		enum PropertyType
@@ -63,7 +63,7 @@ Meson_Vistas_BEGIN
 	};
 
 	//----------------------------------------------------------------------------------------------
-	class Property : public PropertyDescriptor
+	class VISTAS_API Property : public PropertyDescriptor
 	{
 	public:
 		Property(void);
@@ -96,7 +96,7 @@ Meson_Vistas_BEGIN
 	};
 
 	//----------------------------------------------------------------------------------------------
-	class IImmutablePropertySet
+	class VISTAS_API IImmutablePropertySet
 	{
 	public:
 		virtual bool ContainsProperty(const Meson::Common::Text::String& p_strPropertyName);
@@ -117,7 +117,7 @@ Meson_Vistas_BEGIN
 	};
 
 	//----------------------------------------------------------------------------------------------
-	class IPropertySet : public IImmutablePropertySet
+	class VISTAS_API IPropertySet : public IImmutablePropertySet
 	{
 	public:
 		virtual void SetProperty(const Meson::Common::Text::String& p_strPropertyName, bool p_bValue);
@@ -135,7 +135,7 @@ Meson_Vistas_BEGIN
 	};
 
 	//----------------------------------------------------------------------------------------------
-	class PropertySet : public IPropertySet
+	class VISTAS_API PropertySet : public IPropertySet
 	{
 	public:
 		virtual void GetPropertyDescriptor(const Meson::Common::Text::String& p_strPropertyName, PropertyDescriptor& p_propertyDescriptor);

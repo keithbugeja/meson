@@ -13,7 +13,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class Camera : public VistasObject, IPropertySet
+	class VISTAS_API Camera : public VistasObject, IPropertySet
 	{
 		VISTAS_IMPLEMENT_RTTI(Camera, VistasObject);
 

@@ -13,7 +13,7 @@
 
 Meson_Vistas_BEGIN
 	
-	class VisibleEntity : public Meson::Common::TReferenceCounter<VisibleEntity>
+	class VISTAS_API VisibleEntity : public Meson::Common::TReferenceCounter<VisibleEntity>
 	{
 	public:
 		enum Action 

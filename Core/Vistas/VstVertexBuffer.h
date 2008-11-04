@@ -15,7 +15,7 @@
 Meson_Vistas_BEGIN
 	
 	//----------------------------------------------------------------------------------------------
-	class VertexBuffer : public HardwareResource
+	class VISTAS_API VertexBuffer : public HardwareResource
 	{
 		VISTAS_IMPLEMENT_RTTI(VertexBuffer, HardwareResource);
 

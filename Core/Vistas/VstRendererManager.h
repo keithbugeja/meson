@@ -16,7 +16,7 @@ Meson_Vistas_BEGIN
 
 	typedef Meson::Common::Collections::TEnumerator<IRendererFactory*>& RendererFactoryEnumerator;
 
-	class RendererManager : public Meson::Common::TSingleton<RendererManager>
+	class VISTAS_API RendererManager : public Meson::Common::TSingleton<RendererManager>
 	{
 		friend class Meson::Common::TSingleton<RendererManager>;
 

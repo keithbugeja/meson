@@ -14,7 +14,7 @@
 #include "VstCamera.h"
 
 Meson_Vistas_BEGIN
-	class CameraManager : public Meson::Common::TSingleton<CameraManager>
+	class VISTAS_API CameraManager : public Meson::Common::TSingleton<CameraManager>
 	{
 		friend class Meson::Common::TSingleton<CameraManager>;
 

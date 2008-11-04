@@ -14,7 +14,7 @@ Meson_Vistas_BEGIN
 	/** This class provides a basic read-only interface for representing 
 		constants within shader programs.
 	 */
-	class ShaderProgramConstant
+	class VISTAS_API ShaderProgramConstant
 	{
 	public:
 		/** The following list enumerates the data types that can be passed 
@@ -98,15 +98,15 @@ Meson_Vistas_BEGIN
 	
 		//----------------------------------------------------------------------------------------------
 		/** The following constants determine the internal storage requirements of a single shader 
-			constant. The internal buffer is shader by all the elements. The actual size of the buffer 
+			constant. The internal buffer is shared by all the elements. The actual size of the buffer 
 			is: MAX(MaxBoolean * sizeof(bool), MaxInteger * sizeof(int), MaxFloat * sizeof(float))
 		 */
 		//----------------------------------------------------------------------------------------------
-		static const uint MaxBoolean	= 16,
-						  MaxInteger	= 128,
-						  MaxFloat		= 128,
-						  MaxVector		= MaxFloat / 4,
-						  MaxMatrix		= MaxVector  / 4;
+		static const uint MaxBoolean = 128;
+		static const uint MaxInteger = 128;
+		static const uint MaxFloat = 128;
+		static const uint MaxVector = MaxFloat / 4;
+		static const uint MaxMatrix = MaxFloat / 16;
 
 	protected:
 		Meson::Common::Text::String m_strName;

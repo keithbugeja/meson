@@ -16,7 +16,7 @@ Meson_Vistas_BEGIN
 
 	typedef Meson::Common::Collections::TEnumerator<ICullerFactory*>& CullerFactoryEnumerator;
 
-	class CullerManager : public Meson::Common::TSingleton<CullerManager>
+	class VISTAS_API CullerManager : public Meson::Common::TSingleton<CullerManager>
 	{
 		friend class Meson::Common::TSingleton<CullerManager>;
 

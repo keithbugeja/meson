@@ -18,7 +18,7 @@ Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
 	typedef Meson::Common::Collections::TEnumerator<TechniquePtr>& TechniqueEnumerator;
 
-	class TechniqueGroup : public Meson::Common::TReferenceCounter<TechniqueGroup>
+	class VISTAS_API TechniqueGroup : public Meson::Common::TReferenceCounter<TechniqueGroup>
 	{
 	public:
 		TechniqueGroup(void);

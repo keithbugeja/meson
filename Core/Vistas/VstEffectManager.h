@@ -14,7 +14,7 @@
 #include "VstEffect.h"
 
 Meson_Vistas_BEGIN
-	class EffectManager : public Meson::Common::TSingleton<EffectManager>
+	class VISTAS_API EffectManager : public Meson::Common::TSingleton<EffectManager>
 	{
 		friend class Meson::Common::TSingleton<EffectManager>;
 

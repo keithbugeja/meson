@@ -2,6 +2,9 @@
 
 #include "Namespaces.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 Meson_Common_Collections_BEGIN
 
 template<class TElement1, class TElement2>

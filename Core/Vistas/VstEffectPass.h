@@ -10,7 +10,7 @@
 
 Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
-	class EffectPass : public IPass
+	class VISTAS_API EffectPass : public IPass
 	{
 	public:
 		EffectPass(void); 

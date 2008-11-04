@@ -9,7 +9,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class RepositoryManager : public Meson::Common::TSingleton<RepositoryManager>
+	class VISTAS_API RepositoryManager : public Meson::Common::TSingleton<RepositoryManager>
 	{
 		friend class Meson::Common::TSingleton<RepositoryManager>;
 

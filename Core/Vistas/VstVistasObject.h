@@ -6,6 +6,13 @@
 #include "VstTypes.h"
 
 Meson_Vistas_BEGIN
+
+#ifdef VISTAS_EXPORTS
+	#define VISTAS_API __declspec(dllexport)
+#else
+	#define VISTAS_API __declspec(dllimport)
+#endif
+
 	//----------------------------------------------------------------------------------------------
 	/** Type used in Vistas' Object type system.
 	 */ 
@@ -71,7 +78,7 @@ Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
 	typedef Meson::Common::Collections::TEnumerator<void*>& UserDataEnumerator;
 
-	class VistasObject : public Meson::Common::TReferenceCounter<VistasObject>
+	class VISTAS_API VistasObject : public Meson::Common::TReferenceCounter<VistasObject>
 	{
 	protected:
 		VistasObject();

@@ -18,6 +18,9 @@
 #include <limits>
 #include <math.h>
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 // namespace Meson.Common.Math
 Meson_Common_Maths_BEGIN
 

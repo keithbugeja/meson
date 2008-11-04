@@ -19,7 +19,7 @@ Meson_Vistas_BEGIN
 	typedef Meson::Common::Collections::TKeyValuePair<uint,VertexBufferPtr> StreamVertexBufferPair;
 	typedef Meson::Common::Collections::TEnumerator<StreamVertexBufferPair>& StreamVertexBufferPairEnumerator;
 
-	class VertexChannel : public Meson::Common::TReferenceCounter<VertexChannel>
+	class VISTAS_API VertexChannel : public Meson::Common::TReferenceCounter<VertexChannel>
 	{
 	public:
 		//----------------------------------------------------------------------------------------------

@@ -14,7 +14,7 @@
 #include "VstLight.h"
 
 Meson_Vistas_BEGIN
-	class LightManager : public Meson::Common::TSingleton<LightManager>
+	class VISTAS_API LightManager : public Meson::Common::TSingleton<LightManager>
 	{
 		friend class Meson::Common::TSingleton<LightManager>;
 
