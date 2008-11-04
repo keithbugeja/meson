@@ -13,6 +13,9 @@
 #include "Vector3.h"
 #include "Maths.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 Meson_Common_Maths_BEGIN
 
 template <typename TReal> class TPlane
