@@ -143,13 +143,13 @@ DX9TextureBuffer::DX9TextureBuffer(LPDIRECT3DDEVICE9 p_pD3DDevice9, const String
 			m_pD3DTexture9 = m_pD3DTexture2D;
 			
 			// Read width, height and depth from loaded texture
-			m_uiWidth = m_pD3DTexture2D->Width;
-			m_uiHeight = m_pD3DTexture2D->Height;
-			m_uiDepth = 1;
-			
-			// Get mipmap levels and texture format
-			m_uiMipMapLevels = m_pD3DTexture2D->Levels;
-			m_eTextureFormat = ConvertTextureFormat(m_pD3DTexture2D->Format);
+			//m_uiWidth = m_pD3DTexture2D->Width;
+			//m_uiHeight = m_pD3DTexture2D->Height;
+			//m_uiDepth = 1;
+			//
+			//// Get mipmap levels and texture format
+			//m_uiMipMapLevels = m_pD3DTexture2D->Levels;
+			//m_eTextureFormat = ConvertTextureFormat(m_pD3DTexture2D->Format);
 
 			break;
 		}
@@ -164,13 +164,13 @@ DX9TextureBuffer::DX9TextureBuffer(LPDIRECT3DDEVICE9 p_pD3DDevice9, const String
 			m_pD3DTexture9 = m_pD3DTextureVolume;
 
 			// Read width, height and depth from loaded texture
-			m_uiWidth = m_pD3DTextureVolume->Width;
-			m_uiHeight = m_pD3DTextureVolume->Height;
-			m_uiDepth = m_pD3DTextureVolume->Depth;
+			//m_uiWidth = m_pD3DTextureVolume->Width;
+			//m_uiHeight = m_pD3DTextureVolume->Height;
+			//m_uiDepth = m_pD3DTextureVolume->Depth;
 
-			// Get mipmap levels and texture format
-			m_uiMipMapLevels = m_pD3DTextureVolume->Levels;
-			m_eTextureFormat = ConvertTextureFormat(m_pD3DTextureVolume->Format);
+			//// Get mipmap levels and texture format
+			//m_uiMipMapLevels = m_pD3DTextureVolume->Levels;
+			//m_eTextureFormat = ConvertTextureFormat(m_pD3DTextureVolume->Format);
 
 			break;
 		}
@@ -185,13 +185,13 @@ DX9TextureBuffer::DX9TextureBuffer(LPDIRECT3DDEVICE9 p_pD3DDevice9, const String
 			m_pD3DTexture9 = m_pD3DTextureCube;
 
 			// Read width, height and depth from loaded texture
-			m_uiWidth = m_pD3DTextureCube->Width;
-			m_uiHeight = m_pD3DTextureCube->Height;
-			m_uiDepth = 1;
-			
-			// Get mipmap levels and texture format
-			m_uiMipMapLevels = m_pD3DTextureCube->Levels;
-			m_eTextureFormat = ConvertTextureFormat(m_pD3DTextureCube->Format);
+			//m_uiWidth = m_pD3DTextureCube->Width;
+			//m_uiHeight = m_pD3DTextureCube->Height;
+			//m_uiDepth = 1;
+			//
+			//// Get mipmap levels and texture format
+			//m_uiMipMapLevels = m_pD3DTextureCube->Levels;
+			//m_eTextureFormat = ConvertTextureFormat(m_pD3DTextureCube->Format);
 			
 			break;
 		}

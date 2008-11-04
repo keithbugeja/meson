@@ -13,14 +13,19 @@
 #include "List.h"
 #include "ArrayList.h"
 
+#include <iostream>
+
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 #define DEFAULTSIZE 32
 #define EXPANDFACTOR 1.5f
 
-#include <iostream>
-
 Meson_Common_Collections_BEGIN
 
-template< class TElement > class TStack : public TEnumerator< TElement >
+template< class TElement > 
+class TStack : 
+	public TEnumerator< TElement >
 {
 protected:
 	TElement *m_pBegin,

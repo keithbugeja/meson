@@ -2,11 +2,15 @@
 
 #include "Collection.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 Meson_Common_Collections_BEGIN
 
 template<class TKey, class TValue>
-struct TKeyValuePair
+class TKeyValuePair
 {
+public:
 	TKey Key;
 	TValue Value;
 

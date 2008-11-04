@@ -13,7 +13,7 @@
 
 Meson_Vistas_BEGIN
 
-	class MaterialRenderState : public IRenderState
+	class VISTAS_API MaterialRenderState : public IRenderState
 	{
 	public:
 		MaterialRenderState(void);

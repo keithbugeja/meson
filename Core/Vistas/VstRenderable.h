@@ -15,7 +15,7 @@ Meson_Vistas_BEGIN
 		derived class information, renderable objects contain enough information for the 
 		renderer to draw geometry primitives.
 	 */
-	class Renderable : public VistasObject
+	class VISTAS_API Renderable : public VistasObject
 	{
 		VISTAS_IMPLEMENT_RTTI(Renderable, VistasObject);
 

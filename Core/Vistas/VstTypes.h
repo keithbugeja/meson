@@ -6,6 +6,12 @@
 #include "VstDefinitions.h"
 #include "VstVistasObject.h"
 
+#ifdef VISTAS_EXPORTS
+	#define VISTAS_API __declspec(dllexport)
+#else
+	#define VISTAS_API __declspec(dllimport)
+#endif
+
 Meson_Common_Config_BEGIN
 	class Configuration;
 Meson_Common_Config_END

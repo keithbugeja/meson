@@ -12,7 +12,7 @@
 
 Meson_Vistas_BEGIN
 
-class MultipleTextureRenderTarget : public RenderTarget
+class VISTAS_API MultipleTextureRenderTarget : public RenderTarget
 {
 public:
 	const RenderTargetType GetType(void) const { return RTT_MULTI; }

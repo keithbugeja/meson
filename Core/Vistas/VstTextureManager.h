@@ -18,7 +18,7 @@ Meson_Vistas_BEGIN
 	// TODO: This is a bare bones texture manager; eventually this should be extended to allow 
 	//		 derivation from a ResourceManager and provide resource loading options.
 	//----------------------------------------------------------------------------------------------
-	class TextureManager : public Meson::Common::TSingleton<TextureManager>
+	class VISTAS_API TextureManager : public Meson::Common::TSingleton<TextureManager>
 	{
 		friend class Meson::Common::TSingleton<TextureManager>;
 

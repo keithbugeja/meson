@@ -6,7 +6,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class WindowMessageHandler : public IWindowMessageHandler
+	class VISTAS_API WindowMessageHandler : public IWindowMessageHandler
 	{
 	public:
 		//----------------------------------------------------------------------------------------------

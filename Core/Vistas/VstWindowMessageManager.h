@@ -23,7 +23,7 @@ Meson_Vistas_BEGIN
 
 	/** Interface class for window message handling.
 	 */
-	class IWindowMessageHandler
+	class VISTAS_API IWindowMessageHandler
 	{
 	public:
 		enum WindowState
@@ -86,7 +86,7 @@ Meson_Vistas_BEGIN
 
 	/** The Window Message manager dispatches window events to registered handlers. 
 	 */
-	class WindowMessageManager : public Meson::Common::TSingleton<WindowMessageManager>
+	class VISTAS_API WindowMessageManager : public Meson::Common::TSingleton<WindowMessageManager>
 	{
 	public:
 		void Dispatch(void);

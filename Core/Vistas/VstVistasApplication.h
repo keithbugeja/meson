@@ -16,7 +16,7 @@ Meson_Vistas_BEGIN
 	//	The class provides a bare-bones framework for creating Vistas applications, which 
 	//	initialises a rendering window, and provides a registry for scene nodes.
 	//----------------------------------------------------------------------------------------------
-	class VistasApplication : public WindowMessageHandler
+	class VISTAS_API VistasApplication : public WindowMessageHandler
 	{
 	public:
 		//----------------------------------------------------------------------------------------------
@@ -200,8 +200,8 @@ Meson_Vistas_BEGIN
 		VistasEngine*	m_pVistasEngine;
 		IRenderDevice*	m_pRenderDevice;
 
-		const Meson::Common::Text::String m_strDeviceName,
-										  m_strTitle;
+		Meson::Common::Text::String m_strDeviceName,
+									m_strTitle;
 
 		uint m_uiWidth, 
 			 m_uiHeight;

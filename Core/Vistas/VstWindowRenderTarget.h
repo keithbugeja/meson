@@ -15,7 +15,7 @@
 
 Meson_Vistas_BEGIN
 
-class WindowRenderTarget : public RenderTarget
+class VISTAS_API WindowRenderTarget : public RenderTarget
 {
 public:
 	const RenderTargetType GetType(void) const { return RTT_WINDOW; }

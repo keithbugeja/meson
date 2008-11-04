@@ -15,9 +15,13 @@
 #include "DebugSupport.h"
 #include "MesonException.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 Meson_Common_BEGIN
 
-template <typename TClass> class TSingleton
+template <typename TClass> 
+class TSingleton
 {
 protected:
 	static TClass* m_pInstance;

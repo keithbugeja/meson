@@ -19,7 +19,7 @@ Meson_Vistas_BEGIN
 
 	/** Adapter class for all shader program types.
 	 */
-	class ShaderProgramAdapter : public IShaderProgram
+	class VISTAS_API ShaderProgramAdapter : public IShaderProgram
 	{
 	protected:
 		ShaderProgramAdapter(IShaderProgramFactory* p_pCreator, Meson::Common::Text::String p_strId);

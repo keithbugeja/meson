@@ -14,10 +14,14 @@
 
 #include "DebugSupport.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 Meson_Common_BEGIN
 
 //----------------------------------------------------------------------------------------------
-template <typename TClass> class TPointer
+template <typename TClass> 
+class TPointer
 {
 public:
 	explicit TPointer( TClass* p_pObject )

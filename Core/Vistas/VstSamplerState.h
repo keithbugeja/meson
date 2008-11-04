@@ -12,7 +12,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class SamplerState : public Meson::Common::TReferenceCounter<SamplerState>
+	class VISTAS_API SamplerState : public Meson::Common::TReferenceCounter<SamplerState>
 	{
 	public:
 		enum SamplerType

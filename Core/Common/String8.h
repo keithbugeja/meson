@@ -15,6 +15,8 @@
 #include "Pointer.h"
 //#include "BufferDual.h"
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
 
 //----------------------------------------------------------------------------------------------
 
@@ -225,6 +227,9 @@ public:
 
 #pragma endregion
 };
+
+// Restore DLL export warnings
+#pragma warning (default:4251)
 
 typedef Meson::Common::Text::String8 String;
 typedef Meson::Common::TPointer<String8> String8Ptr;

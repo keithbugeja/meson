@@ -12,7 +12,7 @@
 
 Meson_Vistas_BEGIN
 
-	class CullRenderState : public IRenderState
+	class VISTAS_API CullRenderState : public IRenderState
 	{
 	public:
 		/** Vertex winding order for a face

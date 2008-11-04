@@ -15,7 +15,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class Material : public TechniqueGroup
+	class VISTAS_API Material : public TechniqueGroup
 	{
 	public:
 		Material(const Meson::Common::Text::String& p_strName);

@@ -13,7 +13,7 @@ Meson_Vistas_BEGIN
 	/** This class extends the ShaderProgramConstant object, providing
 		a read-write interface for representing shader constants.
 	 */
-	class ShaderProgramVariable : public ShaderProgramConstant
+	class VISTAS_API ShaderProgramVariable : public ShaderProgramConstant
 	{
 	protected:
 		//----------------------------------------------------------------------------------------------

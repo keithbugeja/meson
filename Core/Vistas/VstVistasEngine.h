@@ -39,7 +39,7 @@ Meson_Vistas_BEGIN
 
 	typedef Meson::Common::Collections::TEnumerator<IRenderDevice*>& RenderDeviceEnumerator;
 
-	class VistasEngine : public Meson::Common::TEngine<VistasEngine>
+	class VISTAS_API VistasEngine : public Meson::Common::TEngine<VistasEngine>
 	{
 		friend class Meson::Common::TEngine<VistasEngine>;
 

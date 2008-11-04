@@ -18,7 +18,7 @@ Meson_Vistas_BEGIN
 	class IGeometryFactory;
 	typedef Meson::Common::Collections::TEnumerator<IGeometryFactory*>& GeometryFactoryEnumerator;
 
-	class GeometryManager : public Meson::Common::TSingleton<GeometryManager>
+	class VISTAS_API GeometryManager : public Meson::Common::TSingleton<GeometryManager>
 	{
 		friend class Meson::Common::TSingleton<GeometryManager>;
 

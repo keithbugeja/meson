@@ -21,7 +21,7 @@ Meson_Vistas_BEGIN
 	//	different formats, factories for the creation and modification of geometry primitives,
 	//	and tools for exchanging between concrete and abstract geometry objects.
 	//----------------------------------------------------------------------------------------------
-	class MeshForge
+	class VISTAS_API MeshForge
 	{
 	public:
 		//----------------------------------------------------------------------------------------------

@@ -15,7 +15,8 @@
 
 Meson_Vistas_BEGIN
 
-	class VertexDescriptor: public Meson::Common::TReferenceCounter<VertexDescriptor>
+	class VISTAS_API VertexDescriptor : 
+		public Meson::Common::TReferenceCounter<VertexDescriptor>
 	{
 	public:
 		enum Semantic
@@ -68,7 +69,7 @@ Meson_Vistas_BEGIN
 			 m_uiVertexSize;
 
 		// <Index> -> <Stream, Size>
-		struct StreamInformation
+		struct VISTAS_API StreamInformation
 		{
 			uint m_uiStream,
 				 m_uiStreamSize;
@@ -88,7 +89,7 @@ Meson_Vistas_BEGIN
 		
 		// <Semantic,GlobalIndex> -> <Stream, Usage, Offset>
 		// 
-		struct SemanticDetails
+		struct VISTAS_API SemanticDetails
 		{
 			uint m_uiStream,
 				 m_uiUsageIndex,
@@ -105,7 +106,7 @@ Meson_Vistas_BEGIN
 		Meson::Common::Collections::THashMap<UniqueSemantic, SemanticDetails> m_semanticMap;
 
 		// <Semantic> -> <Function, Type>
-		struct SemanticDescriptor
+		struct VISTAS_API SemanticDescriptor
 		{
 			VertexDataFunction m_eVertexDataFunction;
 			VertexDataType m_eVertexDataType;
@@ -124,7 +125,8 @@ Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
 	// Vertex section
 	//----------------------------------------------------------------------------------------------
-	class Vertex : public Meson::Common::TReferenceCounter<Vertex>
+	class VISTAS_API Vertex : 
+		public Meson::Common::TReferenceCounter<Vertex>
 	{
 		friend class VertexData;
 
@@ -200,7 +202,8 @@ Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
 	// VertexData section
 	//----------------------------------------------------------------------------------------------
-	class VertexData : public Meson::Common::TReferenceCounter<VertexData>
+	class VISTAS_API VertexData : 
+		public Meson::Common::TReferenceCounter<VertexData>
 	{
 	protected:
 		void Build(VertexDescriptorPtr p_pVertexDescriptor, uint p_uiInitialVertexCount);

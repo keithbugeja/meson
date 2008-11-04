@@ -12,7 +12,7 @@
 
 Meson_Vistas_BEGIN
 
-	class StencilRenderState : public IRenderState
+	class VISTAS_API StencilRenderState : public IRenderState
 	{
 	public:
 		/** Stencil comparison function

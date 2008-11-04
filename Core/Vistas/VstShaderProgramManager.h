@@ -19,7 +19,7 @@ Meson_Vistas_BEGIN
 
 	/**
 	 */
-	class ShaderProgramManager
+	class VISTAS_API ShaderProgramManager
 	{
 	public:
 		//----------------------------------------------------------------------------------------------

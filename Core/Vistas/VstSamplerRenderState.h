@@ -12,7 +12,7 @@
 #include "VstSamplerUnit.h"
 
 Meson_Vistas_BEGIN
-	class SamplerRenderState : public IRenderState
+	class VISTAS_API SamplerRenderState : public IRenderState
 	{
 	public:
 		SamplerRenderState();

@@ -12,7 +12,7 @@
 
 Meson_Vistas_BEGIN
 
-	class TargetRenderState : public IRenderState
+	class VISTAS_API TargetRenderState : public IRenderState
 	{
 	public:
 		TargetRenderState(void);

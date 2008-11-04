@@ -79,7 +79,7 @@ Meson_Vistas_BEGIN
 	typedef Meson::Common::Collections::TEnumerator<GeometrySubset>& GeometrySubsetEnumerator;
 
 	//----------------------------------------------------------------------------------------------
-	class Geometry : public Renderable
+	class VISTAS_API Geometry : public Renderable
 	{
 		VISTAS_IMPLEMENT_RTTI(Geometry, Renderable);
 

@@ -12,7 +12,7 @@
 
 Meson_Vistas_BEGIN
 
-	class IRenderState : public Meson::Common::TReferenceCounter<IRenderState>
+	class VISTAS_API IRenderState : public Meson::Common::TReferenceCounter<IRenderState>
 	{
 	public:
 		enum RenderStateType

@@ -22,6 +22,9 @@
 #include <memory.h>
 #include <algorithm>
 
+// Disable DLL export warnings
+#pragma warning (disable:4251)
+
 // Set namespace to Meson::Common::Maths
 Meson_Common_Maths_BEGIN
 

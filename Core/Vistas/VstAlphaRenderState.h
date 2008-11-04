@@ -12,7 +12,7 @@
 
 Meson_Vistas_BEGIN
 
-	class AlphaRenderState : public IRenderState
+	class VISTAS_API AlphaRenderState : public IRenderState
 	{
 	public:
 		/** Alpha comparison functions

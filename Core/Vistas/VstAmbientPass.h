@@ -10,7 +10,7 @@
 
 Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
-	class AmbientPass : public IPass
+	class VISTAS_API AmbientPass : public IPass
 	{
 	public:
 		AmbientPass(void); 

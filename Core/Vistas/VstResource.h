@@ -26,7 +26,7 @@ Meson_Vistas_BEGIN
 		for object identitification and type naming for identification of
 		specific object families.
 	 */
-	class Resource : public VistasObject
+	class VISTAS_API Resource : public VistasObject
 	{
 		VISTAS_IMPLEMENT_RTTI(Resource, VistasObject);
 		

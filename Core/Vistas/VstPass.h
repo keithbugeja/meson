@@ -17,7 +17,7 @@ Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
 	// TODO: Add free shader variables loading to allow per instance variables.
 	//----------------------------------------------------------------------------------------------
-	class IPass : public Meson::Common::TReferenceCounter<IPass>
+	class VISTAS_API IPass : public Meson::Common::TReferenceCounter<IPass>
 	{
 		friend class Technique;
 

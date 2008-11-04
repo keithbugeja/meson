@@ -16,7 +16,7 @@
 
 Meson_Vistas_BEGIN
 
-class TextureRenderTarget : public RenderTarget
+class VISTAS_API TextureRenderTarget : public RenderTarget
 {
 public:
 	const RenderTargetType GetType(void) const { return RTT_TEXTURE; }

@@ -13,7 +13,7 @@
 
 Meson_Vistas_BEGIN
 
-	class RenderTarget : public Meson::Common::TReferenceCounter<RenderTarget>
+	class VISTAS_API RenderTarget : public Meson::Common::TReferenceCounter<RenderTarget>
 	{
 	public:
 		enum RenderTargetType

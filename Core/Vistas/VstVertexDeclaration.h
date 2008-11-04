@@ -69,7 +69,7 @@ Meson_Vistas_BEGIN
 	/** Vertex element
 	 */ 
 	//----------------------------------------------------------------------------------------------
-	class VertexElement
+	class VISTAS_API VertexElement
 	{
 	public:
 		//----------------------------------------------------------------------------------------------
@@ -198,7 +198,7 @@ Meson_Vistas_BEGIN
 	/** VertexDeclaration
 	 */
 	//----------------------------------------------------------------------------------------------
-	class VertexDeclaration : public Resource
+	class VISTAS_API VertexDeclaration : public Resource
 	{
 	protected:
 		void RefreshStreamSet(void);

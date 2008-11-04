@@ -89,7 +89,7 @@ Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
 
 	//----------------------------------------------------------------------------------------------
-	class VisibleEntitySetManager : public Meson::Common::TSingleton<VisibleEntitySetManager>
+	class VISTAS_API VisibleEntitySetManager : public Meson::Common::TSingleton<VisibleEntitySetManager>
 	{
 		friend class Meson::Common::TSingleton<VisibleEntitySetManager>;
 

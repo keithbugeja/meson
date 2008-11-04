@@ -12,7 +12,7 @@
 
 Meson_Vistas_BEGIN
 
-	class DepthRenderState : public IRenderState
+	class VISTAS_API DepthRenderState : public IRenderState
 	{
 	public:
 		/** Depth comparison functions

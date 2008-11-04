@@ -13,7 +13,7 @@
 
 Meson_Vistas_BEGIN
 	//----------------------------------------------------------------------------------------------
-	class ScenegraphManager : public Meson::Common::TSingleton<ScenegraphManager>
+	class VISTAS_API ScenegraphManager : public Meson::Common::TSingleton<ScenegraphManager>
 	{
 		friend class Meson::Common::TSingleton<ScenegraphManager>;
 	private:

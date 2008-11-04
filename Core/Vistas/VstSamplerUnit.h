@@ -14,7 +14,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class SamplerUnit : public Meson::Common::TReferenceCounter<SamplerUnit>
+	class VISTAS_API SamplerUnit : public Meson::Common::TReferenceCounter<SamplerUnit>
 	{
 	public:
 		SamplerUnit(const SamplerUnit& p_samplerUnit);
