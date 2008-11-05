@@ -17,7 +17,7 @@ struct CollisionFilterState;
 /// negative criteria (exceptions). If none of the rules apply to a given pair of bodies,
 /// the default acceptance or rejection flag is applied.
 //----------------------------------------------------------------------------------------------
-class CollisionFilter
+class GRAVITAS_API CollisionFilter
 	: public Meson::Common::TReferenceCounter<CollisionFilter>
 {
 private: // private variables

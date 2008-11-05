@@ -42,7 +42,7 @@ namespace BoundingVolumeType
 /// prior to performing accurate body geometry tests. They are also used in other geometry-
 /// related operations throughout the engine.
 //----------------------------------------------------------------------------------------------
-class IBoundingVolume
+class GRAVITAS_API IBoundingVolume
 	: public Meson::Common::TReferenceCounter<IBoundingVolume>
 {
 public:

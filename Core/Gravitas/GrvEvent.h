@@ -4,6 +4,7 @@
 #include "Pointer.h"
 
 #include "GrvNamespaces.h"
+#include "GrvTypes.h"
 
 Meson_Gravitas_Event_BEGIN
 
@@ -17,7 +18,7 @@ Meson::Common::Memory::MemoryManager* GetEventMemoryManager(void);
 /// \class IEvent
 /// Base interface for an event.
 //------------------------------------------------------------------------------------------
-class IEvent
+class GRAVITAS_API IEvent
 	: public Meson::Common::TReferenceCounter<IEvent>
 {
 public:

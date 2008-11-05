@@ -24,7 +24,7 @@ struct ConstraintManagerState;
 /// The physics engine's constraint manager module maintains a registry of constraint
 /// factories and a registry for constraint solvers.
 //------------------------------------------------------------------------------------------
-class ConstraintManager
+class GRAVITAS_API ConstraintManager
 	: public Meson::Common::TSingleton<ConstraintManager>
 {
 	friend class Meson::Common::TSingleton<ConstraintManager>;

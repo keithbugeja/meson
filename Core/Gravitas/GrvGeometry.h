@@ -22,7 +22,7 @@ Meson_Gravitas_Geometry_BEGIN
 /// methods should be computed on the surface area or should at least return non-zero values to
 /// avoid overflows when computing mass and inertia tensor inverses.
 //----------------------------------------------------------------------------------------------
-class IGeometry
+class GRAVITAS_API IGeometry
 	: public Meson::Gravitas::IGravitasEntity
 {
 public:

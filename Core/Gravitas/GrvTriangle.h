@@ -17,7 +17,7 @@ Meson_Gravitas_Geometry_BEGIN
 /// Representation of a triangle. Provides a number of services for geometrical queries,
 /// distance queries, containment tests and transformations.
 //----------------------------------------------------------------------------------------------
-struct Triangle
+struct GRAVITAS_API Triangle
 {
 	// variables
 	Meson::Common::Maths::TVector3<Real> Vertices[3];

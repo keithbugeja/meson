@@ -16,7 +16,7 @@ struct ForceAccumulatorState;
 /// Maintains a number of force generators bound to a body that owns the accumulator, and
 /// provides a means of computing the total linear force and torque.
 //------------------------------------------------------------------------------------------
-class ForceAccumulator
+class GRAVITAS_API ForceAccumulator
 {
 private: // private variables
 	ForceAccumulatorState *m_pForceAccumulatorState;

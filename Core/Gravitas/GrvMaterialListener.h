@@ -9,7 +9,7 @@ Meson_Gravitas_Event_BEGIN
 /// \class IMaterialListener
 /// Abstract listener interface for material events.
 //------------------------------------------------------------------------------------------
-class IMaterialListener
+class GRAVITAS_API IMaterialListener
 	: public Meson::Common::TReferenceCounter<IMaterialListener>
 {
 public:

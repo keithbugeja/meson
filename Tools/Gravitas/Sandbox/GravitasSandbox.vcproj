@@ -174,12 +174,16 @@
 	</Configurations>
 	<References>
 		<ProjectReference
+			ReferencedProjectIdentifier="{E40D5703-5D58-4B29-A8F4-4E1EEA196C49}"
+			RelativePathToProject=".\Core\Gravitas\Gravitas.vcproj"
+		/>
+		<ProjectReference
 			ReferencedProjectIdentifier="{170A50F6-EA33-45A8-BF5B-33E78D14C6FF}"
 			RelativePathToProject=".\Core\Vistas\Vistas.vcproj"
 		/>
 		<ProjectReference
-			ReferencedProjectIdentifier="{E40D5703-5D58-4B29-A8F4-4E1EEA196C49}"
-			RelativePathToProject=".\Core\Gravitas\Gravitas.vcproj"
+			ReferencedProjectIdentifier="{6240F03C-4204-4E64-9608-6EF97191AF81}"
+			RelativePathToProject=".\Core\Common\Common.vcproj"
 		/>
 	</References>
 	<Files>

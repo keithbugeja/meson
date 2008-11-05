@@ -16,7 +16,7 @@ Meson_Gravitas_Geometry_BEGIN
 /// a vector. The transform may be composisted with other transforms, inverted, or transformed
 /// to a different basis.
 //----------------------------------------------------------------------------------------------
-struct Transform
+struct GRAVITAS_API Transform
 {
 	//----------------------------------------------------------------------------------------------
 	/// Unit quaternion for the rotation component of the transform.

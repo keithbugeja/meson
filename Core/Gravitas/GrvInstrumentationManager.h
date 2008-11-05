@@ -59,7 +59,7 @@ struct InstrumentationManagerState;
 /// console. The manager operates through the use of an IInstrumentationDevice interface that
 /// is usually implemented in the same rendering technology used for the simulator.
 //----------------------------------------------------------------------------------------------
-class InstrumentationManager
+class GRAVITAS_API InstrumentationManager
 	: public Meson::Common::TSingleton<InstrumentationManager>
 {
 	friend class Meson::Common::TSingleton<InstrumentationManager>;

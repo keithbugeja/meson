@@ -12,7 +12,7 @@ Meson_Gravitas_Kinetics_BEGIN
 /// Implementations of the functor interface are used to represent vector quantities dependent
 /// on time.
 //----------------------------------------------------------------------------------------------
-class IVectorTimeFunction
+class GRAVITAS_API IVectorTimeFunction
 {
 public:
 	virtual ~IVectorTimeFunction(void) {};

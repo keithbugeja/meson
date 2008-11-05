@@ -19,7 +19,7 @@ struct ConstraintBatchAggregatorState;
 /// or more disjoint graphs. Each constraint batch consists of the constraints contained in
 /// each graph.
 //------------------------------------------------------------------------------------------
-class ConstraintBatchAggregator
+class GRAVITAS_API ConstraintBatchAggregator
 {
 private:
 	ConstraintBatchAggregatorState* m_pConstraintBatchAggregatorState;

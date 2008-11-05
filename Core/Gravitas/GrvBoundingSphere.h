@@ -16,7 +16,7 @@ Meson_Gravitas_Geometry_BEGIN
 /// \class BoundingSphere
 /// Sphere implementation of a bounding volume.
 //----------------------------------------------------------------------------------------------
-class BoundingSphere
+class GRAVITAS_API BoundingSphere
 	: public Meson::Gravitas::Geometry::IBoundingVolume
 {
 public: // public variables

@@ -23,7 +23,7 @@ Meson_Gravitas_Collision_BEGIN
 /// For any two geometry implementations, only one collision detector implementation is required
 /// as the collision manager is able to automatically swap geometry to match the algorithm.
 //----------------------------------------------------------------------------------------------
-class ICollisionDetector
+class GRAVITAS_API ICollisionDetector
 	: public Meson::Gravitas::IGravitasEntity
 {
 public:

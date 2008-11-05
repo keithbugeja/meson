@@ -7,6 +7,12 @@
 
 #include "GrvNamespaces.h"
 
+#ifdef GRAVITAS_EXPORTS
+	#define GRAVITAS_API __declspec(dllexport)
+#else
+	#define GRAVITAS_API __declspec(dllimport)
+#endif
+
 Meson_Gravitas_BEGIN
 
 // real type use 'r' for hungarian notation

@@ -13,7 +13,7 @@ Meson_Gravitas_Geometry_BEGIN
 /// generate specific geometry implementations and are normally used through the engine's plugin
 /// mechanism.
 //----------------------------------------------------------------------------------------------
-class IGeometryFactory
+class GRAVITAS_API IGeometryFactory
 {
 public:
 	virtual ~IGeometryFactory(void) {};

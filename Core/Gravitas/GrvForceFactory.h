@@ -13,7 +13,7 @@ Meson_Gravitas_Force_BEGIN
 /// generate specific force generator implementations and are normally used through the engine's
 /// plugin mechanism.
 //----------------------------------------------------------------------------------------------
-class IForceFactory
+class GRAVITAS_API IForceFactory
 {
 public:
 	virtual ~IForceFactory(void) {};

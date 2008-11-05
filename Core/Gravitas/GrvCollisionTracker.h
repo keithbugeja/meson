@@ -11,7 +11,7 @@ struct CollisionTrackerState;
 /// Tracks starting, ongoing and ending of collision events. This is an internal class used
 /// by the event management module of the physics engine.
 //----------------------------------------------------------------------------------------------
-class CollisionTracker
+class GRAVITAS_API CollisionTracker
 {
 private: // private variables
 	CollisionTrackerState* m_pCollisionTrackerState;

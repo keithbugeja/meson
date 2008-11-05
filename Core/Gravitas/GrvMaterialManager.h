@@ -22,7 +22,7 @@ struct MaterialManagerState;
 /// \class MaterialManager
 /// The physics engine's material manager provides registry and query services for materials.
 //----------------------------------------------------------------------------------------------
-class MaterialManager
+class GRAVITAS_API MaterialManager
 	: public Meson::Common::TSingleton<MaterialManager>
 {
 	friend class Meson::Common::TSingleton<MaterialManager>;

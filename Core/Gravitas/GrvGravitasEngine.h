@@ -38,7 +38,7 @@ struct GravitasEngineState;
 /// manager modules within the engine, including those for collisions, constraints, events,
 /// geometry, instrumentation, kinetics, simulation and spatial representation.
 //------------------------------------------------------------------------------------------
-class GravitasEngine
+class GRAVITAS_API GravitasEngine
 	: public Meson::Common::TEngine<GravitasEngine>
 {
 	friend class Meson::Common::TEngine<GravitasEngine>;

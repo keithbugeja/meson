@@ -23,7 +23,7 @@ struct KineticsManagerState;
 /// The physics engine's kinetics manager module provides registration and query services for
 /// kinetic intergrator implementations.
 //----------------------------------------------------------------------------------------------
-class KineticsManager
+class GRAVITAS_API KineticsManager
 	: public Meson::Common::TSingleton<KineticsManager>
 {
 	friend class Meson::Common::TSingleton<KineticsManager>;

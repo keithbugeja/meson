@@ -14,7 +14,7 @@ struct ActivityManagerState;
 /// Handles suspension and resumption of body kinetic activity. The activity manager is
 /// typically contained in a simulator instance.
 //----------------------------------------------------------------------------------------------
-class ActivityManager
+class GRAVITAS_API ActivityManager
 {
 private: // privvate variables
 	ActivityManagerState* m_pActivityManagerState;

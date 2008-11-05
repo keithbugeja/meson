@@ -16,7 +16,7 @@ Meson_Gravitas_Constraint_BEGIN
 /// for processing by a constraint solver. The ConstraintBatchAggregator class provides this
 /// functinality.
 //------------------------------------------------------------------------------------------
-struct ConstraintBatch
+struct GRAVITAS_API ConstraintBatch
 {
 	//------------------------------------------------------------------------------------------
 	/// Current time of the simulator.

@@ -16,7 +16,7 @@ Meson_Gravitas_Kinetics_BEGIN
 /// position, orientation, linear and angular velocities, a damping coefficient to allow for
 /// a simple motion resistance model, and activity information for supporting sleep states.
 //----------------------------------------------------------------------------------------------
-struct KineticProperties
+struct GRAVITAS_API KineticProperties
 {
 	///----------------------------------------------------------------------------------------------
 	/// Boolean flag indicating if the associated body is in a kinetically active state or otherwise.

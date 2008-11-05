@@ -54,7 +54,7 @@ public: // public methods
 
 struct IGravitasEntityState;
 
-class IGravitasEntity
+class GRAVITAS_API IGravitasEntity
 	: public Meson::Common::TReferenceCounter<IGravitasEntity>
 {
 private:

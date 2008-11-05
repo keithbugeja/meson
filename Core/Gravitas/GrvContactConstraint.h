@@ -21,7 +21,7 @@ Meson::Common::Memory::MemoryManager* GetContactConstraintMemoryManager(void);
 /// are represented by the positional discrepancy points and the required relative velocity,
 /// respectively.
 //------------------------------------------------------------------------------------------
-class ContactConstraint
+class GRAVITAS_API ContactConstraint
 	: public IConstraint
 {
 private: // private variables

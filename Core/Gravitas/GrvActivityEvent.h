@@ -28,7 +28,7 @@ namespace ActivityEventType
 /// \class ActivityEvent
 /// Activity event implementation for capturing changes in the activity status of bodies.
 //------------------------------------------------------------------------------------------
-class ActivityEvent :
+class GRAVITAS_API ActivityEvent :
 	public IEvent
 {
 public: // public variables

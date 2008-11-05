@@ -9,7 +9,7 @@ Meson_Gravitas_Event_BEGIN
 /// \class ICollisionFilterListener
 /// Abstract listener interface for collision filtering events.
 //------------------------------------------------------------------------------------------
-class ICollisionFilterListener
+class GRAVITAS_API ICollisionFilterListener
 	: public Meson::Common::TReferenceCounter<ICollisionFilterListener>
 {
 public:
