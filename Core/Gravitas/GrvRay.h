@@ -12,7 +12,7 @@ Meson_Gravitas_Geometry_BEGIN
 /// \struct Ray
 /// Ray representation defined by a source point and direction vector.
 //----------------------------------------------------------------------------------------------
-struct Ray
+struct GRAVITAS_API Ray
 {
 	// variables
 

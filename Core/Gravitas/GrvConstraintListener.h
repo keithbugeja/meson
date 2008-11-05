@@ -9,7 +9,7 @@ Meson_Gravitas_Event_BEGIN
 /// \class IConstraintListener
 /// Abstract listener interface for constraint events.
 //------------------------------------------------------------------------------------------
-class IConstraintListener
+class GRAVITAS_API IConstraintListener
 	: public Meson::Common::TReferenceCounter<IConstraintListener>
 {
 public:

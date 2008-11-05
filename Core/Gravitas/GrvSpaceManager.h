@@ -23,7 +23,7 @@ struct SpaceManagerState;
 /// The physics engine's space manager provides registry and query services for space factory
 /// implementations.
 //----------------------------------------------------------------------------------------------
-class SpaceManager
+class GRAVITAS_API SpaceManager
 	: public Meson::Common::TSingleton<SpaceManager>
 {
 	friend class Meson::Common::TSingleton<SpaceManager>;

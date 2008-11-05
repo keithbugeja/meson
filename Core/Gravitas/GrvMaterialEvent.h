@@ -17,7 +17,7 @@ Meson::Common::Memory::MemoryManager* GetMaterialEventMemoryManager(void);
 /// registere for this event is given the opportunity to compute a custom combination of
 /// the materials involved in a collision.
 //------------------------------------------------------------------------------------------
-class MaterialEvent :
+class GRAVITAS_API MaterialEvent :
 	public IEvent
 {
 public: // public variables

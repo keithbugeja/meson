@@ -10,7 +10,7 @@ struct RigidBodyState;
 /// \class RigidBody
 /// An idealised rigid body implementation.
 //----------------------------------------------------------------------------------------------
-class RigidBody
+class GRAVITAS_API RigidBody
 	: public IBody
 {
 private: // private variables

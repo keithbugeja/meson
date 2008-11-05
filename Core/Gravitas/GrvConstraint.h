@@ -23,7 +23,7 @@ Meson::Common::Memory::MemoryManager* GetConstraintMemoryManager(void);
 /// between the bodies. Each discrepancy typically eliminates a degree of freedom in the
 /// relative movement of the two bodies.
 //------------------------------------------------------------------------------------------
-class IConstraint
+class GRAVITAS_API IConstraint
 	: public Meson::Gravitas::IGravitasEntity
 {
 public:

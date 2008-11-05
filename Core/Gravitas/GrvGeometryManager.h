@@ -18,7 +18,7 @@
 
 Meson_Gravitas_Geometry_BEGIN
 
-struct GeometryManagerState;
+struct GRAVITAS_API GeometryManagerState;
 
 //----------------------------------------------------------------------------------------------
 /// \class GeometryManager

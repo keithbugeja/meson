@@ -18,7 +18,7 @@ Meson_Gravitas_Constraint_BEGIN
 /// discrepancy specifies a relative velocity that the points must satisfy. This is usually
 /// zero for joint constraints but may be non-zero for contacts or motors.
 //------------------------------------------------------------------------------------------
-struct ConstraintDiscrepancy
+struct GRAVITAS_API ConstraintDiscrepancy
 {
 	//------------------------------------------------------------------------------------------
 	/// First discrepancy point.

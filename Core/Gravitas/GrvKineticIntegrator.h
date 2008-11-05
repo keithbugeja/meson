@@ -17,7 +17,7 @@ Meson_Gravitas_Kinetics_BEGIN
 /// corresponding vector time functions for the linear and angular accelerations over a
 /// specified time delta.
 //----------------------------------------------------------------------------------------------
-class IKineticIntegrator
+class GRAVITAS_API IKineticIntegrator
 	: public Meson::Gravitas::IGravitasEntity
 {
 public:

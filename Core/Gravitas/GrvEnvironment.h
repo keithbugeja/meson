@@ -18,7 +18,7 @@ Meson_Gravitas_BEGIN
 /// representation containing the bodies, inter-body constraints, an optional collision filter,
 /// a kinetic integrator and a constraint solver.
 //----------------------------------------------------------------------------------------------
-struct Environment
+struct GRAVITAS_API Environment
 	: public Meson::Common::TReferenceCounter<Environment>
 {
 	Meson::Common::Text::String Id;

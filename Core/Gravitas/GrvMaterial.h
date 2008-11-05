@@ -21,7 +21,7 @@ Meson_Gravitas_Materials_BEGIN
 /// \class Material
 /// Class for defining the material properties of a body.
 //----------------------------------------------------------------------------------------------
-class Material
+class GRAVITAS_API Material
 	: public Meson::Gravitas::IGravitasEntity
 {
 public: // public variables

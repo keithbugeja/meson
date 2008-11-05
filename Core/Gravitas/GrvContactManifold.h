@@ -18,7 +18,7 @@ Meson_Gravitas_Collision_BEGIN
 /// line and area cases, the points typically describe, respectively, the end points and the
 /// vertices of the manifold geometry.
 //----------------------------------------------------------------------------------------------
-struct ContactManifold
+struct GRAVITAS_API ContactManifold
 {
 	//----------------------------------------------------------------------------------------------
 	/// First body involved in the contact.

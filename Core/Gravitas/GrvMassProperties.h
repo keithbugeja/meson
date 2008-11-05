@@ -20,7 +20,7 @@ Meson_Gravitas_Body_BEGIN
 /// \struct MassProperties
 /// Structure for defining the mass properties of a body.
 //----------------------------------------------------------------------------------------------
-struct MassProperties
+struct GRAVITAS_API MassProperties
 {
 	/// \var mass value (linear inertia)
 	Real Mass;

@@ -23,7 +23,7 @@ struct SimulationManagerState;
 /// The physics engine's simulation manager provides registry and query services for simulation
 /// factory implementations.
 //----------------------------------------------------------------------------------------------
-class SimulationManager
+class GRAVITAS_API SimulationManager
 	: public Meson::Common::TSingleton<SimulationManager>
 {
 	friend class Meson::Common::TSingleton<SimulationManager>;

@@ -24,7 +24,7 @@ Meson_Gravitas_Geometry_BEGIN
 /// \class BoundingOrientedBox
 /// Oriented bounding box implementation of a bounding volume.
 //----------------------------------------------------------------------------------------------
-class BoundingOrientedBox
+class GRAVITAS_API BoundingOrientedBox
 	: public Meson::Gravitas::Geometry::IBoundingVolume
 {
 public: // public variables

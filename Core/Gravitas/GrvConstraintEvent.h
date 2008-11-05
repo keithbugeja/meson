@@ -28,7 +28,7 @@ namespace ConstraintEventType
 /// Constraint event implementation for capturing constraint-related events. This event type
 /// currently only support constraint breakage events.
 //------------------------------------------------------------------------------------------
-class ConstraintEvent :
+class GRAVITAS_API ConstraintEvent :
 	public IEvent
 {
 public: // public variables

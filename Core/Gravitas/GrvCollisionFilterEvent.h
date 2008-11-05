@@ -17,7 +17,7 @@ Meson::Common::Memory::MemoryManager* GetCollisionFilterEventMemoryManager(void)
 /// collision filtering phase. The event exposes an AllowCollision flag to enable the
 /// event listener to override the decision of the filter.
 //------------------------------------------------------------------------------------------
-class CollisionFilterEvent
+class GRAVITAS_API CollisionFilterEvent
 	: public IEvent
 {
 public: // public variables

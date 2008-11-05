@@ -18,7 +18,7 @@ Meson::Common::Memory::MemoryManager* GetSpaceMemoryManager(void);
 /// \struct BodyRayIntersection
 /// Represents an instance of a ray intersecting a body at a given point in world space.
 //------------------------------------------------------------------------------------------
-struct BodyRayIntersection
+struct GRAVITAS_API BodyRayIntersection
 {
 	//------------------------------------------------------------------------------------------
 	/// Pointer to the ray intersecting the body.
@@ -139,7 +139,7 @@ typedef Meson::Common::Collections::TLinkedList< BodyRayIntersection >
 /// actual geometry of the bodies are then tested for actual intersection, and subsequently
 /// to obtain contact manifolds between bodies in contact.
 //------------------------------------------------------------------------------------------
-class ISpace
+class GRAVITAS_API ISpace
 	: public Meson::Gravitas::IGravitasEntity
 {
 public:

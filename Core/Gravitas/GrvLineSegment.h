@@ -16,7 +16,7 @@ Meson_Gravitas_Geometry_BEGIN
 /// Representation of a line segment. Provides a number of services for determining length,
 /// direction, midpoint and supports a number of distance queries.
 //----------------------------------------------------------------------------------------------
-struct LineSegment
+struct GRAVITAS_API LineSegment
 {
 	//----------------------------------------------------------------------------------------------
 	/// Starting point of the line segment.

@@ -11,7 +11,7 @@ Meson_Gravitas_Constraint_BEGIN
 /// \class IConstraintSolver
 /// Abstract interface for a constraint solving algorithm.
 //------------------------------------------------------------------------------------------
-class IConstraintSolver
+class GRAVITAS_API IConstraintSolver
 	: public Meson::Gravitas::IGravitasEntity
 {
 public:

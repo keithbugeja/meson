@@ -14,7 +14,7 @@ Meson_Gravitas_Instrumentation_BEGIN
 /// \struct Colour
 /// Colour representation for the instrumentation device interface.
 //----------------------------------------------------------------------------------------------
-struct Colour
+struct GRAVITAS_API Colour
 {
 	//----------------------------------------------------------------------------------------------
 	/// Black predefined static colour.
@@ -128,7 +128,7 @@ namespace DrawMode
 /// InstrumentationManager depending on the rendering flags set and provided that an explicit
 /// call to RenderInstrumentation is made from the simulation loop.
 //----------------------------------------------------------------------------------------------
-class IInstrumentationDevice
+class GRAVITAS_API IInstrumentationDevice
 	: public Meson::Common::TReferenceCounter<IInstrumentationDevice>
 {
 public:

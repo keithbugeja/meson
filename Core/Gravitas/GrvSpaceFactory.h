@@ -13,7 +13,7 @@ Meson_Gravitas_Space_BEGIN
 /// generate specific space implementations and are normally loaded through the engine's
 /// plugin mechanism.
 //----------------------------------------------------------------------------------------------
-class ISpaceFactory
+class GRAVITAS_API ISpaceFactory
 {
 public:
 	virtual ~ISpaceFactory(void) {};

@@ -9,7 +9,7 @@ Meson_Gravitas_Event_BEGIN
 /// \class IActivityListener
 /// Abstract listener interface for activity events.
 //------------------------------------------------------------------------------------------
-class IActivityListener
+class GRAVITAS_API IActivityListener
 	: public Meson::Common::TReferenceCounter<IActivityListener>
 {
 public:

@@ -4,7 +4,7 @@
 
 Meson_Gravitas_Geometry_BEGIN
 
-struct GeometryComponent
+struct GRAVITAS_API GeometryComponent
 {
 	Meson::Gravitas::Geometry::Transform Transform;
 	GeometryPtr Geometry;
@@ -31,7 +31,7 @@ struct GeometryCompositeState;
 /// volumes. Ray intersection tests are performed against the constituent geomety where the
 /// poiint of intersection is taken as the closest point found.
 //----------------------------------------------------------------------------------------------
-class GeometryComposite
+class GRAVITAS_API GeometryComposite
 	: public IGeometry
 {
 private: // private variables

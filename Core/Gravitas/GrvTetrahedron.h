@@ -15,7 +15,7 @@ Meson_Gravitas_Geometry_BEGIN
 /// Representation of a tetrahedron. Provides a number of services for geometrical queries,
 /// distance queries, containment tests and transformations.
 //----------------------------------------------------------------------------------------------
-struct Tetrahedron
+struct GRAVITAS_API Tetrahedron
 {
 	// variables
 	//----------------------------------------------------------------------------------------------

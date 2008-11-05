@@ -20,7 +20,7 @@ Meson_Gravitas_Geometry_BEGIN
 /// \class BoundingAxisAlignedBox
 /// Axis-aligned bounding box implementation of a bounding volume.
 //----------------------------------------------------------------------------------------------
-class BoundingAxisAlignedBox
+class GRAVITAS_API BoundingAxisAlignedBox
 	: public Meson::Gravitas::Geometry::IBoundingVolume
 {
 public: // public variables

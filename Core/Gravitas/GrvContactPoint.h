@@ -14,7 +14,7 @@ Meson_Gravitas_Collision_BEGIN
 /// vector pointing from the first body to the second body involved in the collision, and a
 /// penetration depth in scalar form.
 //----------------------------------------------------------------------------------------------
-struct ContactPoint
+struct GRAVITAS_API ContactPoint
 {
 	//----------------------------------------------------------------------------------------------
 	/// Position of the contact point in world coordinates.

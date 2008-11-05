@@ -17,7 +17,7 @@ struct CollisionGroupState;
 /// A body grouping mechanism for use with collision filtering. Bodies may be assigned to
 /// multiple groups.
 //----------------------------------------------------------------------------------------------
-class CollisionGroup
+class GRAVITAS_API CollisionGroup
 	: public Meson::Common::TReferenceCounter<CollisionGroup>
 {
 private: // private variables

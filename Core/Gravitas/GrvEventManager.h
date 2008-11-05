@@ -65,7 +65,7 @@ struct EventManagerState;
 /// constraint filtering events, that enable the event listener to change the outcome of the
 /// collision filter for a given pair of bodies.
 //----------------------------------------------------------------------------------------------
-class EventManager
+class GRAVITAS_API EventManager
 	: public Meson::Common::TSingleton<EventManager>
 {
 	friend class Meson::Common::TSingleton<EventManager>;

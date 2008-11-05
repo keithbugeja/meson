@@ -25,7 +25,7 @@ Meson_Gravitas_Force_BEGIN
 /// generator instance is not bound to a specific body but may be shared by an arbitrary
 /// number of bodies.
 //------------------------------------------------------------------------------------------
-class IForce
+class GRAVITAS_API IForce
 	: public Meson::Gravitas::IGravitasEntity
 {
 public:

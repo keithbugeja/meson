@@ -11,7 +11,7 @@ Meson_Gravitas_Constraint_BEGIN
 /// \class IConstraintFactory
 /// Abstract factory interface for creating constraints.
 //------------------------------------------------------------------------------------------
-class IConstraintFactory
+class GRAVITAS_API IConstraintFactory
 {
 public:
 	virtual ~IConstraintFactory(void) {};

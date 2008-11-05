@@ -25,7 +25,7 @@ struct CollisionManagerState;
 /// algorithms implementing the ICollisionDetector interface for specific IGeometry
 /// implementations.
 //----------------------------------------------------------------------------------------------
-class CollisionManager
+class GRAVITAS_API CollisionManager
 	: public Meson::Common::TSingleton<CollisionManager>
 {
 	friend class Meson::Common::TSingleton<CollisionManager>;

@@ -13,7 +13,7 @@ Meson_Gravitas_Simulation_BEGIN
 /// generate specific simulator implementations and are normally loaded through the engine's
 /// plugin mechanism.
 //----------------------------------------------------------------------------------------------
-class ISimulatorFactory
+class GRAVITAS_API ISimulatorFactory
 {
 public:
 	virtual ~ISimulatorFactory(void) {};

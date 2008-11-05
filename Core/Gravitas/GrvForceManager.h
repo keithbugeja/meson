@@ -23,7 +23,7 @@ struct ForceManagerState;
 /// The physics engine's force manager provides registry and query services for force factory
 /// implementations.
 //----------------------------------------------------------------------------------------------
-class ForceManager
+class GRAVITAS_API ForceManager
 	: public Meson::Common::TSingleton<ForceManager>
 {
 	friend class Meson::Common::TSingleton<ForceManager>;

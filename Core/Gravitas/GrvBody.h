@@ -48,7 +48,7 @@ namespace BodyType
 /// \class IBody
 /// Abstract interface for a physical body.
 //----------------------------------------------------------------------------------------------
-class IBody
+class GRAVITAS_API IBody
 	: public Meson::Gravitas::IGravitasEntity
 {
 public:

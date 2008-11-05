@@ -30,7 +30,7 @@ namespace CollisionEventType
 /// Collision event implementation for capturing collisions in their initial, ongoing and
 /// terminal phases.
 //------------------------------------------------------------------------------------------
-class CollisionEvent :
+class GRAVITAS_API CollisionEvent :
 	public IEvent
 {
 public: // public variables

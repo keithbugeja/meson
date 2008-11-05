@@ -11,7 +11,7 @@ Meson_Gravitas_Simulation_BEGIN
 /// Interface for a simulator instance. The interface provides methods for initialising,
 /// stepping through, and terminating the simulator instance.
 //----------------------------------------------------------------------------------------------
-class ISimulator
+class GRAVITAS_API ISimulator
 	: public Meson::Gravitas::IGravitasEntity
 {
 public: // public methods
