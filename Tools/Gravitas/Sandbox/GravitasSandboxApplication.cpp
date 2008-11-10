@@ -52,7 +52,7 @@ GravitasSandboxApplication::GravitasSandboxApplication(uint p_uiWidth, uint p_ui
 	, m_pReflectionEffect(NULL)
 	, m_pSkyEffect(NULL)
 {
-	m_strSimulationFilename = "..\\Gravitas\\GravitasSandbox\\Resources\\default.grv";
+	m_strSimulationFilename = "..\\..\\Test\\gravitas\\default.grv";
 }
 //----------------------------------------------------------------------------------------------
 GravitasSandboxApplication::~GravitasSandboxApplication()
