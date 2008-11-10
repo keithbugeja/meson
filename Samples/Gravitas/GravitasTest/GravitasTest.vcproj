@@ -182,6 +182,10 @@
 			ReferencedProjectIdentifier="{170A50F6-EA33-45A8-BF5B-33E78D14C6FF}"
 			RelativePathToProject=".\Core\Vistas\Vistas.vcproj"
 		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{6240F03C-4204-4E64-9608-6EF97191AF81}"
+			RelativePathToProject=".\Core\Common\Common.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
