@@ -7,7 +7,7 @@
 Meson_Vistas_BEGIN
 	
 	//----------------------------------------------------------------------------------------------
-	class SkyEffect : public IEffect
+	class VISTAS_API SkyEffect : public IEffect
 	{
 		VISTAS_IMPLEMENT_RTTI(SkyEffect, IEffect);
 

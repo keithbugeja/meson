@@ -16,7 +16,7 @@
 Meson_Vistas_BEGIN
 	
 	//----------------------------------------------------------------------------------------------
-	class IEffect : public VistasObject, IPropertySet
+	class VISTAS_API IEffect : public VistasObject, IPropertySet
 	{
 		VISTAS_IMPLEMENT_RTTI(IEffect, VistasObject);
 

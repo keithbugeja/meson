@@ -14,7 +14,7 @@
 Meson_Vistas_BEGIN
 	
 	//----------------------------------------------------------------------------------------------
-	class LocalEffect : public IEffect
+	class VISTAS_API LocalEffect : public IEffect
 	{
 		VISTAS_IMPLEMENT_RTTI(LocalEffect, IEffect);
 
