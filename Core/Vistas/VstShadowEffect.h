@@ -12,7 +12,7 @@
 Meson_Vistas_BEGIN
 	
 	//----------------------------------------------------------------------------------------------
-	class ShadowEffect : public IEffect
+	class VISTAS_API ShadowEffect : public IEffect
 	{
 		VISTAS_IMPLEMENT_RTTI(ShadowEffect, IEffect);
 

@@ -11,7 +11,7 @@
 Meson_Vistas_BEGIN
 
 	//----------------------------------------------------------------------------------------------
-	class ISceneCompositeNode : public ISceneNode
+	class VISTAS_API ISceneCompositeNode : public ISceneNode
 	{
 		VISTAS_IMPLEMENT_RTTI(ISceneCompositeNode, ISceneNode);
 

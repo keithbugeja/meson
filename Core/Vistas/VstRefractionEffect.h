@@ -12,7 +12,7 @@
 Meson_Vistas_BEGIN
 	
 	//----------------------------------------------------------------------------------------------
-	class RefractiveEffect : public IEffect
+	class VISTAS_API RefractiveEffect : public IEffect
 	{
 		VISTAS_IMPLEMENT_RTTI(RefractiveEffect, IEffect);
 
