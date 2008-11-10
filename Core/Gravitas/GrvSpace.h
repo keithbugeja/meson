@@ -12,7 +12,7 @@ Meson_Gravitas_Space_BEGIN
 /// Returns a pointer to the memory manager for Gravitas events.
 /// \returns a pointer to the memory manager for Gravitas events.
 //------------------------------------------------------------------------------------------
-Meson::Common::Memory::MemoryManager* GetSpaceMemoryManager(void);
+GRAVITAS_API Meson::Common::Memory::MemoryManager* GetSpaceMemoryManager(void);
 
 //------------------------------------------------------------------------------------------
 /// \struct BodyRayIntersection
