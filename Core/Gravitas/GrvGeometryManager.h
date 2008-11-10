@@ -18,7 +18,7 @@
 
 Meson_Gravitas_Geometry_BEGIN
 
-struct GRAVITAS_API GeometryManagerState;
+struct GeometryManagerState;
 
 //----------------------------------------------------------------------------------------------
 /// \class GeometryManager
@@ -27,7 +27,7 @@ struct GRAVITAS_API GeometryManagerState;
 /// are used for fast indexing into the collision detector matrix that provides access to
 /// appropriate collision algorithms for any given geometry pair.
 //----------------------------------------------------------------------------------------------
-class GeometryManager
+class GRAVITAS_API GeometryManager
 	: public Meson::Common::TSingleton<GeometryManager>
 {
 	friend class Meson::Common::TSingleton<GeometryManager>;
