@@ -34,7 +34,7 @@ namespace PropertyType
 	};
 }
 
-struct PropertyDescriptor
+struct GRAVITAS_API PropertyDescriptor
 {
 public: // public variables
 	Meson::Common::Text::String Name;
