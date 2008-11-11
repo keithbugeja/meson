@@ -5,7 +5,7 @@
 Meson_Cuneus_RTS_Typing_BEGIN
 
 
-class TypeInt : public DataType
+class CUNEUS_API TypeInt : public DataType
 {
 private:
 	int m_nValue;

@@ -23,7 +23,7 @@
 
 Meson_Cuneus_BEGIN
 
-class CuneusVirtualMachine
+class CUNEUS_API CuneusVirtualMachine
 {
 public:
 	static const char* m_szVM_ByteCodeMgr;

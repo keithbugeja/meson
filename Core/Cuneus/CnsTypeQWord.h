@@ -5,7 +5,7 @@
 Meson_Cuneus_RTS_Typing_BEGIN
 
 
-class TypeQWord : public DataType
+class CUNEUS_API TypeQWord : public DataType
 {
 private:
 	qword m_qwValue;

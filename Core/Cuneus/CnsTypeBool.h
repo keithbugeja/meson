@@ -4,7 +4,7 @@
 
 Meson_Cuneus_RTS_Typing_BEGIN
 
-class TypeBool : public DataType
+class CUNEUS_API TypeBool : public DataType
 {
 private:
 	bool m_bValue;

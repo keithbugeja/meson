@@ -8,7 +8,7 @@
 
 Meson_Cuneus_BEGIN
 
-class ConstantsMgr
+class CUNEUS_API ConstantsMgr
 {
 private:
 	Meson::Common::Collections::TArrayList< Meson::Common::TPointer< Meson::Cuneus::RTS::Typing::DataType > > m_lstDataType;

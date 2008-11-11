@@ -16,7 +16,7 @@ Meson_Cuneus_RTS_Reflection_END
 Meson_Cuneus_RTS_Typing_BEGIN
 
 
-class TypeObject : public DataType
+class CUNEUS_API TypeObject : public DataType
 {
 private:
 	Meson::Cuneus::RTS::Reflection::TypeClass* m_pTypeClass;

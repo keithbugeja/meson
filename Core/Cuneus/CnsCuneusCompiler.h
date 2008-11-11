@@ -45,7 +45,7 @@ enum TokenValue
 	OperatorSubEq,	OperatorUShr,		OperatorUShrEq
 };
 
-class CuneusCompiler
+class CUNEUS_API CuneusCompiler
 {
 protected:
 	SourceInfo m_sourceInfo;

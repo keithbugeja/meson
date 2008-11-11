@@ -9,7 +9,7 @@
 
 Meson_Cuneus_RTS_Reflection_BEGIN
 
-class TypeMethod : public AccessEntity
+class CUNEUS_API TypeMethod : public AccessEntity
 {
 private:
 	dword m_dwByteCodeOffset;

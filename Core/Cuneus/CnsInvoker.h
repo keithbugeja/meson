@@ -12,7 +12,7 @@
 Meson_Cuneus_RTS_BEGIN
 
 
-class Invoker
+class CUNEUS_API Invoker
 {
 
 public:

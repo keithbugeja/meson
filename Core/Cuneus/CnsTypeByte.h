@@ -4,7 +4,7 @@
 
 Meson_Cuneus_RTS_Typing_BEGIN
 
-class TypeByte : public DataType
+class CUNEUS_API TypeByte : public DataType
 {
 
 private:

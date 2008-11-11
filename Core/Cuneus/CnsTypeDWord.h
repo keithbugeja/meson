@@ -5,7 +5,7 @@
 Meson_Cuneus_RTS_Typing_BEGIN
 
 
-class TypeDWord : public DataType
+class CUNEUS_API TypeDWord : public DataType
 {
 private:
 	dword m_dwValue;

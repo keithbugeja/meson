@@ -5,7 +5,7 @@
 Meson_Cuneus_RTS_Typing_BEGIN
 
 
-class TypeString : public DataType
+class CUNEUS_API TypeString : public DataType
 {
 private:
 	Meson::Common::Text::String m_strValue;

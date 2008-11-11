@@ -72,7 +72,7 @@ public:
 
 //---------------------------------------------------------------------------------------------------------
 
-class SymbolTable
+class CUNEUS_API SymbolTable
 {
 protected:
 	Meson::Common::Collections::TStringMap< SymbolTableEntry* > m_mapEntry;

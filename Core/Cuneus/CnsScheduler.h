@@ -18,7 +18,7 @@
 
 Meson_Cuneus_BEGIN
 
-class IScheduler
+class CUNEUS_API IScheduler
 {
 
 public:
