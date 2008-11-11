@@ -228,9 +228,6 @@ public:
 #pragma endregion
 };
 
-// Restore DLL export warnings
-#pragma warning (default:4251)
-
 typedef Meson::Common::Text::String8 String;
 typedef Meson::Common::TPointer<String8> String8Ptr;
 typedef Meson::Common::TPointer<String> StringPtr;
