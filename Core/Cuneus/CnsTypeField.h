@@ -7,7 +7,7 @@
 
 Meson_Cuneus_RTS_Reflection_BEGIN
 
-class TypeField : public Meson::Cuneus::RTS::Typing::Entity
+class CUNEUS_API TypeField : public Meson::Cuneus::RTS::Typing::Entity
 {
 private:
 	//Meson::Cuneus::RTS::Typing::DataType m_dataType;

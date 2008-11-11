@@ -8,7 +8,7 @@
 
 Meson_Cuneus_RTS_Reflection_BEGIN
 
-class TypeParam : public Meson::Cuneus::RTS::Typing::Entity
+class CUNEUS_API TypeParam : public Meson::Cuneus::RTS::Typing::Entity
 {
 private:
 	Meson::Common::TPointer< Meson::Cuneus::RTS::Typing::DataType > m_pDataType;

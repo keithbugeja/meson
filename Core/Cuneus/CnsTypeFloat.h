@@ -5,7 +5,7 @@
 Meson_Cuneus_RTS_Typing_BEGIN
 
 
-class TypeFloat : public DataType
+class CUNEUS_API TypeFloat : public DataType
 {
 private:
 	float m_fValue;

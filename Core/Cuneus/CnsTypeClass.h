@@ -14,7 +14,7 @@
 
 Meson_Cuneus_RTS_Reflection_BEGIN
 
-class TypeClass : public Meson::Cuneus::RTS::Typing::DataType
+class CUNEUS_API TypeClass : public Meson::Cuneus::RTS::Typing::DataType
 {
 
 protected:

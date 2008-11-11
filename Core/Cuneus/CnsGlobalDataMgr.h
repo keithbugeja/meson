@@ -8,7 +8,7 @@
 
 Meson_Cuneus_BEGIN
 
-class GlobalDataMgr
+class CUNEUS_API GlobalDataMgr
 {
 protected:
 	Meson::Common::Collections::TArrayList< Meson::Common::TPointer< Meson::Cuneus::RTS::Typing::DataType > >* m_plstData;

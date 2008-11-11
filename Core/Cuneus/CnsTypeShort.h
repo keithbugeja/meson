@@ -5,7 +5,7 @@
 Meson_Cuneus_RTS_Typing_BEGIN
 
 
-class TypeShort : public DataType
+class CUNEUS_API TypeShort : public DataType
 {
 private:
 	short m_sValue;

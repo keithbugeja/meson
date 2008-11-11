@@ -19,7 +19,7 @@
 
 Meson_Cuneus_VCPU_BEGIN
 
-class Context
+class CUNEUS_API Context
 {
 private:
 	dword m_dwIndex;

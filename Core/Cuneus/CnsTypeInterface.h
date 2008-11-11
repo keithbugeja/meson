@@ -4,7 +4,7 @@
 
 Meson_Cuneus_RTS_Reflection_BEGIN
 
-class TypeInterface : public Meson::Cuneus::RTS::Typing::DataType
+class CUNEUS_API TypeInterface : public Meson::Cuneus::RTS::Typing::DataType
 {
 public:
 	TypeInterface(void);

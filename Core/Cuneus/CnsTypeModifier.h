@@ -4,7 +4,7 @@
 
 Meson_Cuneus_RTS_Reflection_BEGIN
 
-class TypeModifier : public Meson::Cuneus::RTS::Typing::DataType
+class CUNEUS_API TypeModifier : public Meson::Cuneus::RTS::Typing::DataType
 {
 protected:
 	dword m_dwModifier;

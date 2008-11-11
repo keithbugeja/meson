@@ -4,7 +4,7 @@
 
 Meson_Cuneus_RTS_Typing_BEGIN
 
-class TypeChar : public DataType
+class CUNEUS_API TypeChar : public DataType
 {
 private:
 	char m_cValue;

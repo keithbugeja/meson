@@ -18,7 +18,7 @@
 
 Meson_Cuneus_Util_BEGIN
 
-class DataTypeStack
+class CUNEUS_API DataTypeStack
 {
 protected:
 	Meson::Common::Collections::TArrayList< Meson::Common::TPointer< Meson::Cuneus::RTS::Typing::DataType > > m_lstDataType;

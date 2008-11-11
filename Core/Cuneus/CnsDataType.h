@@ -7,7 +7,7 @@
 
 Meson_Cuneus_RTS_Typing_BEGIN
 
-class DataType : public Entity
+class CUNEUS_API DataType : public Entity
 {
 public:
 	DataType( void );

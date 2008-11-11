@@ -4,7 +4,7 @@
 
 Meson_Cuneus_RTS_Reflection_BEGIN
 
-class TypeNamespace : public Meson::Cuneus::RTS::Typing::DataType
+class CUNEUS_API TypeNamespace : public Meson::Cuneus::RTS::Typing::DataType
 {
 public:
 	TypeNamespace(void);

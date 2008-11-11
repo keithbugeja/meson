@@ -24,7 +24,7 @@ Meson_Cuneus_BEGIN
 //----------------------------------------------------------------------------------------------
 //	Cuneus Engine
 //----------------------------------------------------------------------------------------------
-class CuneusEngine : public Meson::Common::TEngine<CuneusEngine>
+class CUNEUS_API CuneusEngine : public Meson::Common::TEngine<CuneusEngine>
 {
 	friend class Meson::Common::TEngine<CuneusEngine>;
 

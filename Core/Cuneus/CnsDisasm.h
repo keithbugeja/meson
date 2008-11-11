@@ -7,7 +7,7 @@
 
 Meson_Cuneus_Util_BEGIN
 
-class Disasm
+class CUNEUS_API Disasm
 {
 private:
 	byte* m_pByteCodeBase;

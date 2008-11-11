@@ -6,7 +6,7 @@
 
 Meson_Cuneus_RTS_Reflection_BEGIN
 
-class AccessEntity : public Meson::Cuneus::RTS::Typing::DataType
+class CUNEUS_API AccessEntity : public Meson::Cuneus::RTS::Typing::DataType
 {
 protected:
 	///TypeModifier m_modifier;

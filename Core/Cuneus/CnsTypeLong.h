@@ -5,7 +5,7 @@
 Meson_Cuneus_RTS_Typing_BEGIN
 
 
-class TypeLong : public DataType
+class CUNEUS_API TypeLong : public DataType
 {
 private:
 	long long m_llValue;

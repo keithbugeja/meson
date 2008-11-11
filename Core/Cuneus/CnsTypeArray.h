@@ -6,7 +6,7 @@
 
 Meson_Cuneus_RTS_Typing_BEGIN
 
-class TypeArray : public DataType
+class CUNEUS_API TypeArray : public DataType
 {
 protected:
 	dword m_dwSize;

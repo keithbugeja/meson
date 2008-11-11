@@ -8,7 +8,7 @@ using namespace Meson::Common::Text;
 
 Meson_Cuneus_RTS_Typing_BEGIN
 
-class Entity : public Meson::Common::TReferenceCounter< Entity >
+class CUNEUS_API Entity : public Meson::Common::TReferenceCounter< Entity >
 {
 protected:
 	Meson::Common::Text::String m_strName;

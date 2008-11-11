@@ -4,7 +4,7 @@
 
 Meson_Cuneus_RTS_Typing_BEGIN
 
-class TypeDouble : public DataType
+class CUNEUS_API TypeDouble : public DataType
 {
 private:
 	double m_dfValue;
