@@ -59,7 +59,7 @@ int main(int p_nArgumentCount, char* p_szArguments[])
 	if (strSimulationFilename.Length() > 0)
 		application.SetSimulationFilename(strSimulationFilename);
 
-	application.ApplicationPath = Directory::GetCurrent().GetPath() + Directory::Delimeter + "..\\Gravitas\\GravitasSandbox\\Resources";
+	application.ApplicationPath = Directory::GetCurrent().GetPath() + Directory::Delimeter + "..\\..\\Test";
 	application.MaterialCatalogue = "default.ms";
 	application.BackgroundColour.Set(0,0,0,0);
 
